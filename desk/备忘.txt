@@ -1,0 +1,140 @@
+http://39.108.222.81:8088/BGManage 外网地址  
+http://shenqi.baizeai.com/BGManage/home 或 http://shenqi.baizeai.com
+
+账号 bzd_leo 123
+
+post 传输格式为json
+contentType: "application/x-www-form-urlencoded; charset=utf-8",  
+data : {"userId":uId,"account":account,"oldPwd":oldPwd,"newPwd":newPwd},
+
+get 传输格式string
+data:'receiver='+emial+'&offerListId='+offerID,
+contentType: "application/json; charset=utf-8",
+
+js iframe中的window对象写法 contentWindow jq的为contents()  window.top不用加contentWindow,非Ifram 直接操作EG：window.parent.document.getElementById('')
+
+JSON.parse(str) 将字符串转化对象，JSON.stringify(obj) 将对象转化为字符串
+
+cookies清楚还能登录？怎么做的？
+http://www.baizeai.com/
+http://192.168.0.114:8080/BGManage
+
+ SVN 
+    trunk : https://192.168.0.114/svn/BGManage/trunk
+    branches : https://192.168.0.114/svn/BGManage/branches
+
+筛选模板
+https://list.tmall.com/search_product.htm?spm=a220m.1000858.0.0.6f34f42bkcAGDN&cat=50918004&sort=s&style=g&search_condition=4&from=sn_1_prop&active=1&industryCatId=50918004&smAreaId=440100#J_crumbs
+
+$.ajax({
+   $type: "GET",
+   url:"${prc }/offerListEmail/send",
+   data:'receiver='+emial+'&offerListId='+offerID,
+   dataType:"text",
+   contentType: "application/json; charset=utf-8", 
+   success: function(res){
+
+   },
+   error : function(){
+
+   },
+   complete : function(){
+
+   } 
+});
+
+$.ajax({
+   $type: "GET",
+   async:true, //false表示为同步
+   url:"${prc }/offerListEmail/send",
+   data:'receiver='+emial+'&offerListId='+offerID,
+   dataType:"text",
+   contentType: "application/json; charset=utf-8", 
+   success: function(res){
+
+   },
+   error : function(){
+
+   },
+   complete : function(){
+
+   } 
+});
+
+
+$.ajax({
+   type: "POST",
+   async:true,
+   url:"${prc}/offerList/updateAreaName",
+   data:JSON.stringify(area),
+   dataType:"json",
+   contentType: "application/json; charset=utf-8",
+   success: function(result) {
+   },
+   error: function(err) {
+   }
+});
+
+"state":"{checked:true,disabled:true,expanded:true,selected:true}"
+
+
+java 设置序号 varStatus="navInd" ${navInd.index}
+
+enctype="multipart/form-data" method="post"
+
+微信尽量不要跨域请求JS，图片上传预览就不执行imagePreview
+
+
+
+jsp
+ 
+ 	eq  就是等于的意思
+ 	gt  大于
+ 	ne  不等于
+ 	lt  小于
+ 	ge  大于等于
+ 	le  小于等于
+
+
+格式化
+   fmt:requestEncoding 
+   fmt:setLocale 
+   fmt:timeZone 
+   fmt:setTimeZone 
+   fmt:bundle 
+   fmt:setBundle 
+   fmt:message 
+   fmt:param 
+   fmt:formatNumber 
+   fmt:parseNumber 
+   fmt:formatDate 
+   fmt:parseDate 
+
+eg：格式化为整数 <fmt:parseNumber type="number" value="${prod.price}" />
+
+更多格式化 http://learnmore.iteye.com/blog/1075664
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

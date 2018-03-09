@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{white-space: nowrap;text-overflow: ellipsis;overflow:hidden;}
+        </style>
+    </head>
+    <body>
+        
+    </body>
+    <script>
+        var patern = 'test1.2/test2.2',
+            patern_temp,
+            data = [
+                ['test1.2','000','test1.1',],
+                ['test2.1','test2.2','222',],
+            ],
+            res = '',
+            len = data.length,
+            temp_val,
+            item_len,
+            i = 0;
+
+        patern_temp = patern+'/';
+
+        for(;i<len;i++){
+            item_len = data[i].length;
+
+            for(;item_len--;){
+                temp_val = data[i][item_len];
+                if(patern_temp.indexOf(temp_val+'/') !== -1){
+                    res += '/'+temp_val;
+                }
+            }
+
+        }
+
+        res = res.substr(1);
+
+        console.log(res);
+
+    </script>
+</html>
