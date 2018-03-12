@@ -2,7 +2,7 @@
 * @Author: RainCloud
 * @Date:   2018-03-12 17:46:40
 * @Last Modified by:   RainCloud
-* @Last Modified time: 2018-03-12 17:48:23
+* @Last Modified time: 2018-03-12 17:51:55
 */
 
 var list = [
@@ -13,9 +13,7 @@ var list = [
     ];
 
 var total_valArr = [],
-    results = [],
     result = {},
-    hasVal,
     ajust = 0;
 
 function concatObj(addinObj,Obj){
@@ -26,7 +24,6 @@ function concatObj(addinObj,Obj){
 }
 
 function doExchange(arr, depth){
-	//过滤数组为[]这种的情况
     if( arr[depth] && arr[depth].length === 0){
         if(arr[depth+1]){
             ajust++;
