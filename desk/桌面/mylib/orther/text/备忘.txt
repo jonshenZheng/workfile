@@ -96,30 +96,15 @@ jsp
  	le  小于等于
 
 
-格式化
-   fmt:requestEncoding 
-   fmt:setLocale 
-   fmt:timeZone 
-   fmt:setTimeZone 
-   fmt:bundle 
-   fmt:setBundle 
-   fmt:message 
-   fmt:param 
-   fmt:formatNumber 
-   fmt:parseNumber 
-   fmt:formatDate 
-   fmt:parseDate 
-
-eg：格式化为整数 <fmt:parseNumber type="number" value="${prod.price}" />
-
-更多格式化 http://learnmore.iteye.com/blog/1075664
 
 
 
-小程序
-   iPhone5 1rpx = 0.42px 1px = 2.34px
-   iPhone6 1rpx = 0.5px 1px = 2rpx
-   iPhone6s 1rpx = 0.552px 1px = 1.81rpx
+
+
+
+
+
+
 
 
 
