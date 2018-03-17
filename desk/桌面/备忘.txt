@@ -121,6 +121,8 @@ eg：格式化为整数 <fmt:parseNumber type="number" value="${prod.price}" />
    iPhone6 1rpx = 0.5px 1px = 2rpx
    iPhone6s 1rpx = 0.552px 1px = 1.81rpx
 
+   用手机微信测试走得是微信
+
 
 
 
