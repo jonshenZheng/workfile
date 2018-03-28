@@ -6,6 +6,20 @@ function isObject(v){
 	return type(v,'object');
 }
 
+/**
+ * 获取某个字符在字符串出现的位置（从字符串末尾开始匹配，索引也是从字符串末尾开始）
+ * str 字符串
+ * v 要匹配的字符
+ */
+
+function lastIndexOfInd(str,v){
+  
+  var temp = str.split('').reverse().join('');
+
+  return temp.indexOf(v);
+
+}
+
 /*常用方法end*/
 
 
