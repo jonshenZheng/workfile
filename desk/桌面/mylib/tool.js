@@ -6,17 +6,27 @@ function isObject(v){
 	return type(v,'object');
 }
 
+
+/*翻转字符串*/
+function strReverse(str){
+  return str.split('').reverse().join('');
+}
+
 /**
  * 获取某个字符在字符串出现的位置（从字符串末尾开始匹配，索引也是从字符串末尾开始）
  * str 字符串
  * v 要匹配的字符
  */
-
 function lastIndexOfInd(str,v){
   
-  var temp = str.split('').reverse().join('');
+  var temp = strReverse(str),
+      st;
 
-  return temp.indexOf(v);
+  if(v.length > 1){
+    st = strReverse(v);
+  }    
+
+  return temp.indexOf(st);
 
 }
 

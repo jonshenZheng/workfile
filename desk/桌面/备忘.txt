@@ -126,9 +126,12 @@ eg：格式化为整数 <fmt:parseNumber type="number" value="${prod.price}" />
 
 
 
+html 一些常用方法
+   //输入的内容为数值
+   <input type="text" name="area" onkeyup="value=value.replace(/[^\d.]/g,'')">
 
-
-
+   //输入的内容为整数
+   <input type="text" name="staffCount" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
 
 
 
