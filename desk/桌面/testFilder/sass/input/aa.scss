@@ -1,0 +1,22 @@
+$i : 0;
+/* @for $i from 8 through 10 {
+
+	.dd-#{$i} {font-size: #{$i}px;}  
+} */
+
+@for $i from 8 through 100 {
+	@if $i>50{
+		@if $i % 10 == 0{
+			.fontSz-#{$i}{font-size: #{$i}px;}
+		}
+	}
+	@else if $i>10{
+		@if $i % 2 == 0{
+			.fontSz-#{$i}{font-size: #{$i}px;}
+		}
+	} 
+	@else{
+		.fontSz-#{$i}{font-size: #{$i}px;}
+	}
+
+}
