@@ -133,10 +133,13 @@ html 一些常用方法
    //输入的内容为整数
    <input type="text" name="staffCount" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
 
+   //输入框动态变化事件
+   <input type="text" id="a" oninput="aa(event)" onporpertychange="aa(event)" />
 
-
-
-
+   //jq绑定输入框动态变化事件
+   $("#a").bind('input porpertychange',function(){
+      console.log("e");
+   });
 
 
 
