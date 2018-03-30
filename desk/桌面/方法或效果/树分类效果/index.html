@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="renderer" content="webkit|ie-comp|ie-stand"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/iframhome.css">
+		<link href="source/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="frameTop">
+			<div class="container clearfix">
+				<a href="" class="fl logo">
+					<!-- <img src="img/wowphp-elephant.png" class="img-responsive" alt=""> -->
+				</a>
+				<a href="" class="login">登录</a>
+			</div>
+		</div>
+		<div class="frameContianer">
+			<div class="frameHei clearfix">
+				<div class="frameNavbar">
+					<ul class="qutBox">
+	                	<li>
+		                    <a class="dropdown-toggle"><i class="bordL"></i>控制台<span class="nav_tri"></span></a>
+		                    <ul class="submenu">
+								<li>
+			                    	<a class="dropdown-toggle"><i class="bordL"></i>密码管理</a>
+			                    	<ul class="submenu">
+										<li><a href="4.html" target="ifr" class="nav_link" >4.html</a></li>
+			                    	</ul>
+			                    </li>
+			                    <li>
+			                    	<a class="dropdown-toggle"><i class="bordL"></i>账户管理</a>
+			                    	<ul class="submenu">
+										<li><a href="6.html" target="ifr" class="nav_link" >6.html</a></li>
+				                    	<li><a href="7.html" target="ifr" class="nav_link" >7.html</a></li>
+			                    	</ul>
+			                    </li>
+			                    <li>
+			                    	<a class="dropdown-toggle"><i class="bordL"></i>账户管理</a>
+				                    <ul class="submenu">
+										<li>
+					                    	<a class="dropdown-toggle"><i class="bordL"></i>密码管理</a>
+					                    	<ul class="submenu">
+												<li><a href="5.html" target="ifr" class="nav_link" >5.html</a></li>
+					                    	</ul>
+				                    	</li>
+					                    <li>
+					                    	<a class="dropdown-toggle"><i class="bordL"></i>账户管理</a>
+					                    	<ul class="submenu">
+												<li><a href="6.html" target="ifr" class="nav_link" >6.html</a></li>
+						                    	<li><a href="7.html" target="ifr" class="nav_link" >7.html</a></li>
+					                    	</ul>
+					                    </li>
+			                    	</ul>
+			                    </li>
+		                    </ul>
+		                </li>
+		                <li>
+		                    <a class="dropdown-toggle"><i class="bordL"></i>更多页面<span class="nav_tri"></span></a>
+		                    <ul class="submenu">
+		                    	<li><a href="1.html" target="ifr" class="nav_link" >1.html</a></li>
+		                    	<li><a href="2.html" target="ifr" class="nav_link" >2.html</a></li>
+		                    	<li><a href="3.html" target="ifr" class="nav_link" >3.html</a></li>
+		                    </ul>
+		                </li>
+		                <li>
+		                    <a class="dropdown-toggle"><i class="bordL"></i>会员中心<span class="nav_tri"></span></a>
+		                    <ul class="submenu">
+		                    	<li><a href="1.html" target="ifr" class="nav_link" >1.html</a></li>
+		                    	<li><a href="2.html" target="ifr" class="nav_link" >2.html</a></li>
+		                    	<li><a href="3.html" target="ifr" class="nav_link" >3.html</a></li>
+		                    </ul>
+		                </li>
+		            </ul>
+				</div>
+				<div class="frameRbox">
+					 <iframe frameborder="0" src="1.html" name='ifr' width="100%" height="100%"></iframe> 
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-1.11.3.js"></script>
+	<script src="source/bootstrap-3.3.0-dist/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+		//获取浏览器版本
+
+        var Browser = {
+          ie6 : 'MSIE 6.0',
+          ie7 : 'MSIE 7.0',
+          ie8 : 'MSIE 8.0',
+          ie9 : 'MSIE 9.0',
+          ie10 : 'MSIE 10.0',
+          FF : 'Firefox',
+          Chrome : 'Chrome'
+        };
+
+        var BroserVersion = navigator.userAgent,
+            isIE7 = false,
+            regx_IE7 = new RegExp(Browser.ie7);
+
+        isIE7 = regx_IE7.test(BroserVersion);
+
+	    //左边列表(必须有一个展开)
+		var $category_showBtn  = $('.frameNavbar .qutBox .dropdown-toggle'),
+		  categorySlider,
+		  speed = 500;
+
+
+		var easyTree = (function(opt){
+
+			var defualt = {
+				isShowALL : false,
+			},
+			fn,
+			tree; 
+			
+			if(isIE7){
+			  	fn = function(el_jq){
+			  		if(!el_jq.hasClass('showB')){
+			  			if(!defualt.isShowALL) {
+			  				el_jq.parent('li').siblings().find('.showB').removeClass('showB').siblings('ul').hide();
+			  			}
+					  	el_jq.addClass('showB').siblings('ul').show(); 
+					}
+					else{
+						slideUp(el_jq.removeClass('showB').siblings('ul'));
+					}
+			  	}
+			}
+			else{
+			  	fn = function(el_jq){
+			  		if(!el_jq.hasClass('showB')){
+			  			if(!defualt.isShowALL){
+			  				slideUp(el_jq.parent('li').siblings().find('.showB').removeClass('showB').siblings('ul'));
+			  			}
+						el_jq.addClass('showB').siblings('ul').slideDown(function(){
+							$(this).css('display','block');
+						}); 
+					}
+					else{
+						slideUp(el_jq.removeClass('showB').siblings('ul'));
+					}
+			  	}
+			}
+
+			tree = function(opt){
+				if( Object.prototype.toString.call(opt) === '[object Object]' ){
+					defualt = $.extend(true, defualt, opt);
+				}
+				return fn;
+			}
+
+
+		  return tree;
+
+		})();
+
+		categorySlider = easyTree({
+			isShowALL : true
+		});
+
+		$category_showBtn.click(function(){
+			categorySlider($(this));
+		});
+
+
+
+		/*$qtionDt.click(function(){
+			_seft = $(this);
+			if(!_seft.hasClass('showB')){
+			  slideUp(_seft.parent('li').siblings().find('.showB').removeClass('showB').siblings('ul'));
+			  _seft.addClass('showB').siblings('ul').slideDown(function(){
+                $(this).css('display','block');
+              }); 
+			}
+			else{
+				slideUp(_seft.removeClass('showB').siblings('ul'));
+			}
+		});*/
+
+
+		function slideUp(o){
+			o.animate({height: 'toggle'}, speed,function(){
+			    $(this).hide();
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,92 @@
+body,h1,h2,h3,h4,h5,h6,dl,dd,ul,ol,pre,p,ul{margin: 0}
+ul{list-style: none}
+ol,ul{padding-left: 0}
+th,td,option{padding: 0}
+em,i{font-style: normal;font-size:0;overflow: hidden;}
+
+input[type="submit"],input[type="button"],button{cursor:pointer;padding:0;}
+input[type="text"],input[type="email"],input[type="number"],input[type="password"]{padding:0 0 0 5px;}
+:focus,input,select,textarea,button{outline:none;}
+textarea{resize:none}
+
+a{text-decoration: none;color: #000;outline:none;cursor:pointer;}
+body a:hover{text-decoration: none;}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+
+.fl{float:left}
+.fr{float:right}
+
+
+/* 左右浮动后清除浮动 */
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+.clearfix{*zoom:1;}
+
+.noselect{moz-user-select: -moz-none;-moz-user-select: none;-o-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;}
+
+.layout{width: 1200px;margin: 0 auto}
+
+
+.frameTop{padding: 15px;background-color: #dfd}
+.logo{width: 200px;height: 80px;background-color: #ccc}
+.frameTop .login{float: right;height: 18px;margin-top: 31px}
+.frameTop .login:hover{color: #f60}
+
+
+.frameContianer{}
+.frameHei{overflow: hidden;}
+.frameNavbar .qutBox{background-color: #f9f9f9}
+.frameNavbar{width: 200px;background-color: #f2f2f2;float: left;padding-bottom: 800px;margin-bottom: -800px;border-right: 1px solid #ccc}
+
+.frameNavbar .dropdown-toggle, .frameNavbar .dropdown-toggle{height: 38px;line-height: 38px;border-top: 1px solid #fcfcfc;border-bottom: 1px solid #e5e5e5;display: block;}
+.frameNavbar li{display: block;}    
+
+.frameNavbar .submenu{border-bottom: 1px dashed #d8d8d8;display: none;padding-left: 0;zoom:1;}
+.frameNavbar .dropdown-toggle{color: #575757;font-weight: bold;cursor: pointer;display: block;position: relative;}
+.frameNavbar .dropdown-toggle .bordL{left: 0;top: 0;width: 3px;height: 100%;background-color: #f60}
+.frameNavbar .submenu{color: #6a6a6a;height: auto;line-height: normal;display: none;position: relative;}
+.frameNavbar .submenu i{top: -0.01rem;margin-top: 0;background-position: -22px 0}
+/* .frameNavbar .dropdown-toggle span{position: absolute;width: 42px;height: 19px;line-height: 19px;text-align: center;right: 0;top: 50%;margin-top: -9px;border-radius: 10px;border: 1px solid #4d4d4d;color: #4d4d4d;font-size: 11px}
+.frameNavbar .dropdown-toggle b{display: none;font-size: 12px;}
+.frameNavbar .dropdown-toggle em{font-size: 12px;}
+.frameNavbar .showB b{display: block;}
+.frameNavbar .showB em{display: none;} */
+
+.frameNavbar .nav_tri{position: absolute;width: 10px;height: 16px;right: 10px;top: 50%;margin-top: -8px;background-image: url('../img/left_nav.png');transition: all .5s;}
+.frameNavbar .showB .nav_tri{transform:rotate(-90deg);width: 16px\9;height: 10px\9;margin-top: -5px\9;background-image: url('../img/down_nav.png')\9;}
+@media screen and (min-width:0\0) {.frameNavbar .showB .nav_tri{ background-image: url('../img/down_nav.png'); }} 
+.frameNavbar .nav_link{height: 32px;line-height: 32px;display: block;}
+.frameNavbar .dropdown-toggle, .frameNavbar .nav_link{padding-left: 20px;color:#585858;font-size: 14px;}
+.frameNavbar .submenu .dropdown-toggle, .frameNavbar .submenu .nav_link{padding-left: 40px}
+.frameNavbar .submenu .dropdown-toggle{border-top: 0;border-bottom:1px dashed #e5e5e5 }
+.frameNavbar .submenu .submenu .dropdown-toggle, .frameNavbar .submenu .submenu .nav_link{padding-left: 60px}
+/* 鼠标hover效果 */
+
+.frameNavbar .dropdown-toggle:hover{background-color: #fff}
+.frameNavbar .dropdown-toggle:hover .bordL{position: absolute;}
+.frameNavbar .submenu .nav_link:hover{color: #f60}
+.frameNavbar .submenu .submenu .nav_link:hover{color: #f60;text-decoration: underline;}
+
+.frameRbox{margin-left: 201px;min-height: 700px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
