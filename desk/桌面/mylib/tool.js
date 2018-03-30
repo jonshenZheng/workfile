@@ -6,6 +6,35 @@ function isObject(v){
 	return type(v,'object');
 }
 
+// 返回e很当前节点 后面缓存单例
+function EvenFn(e,IsStopPreventDefault){
+	var ev = e || window.e;
+
+	//阻止事件传播
+	if(e.stopPropagation){
+		e.stopPropagation();
+	}
+	else{
+		e.cancelBubble = true;
+	}
+
+	if(IsStopPreventDefault){
+		if(e.preventDefault){
+			e.preventDefault();
+		}
+		else{
+			e.returnValue = false;
+		}
+		
+	}
+
+	return {
+		e : e,
+		el : e.currentTarget
+	}
+
+}
+
 
 /*翻转字符串*/
 function strReverse(str){
