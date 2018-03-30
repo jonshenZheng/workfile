@@ -107,17 +107,23 @@
 
 	    //左边列表(必须有一个展开)
 		var $category_showBtn  = $('.frameNavbar .qutBox .dropdown-toggle'),
-		  categorySlider,
-		  speed = 500;
+		  categorySlider;
 
 
 		var easyTree = (function(opt){
 
 			var defualt = {
 				isShowALL : false,
+				speed = 500,
 			},
 			fn,
 			tree; 
+
+			function slideUp(o){
+				o.animate({height: 'toggle'}, defualt.speed,function(){
+				    $(this).hide();
+				});
+			}
 			
 			if(isIE7){
 			  	fn = function(el_jq){
@@ -169,7 +175,6 @@
 		});
 
 
-
 		/*$qtionDt.click(function(){
 			_seft = $(this);
 			if(!_seft.hasClass('showB')){
@@ -184,10 +189,5 @@
 		});*/
 
 
-		function slideUp(o){
-			o.animate({height: 'toggle'}, speed,function(){
-			    $(this).hide();
-			});
-		}
 	</script>
 </html>
