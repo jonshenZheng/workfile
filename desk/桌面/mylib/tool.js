@@ -85,6 +85,29 @@ var RegexpObj = {
 
 var UiMethod = {
 
+	//是哪个浏览器或版本
+    whichBroser ：function(version){
+        var Browser = {
+          ie6 : 'MSIE 6.0',
+          ie7 : 'MSIE 7.0',
+          ie8 : 'MSIE 8.0',
+          ie9 : 'MSIE 9.0',
+          ie10 : 'MSIE 10.0',
+          FF : 'Firefox',
+          Chrome : 'Chrome'
+        },
+        BroserVersion = navigator.userAgent,
+        regx;
+
+        if(!Browser[version]){
+        	return;
+        }
+
+        regx = new RegExp(Browser[version]);
+
+        return regx.test(BroserVersion);
+    },
+
 	/*检查是否支持css3*/
 	support_css3 :function(prop){
 	   var div = document.createElement('div'),

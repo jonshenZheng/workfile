@@ -87,34 +87,48 @@
 	<script src="source/bootstrap-3.3.0-dist/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 
-		//获取浏览器版本
+		//是哪个浏览器或版本
+        function whichBroser(version){
+	        var Browser = {
+	          ie6 : 'MSIE 6.0',
+	          ie7 : 'MSIE 7.0',
+	          ie8 : 'MSIE 8.0',
+	          ie9 : 'MSIE 9.0',
+	          ie10 : 'MSIE 10.0',
+	          FF : 'Firefox',
+	          Chrome : 'Chrome'
+	        },
+	        BroserVersion = navigator.userAgent,
+	        regx;
 
-        var Browser = {
-          ie6 : 'MSIE 6.0',
-          ie7 : 'MSIE 7.0',
-          ie8 : 'MSIE 8.0',
-          ie9 : 'MSIE 9.0',
-          ie10 : 'MSIE 10.0',
-          FF : 'Firefox',
-          Chrome : 'Chrome'
-        };
+	        if(!Browser[version]){
+	        	return;
+	        }
 
-        var BroserVersion = navigator.userAgent,
+	        regx = new RegExp(Browser[version]);
+
+	        return regx.test(BroserVersion);
+
+        }
+
+
+
+
+        /*var BroserVersion = navigator.userAgent,
             isIE7 = false,
             regx_IE7 = new RegExp(Browser.ie7);
 
-        isIE7 = regx_IE7.test(BroserVersion);
+        isIE7 = regx_IE7.test(BroserVersion);*/
 
 	    //左边列表(必须有一个展开)
 		var $category_showBtn  = $('.frameNavbar .qutBox .dropdown-toggle'),
 		  categorySlider;
 
-
 		var easyTree = (function(opt){
 
 			var defualt = {
 				isShowALL : false,
-				speed = 500,
+				speed : 500,
 			},
 			fn,
 			tree; 
@@ -125,7 +139,7 @@
 				});
 			}
 			
-			if(isIE7){
+			if(whichBroser('ie7')){
 			  	fn = function(el_jq){
 			  		if(!el_jq.hasClass('showB')){
 			  			if(!defualt.isShowALL) {
