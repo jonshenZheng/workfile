@@ -2,11 +2,11 @@
 * @Author: RainCloud
 * @Date:   2017-12-01 14:57:31
 * @Last Modified by:   RainCloud
-* @Last Modified time: 2018-03-29 11:53:54
+* @Last Modified time: 2018-03-31 14:50:05
 */
 
 body,h1,h2,h3,h4,h5,h6,dl,dd,ul,ol,pre,p,ul{margin: 0;}
-ul{list-style: none;}
+ul,li{list-style: none;}
 ol,ul{padding-left: 0;}
 th,td,option{padding: 0;}
 img{border:0;}
