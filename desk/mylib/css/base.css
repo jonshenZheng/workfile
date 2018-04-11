@@ -1,0 +1,89 @@
+/* 
+* @Author: RainCloud
+* @Date:   2017-12-01 14:57:31
+* @Last Modified by:   RainCloud
+* @Last Modified time: 2018-03-31 14:50:05
+*/
+
+body,h1,h2,h3,h4,h5,h6,dl,dd,ul,ol,pre,p,ul{margin: 0;}
+ul,li{list-style: none;}
+ol,ul{padding-left: 0;}
+th,td,option{padding: 0;}
+img{border:0;}
+em,i{font-style: normal;font-size:0;overflow: hidden;}
+
+input[type="submit"],input[type="button"],button{cursor:pointer;padding:0;}
+input[type="text"],input[type="email"],input[type="number"],input[type="password"]{padding:0 0 0 5px;}
+:focus,input,select,textarea,button{outline:none;}
+slect{backgroud-color:#fff !important;}
+textarea{resize:none;}
+
+a{text-decoration: none;color: #000;outline:none;cursor:pointer;}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
+
+.fl{float:left;}
+.fr{float:right;}
+
+.noselect{moz-user-select: -moz-none;-moz-user-select: none;-o-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;}
+
+.wordBreck{white-space: normal;word-break: break-all;word-wrap:break-word;}
+
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+.clearfix{*zoom:1;}
+
+table{border-collapse: separate;border-spacing: 0;}
+table td{empty-cells:show;}
+table th{font-weight:normal;}
+
+a:hover{cursor:pointer;text-decoration: none !important;}
+
+img[src=""],img:not([src]){opacity:0}
+
+.btn-b,.btn-b{
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px; 
+}
+
+.btn-b{
+	display: block;
+}
+
+.btn-ib{
+	display: inline-block;
+}
+
+/* 弹窗背景 */
+.popBg{
+    position:absolute;
+    left: 0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color: #000;
+    opacity : 0.5;
+    filter:alpha(opacity=50);
+}
+
+/* 面板阴影 */
+.popshadow{
+    -moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    -ms-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+}
