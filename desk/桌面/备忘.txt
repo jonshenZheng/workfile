@@ -121,8 +121,9 @@ eg：格式化为整数 <fmt:parseNumber type="number" value="${prod.price}" />
    iPhone6 1rpx = 0.5px 1px = 2rpx
    iPhone6s 1rpx = 0.552px 1px = 1.81rpx
 
-   用手机微信测试走得是微信
-
+   用手机微信测试（微信会拦截非域名的链接，带端口的域名也不行）
+   ide上传文件，地址一定要域名才能上传；
+   电脑主机可以 ip指向本地服务域名，手机端就不行，手机端一定要有域名
 
 
 
@@ -141,7 +142,14 @@ html 一些常用方法
       console.log("e");
    });
 
+   设置text为pxx的项选中
+   $(".selector").find("option:contains('pxx')").attr("selected",true);
 
+   获取当前选中项的text
+   $(".selector").find("option:selected").text();
+
+   获取当前选中项的value
+   $(".selector").val(); setSelectVal
 
 
 
