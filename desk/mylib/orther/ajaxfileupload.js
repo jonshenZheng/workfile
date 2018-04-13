@@ -1,3 +1,71 @@
+
+/*使用例子
+$.ajaxFileUpload
+(
+    {
+        url: '${prc }/imageSearch/searchSimialImage', //用于文件上传的服务器端请求地址
+        secureuri: false, //是否需要安全协议，一般设置为false
+        fileElementId: 'sereachImgInp', //文件上传域的ID
+        dataType: 'application/json', //返回值类型 一般设置为json
+        proTypeId : pid,
+        pageSize : pageImgCountNum,
+        contentType: "application/json; charset=utf-8",
+        success: function (data, status)  //服务器成功响应处理函数,回掉成功执行js报错就跑到error处理函数
+        {
+        	window.top.hideHomeLoading();
+        	 var res,
+        		reg = /^<pre.+?>/g,
+        		datas,
+        		dataInd;
+
+        	dataInd = data.indexOf('{');
+        	
+        	 res = data.slice(dataInd,-6);	
+        	 
+        	 if(res == 'false'){
+        		 alert('搜索失败');
+        		 return false;
+        	 }
+        	 else{
+        		 datas = JSON.parse(res);
+        	 }
+
+        	 
+         	 showProdPic(datas.prodLibProds);
+         	 if(!datas.produces.length){
+         		 return;
+         	 }
+         	 
+         	 $fingerprint.val(datas.imgUuid);
+         	 
+         	 if(pid == ''){
+         		 pid = 'all';
+         	 }
+         	  
+             showPageInfo(pid,datas.producesCount,true);
+             $('#prodPicTable td .daskImg').lightBox();
+
+        },
+        error: function (data, status, e)//服务器响应失败处理函数
+        {
+        	
+        	window.top.hideHomeLoading();
+        	if( data.responseText.indexOf('a damaged picture') !== -1){
+        		alert('请上传正确的图片的格式');
+        	}
+        	else{
+        		alert('搜索失败');	
+        	}
+        	
+        	/* console.log(data);
+        	console.log(status);
+        	console.log(e); */
+        }
+    }
+);*/
+
+
+
 jQuery.extend({
     
     createUploadIframe: function(id, uri)
