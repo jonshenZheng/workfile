@@ -85,6 +85,9 @@ enctype="multipart/form-data" method="post"
 微信尽量不要跨域请求JS，图片上传预览就不执行imagePreview
 
 
+HTML5表单验证 
+   required oninvalid="setCustomValidity('必须填写！');" oninput="setCustomValidity('');" 直接写在Dom里面
+
 
 jsp
  
