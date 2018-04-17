@@ -323,7 +323,25 @@ var Method = {
     		return '';
     	}
     	return sep+(arr.join(sep))+sep;
-    }
+    },
+    /*解析返回来是字符串数据，里面json变为字符串，还加了<pre>标签*/
+    parseStrData : function(strData){
+    	var res,
+    		datas,
+    		dataInd;
+
+    	dataInd = data.indexOf('{');
+     
+    	if(dataInd < 0){
+    		return;
+    	}
+
+		res = data.slice(dataInd,-6);	
+		datas = JSON.parse(res);
+
+		return datas;
+		
+    },
     
 };
 
