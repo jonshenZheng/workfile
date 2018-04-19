@@ -1,0 +1,40 @@
+/* 数量增减按钮 */
+
+.easyLib-num-box{float: left;}
+
+.easyLib-num-box{
+     width:160px;
+}
+.easyLib-num-box .num-jian,
+.easyLib-num-box .num-jia{
+  width: 36px;
+  height: 36px;
+  line-height: 34px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+.easyLib-num-box .num-input{
+  font-size: 12px;
+}
+.easyLib-num-box .num-input input{
+  height: 18px;
+  padding:9px 0;
+  border:0;
+  width: 100%;
+  text-align: center;
+  color:#999;
+  font-size: 18px;
+  box-sizing: content-box;
+}
+
+.easyLib-num-box .num-input{
+	width: 85px;
+	text-align: center;
+}
+ 
+.easyLib-num-box .hui{
+  background-color: #f5f5f9;
+  cursor:not-allowed;
+}
+
+/* 数量增减按钮 end*/
