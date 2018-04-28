@@ -77,7 +77,7 @@ var RegexpObj = {
     password : /(^.*?[a-zA-Z]+.*?\d+.*?$)|(^.*?\d+.*?[a-zA-Z]+.*?$)/,  //密码不能为纯数字或纯英文且不能为中文
     phone : /^1[13456789][0-9]{9}$/,             //匹配手机号
     telephone : /^0\d{2,3}-?\d{7,8}$/,          //匹配固话（必须加区号）
-    noIntNumber : /^0|\D/                       //匹配非整数（填写表单的时候，用来去掉一些非整数的字符） 
+    noIntNumber : /^0|\D/,                       //匹配非整数（填写表单的时候，用来去掉一些非整数的字符） 
 };
 
 
@@ -217,6 +217,18 @@ var FormMethod = {
 		}
 		jq_el.val(val);
     },
+    inputNumber : function re(v){
+	    var temp = v;
+	    temp = v.replace(/[^\d.]/g,'');
+
+	    var arr = temp.split('.');
+
+	    if(arr.length>0){
+	        arr[0] += '.';
+	        temp = arr.join('');
+	    }
+	    return temp;
+	},
 
     /*获取密码强度*/
 

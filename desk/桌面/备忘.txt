@@ -99,6 +99,13 @@ jsp
  	le  小于等于
 
 
+   判断列表为空
+      <c:if test="${empty list}">
+      <c:if test="${list== null || fn:length(list) == 0}">
+   判断列表非空
+      <c:if test="${not empty list}">
+      <c:if test="${list != null || fn:length(list) != 0}">
+
 格式化
    fmt:requestEncoding 
    fmt:setLocale 
@@ -134,7 +141,29 @@ html 一些常用方法
    //输入的内容为数值
    <input type="text" name="area" onkeyup="value=value.replace(/[^\d.]/g,'')">
 
-   //输入的内容为整数
+   //输入的内容为整数(不推荐)
+   <input type="text" name="staffCount"  onblur="setIntNumber(this,true)" onkeyup="setIntNumber(this)" onafterpaste="setIntNumber(this)"/>
+
+   function setIntNumber(self,isBlur){
+      var temp;
+
+      if(isBlur && temp == ''){
+         temp  = 0;
+      }
+      
+      if(self.value.length==1){
+         self.value=self.value.replace(/[^1-9]/g,'');
+      }
+      else{
+         temp = parseInt(self.value.replace(/\D/g,''));
+         if(isNaN(temp)){
+            temp = '';
+         }
+         self.value=temp;
+      }
+      
+   }
+                             
    <input type="text" name="staffCount" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
 
    //输入框动态变化事件
@@ -155,7 +184,8 @@ html 一些常用方法
    $(".selector").val(); setSelectVal
 
 
-
+测试webView
+chrome://inspect/
 
 
 
