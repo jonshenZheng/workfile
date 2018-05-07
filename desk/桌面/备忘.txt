@@ -143,6 +143,33 @@ eg：格式化为整数 <fmt:parseNumber type="number" value="${prod.price}" />
 
 
 html 一些常用方法
+
+   //一些事件需要禁止传播的写法
+   <div class="hideValBox" onmouseleave="hideChooseValFn(event)"></div>
+   <script>
+      //onmouseleave在IE7不行，行为跟mouseout一样
+      function hideChooseValFn(e){
+        
+         var ev = e,
+             el;
+
+         if(ev.stopPropagation){
+            //非IE
+            ev.stopPropagation();
+            el = ev.currentTarget;
+         }
+         else{
+            //ie
+            ev.cancelBubble = true;
+            el = ev.srcElement;
+         }
+
+         $(el).hide();
+      }
+
+   </script>
+
+
    //输入的内容为数值
    <input type="text" name="area" onkeyup="value=value.replace(/[^\d.]/g,'')">
 
