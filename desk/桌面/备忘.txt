@@ -3,6 +3,11 @@ http://shenqi.baizeai.com/BGManage/home 或 http://shenqi.baizeai.com
 
 账号 bzd_leo 123
 
+100测试地址：
+   bzms : http://192.168.0.100:8083/bzms
+   pms : http://192.168.0.100:8084/pms
+
+
 post 传输格式为json
 contentType: "application/x-www-form-urlencoded; charset=utf-8",  
 data : {"userId":uId,"account":account,"oldPwd":oldPwd,"newPwd":newPwd},
