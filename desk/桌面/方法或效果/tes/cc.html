@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<style type="text/css">
+		*{margin:0;padding: 0}
+		.imgBox{background-color: #000}
+		.imgBox img{display: block;width: 100%;}
+
+		.textBox{
+			display: block;
+			width: 78%;
+			height: 36px;
+			line-height: 36px;
+			margin: 20px auto;
+			padding: 0 3%;
+			border-radius: 6px;
+			border:1px solid #ddd;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<input type="text" id="url" class="textBox">
+
+	<div class="imgBox">
+		<ul id="img"></ul>
+	</div>
+
+
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+
+	<script type="text/javascript">
+
+		var $imgBox = $('#img'),
+			$url = $('#url'),
+			url_path,
+			max = 199,
+			filelen = 3,
+			baseImgUrl = '',
+			dividNum = 0,
+			imgCount = 0,
+			extName = '.jpg',
+			defaultDivNum = 50,
+			errTimes = 3;
+
+		
+
+
+		$(document).keydown(function(k){
+
+			if(k.keyCode === 13){
+				randerImg();
+			}
+
+		});
+
+
+		function countLeterNum(leter,str){
+			var i = 0,
+				len_c = 0,
+				zim = String(leter),
+				len = str.length;
+
+			for(;i<len;i++){
+				if(str[i] === zim){
+					len_c++;
+				}
+			}
+
+			return len_c;
+		}
+
+
+		function createDiv(nums){
+			var number = nums || defaultDivNum,
+				i = 0,
+				start = $('#img .divIdClass-js').length,
+				str = '',
+				temp;
+
+			for(;i<number;i++){
+				temp = start + i;
+				str += '<div id="divId'+temp+'" class="divIdClass-js" ></div>';
+			}	
+
+			$imgBox.append(str);
+
+			dividNum = number + start;
+
+		}
+
+
+		function randerImg(){
+			
+			$url.hide();
+
+			var v = $url.val(),
+				beg = v.lastIndexOf('/')+1,
+				fileName = v.split('/');
+
+			fileName = fileName[fileName.length-1].split('.');
+			extName = '.' + fileName[1];
+			fileName = fileName[0];
+
+			filelen = fileName.length;
+
+			url_path = $url.val().slice(0,beg);
+
+			createDiv();
+
+			addImg(url_path,0);
+
+		}
+
+
+		function addDividNum(indNum){
+
+			var i = 0,
+				end = parseInt(indNum),
+				createNum,
+				total = 0;
+
+			while(total <= end){
+				total += defaultDivNum;
+			}	
+
+			createNum = total - dividNum;
+
+			if(createNum <= 0){
+				return;
+			}
+
+			createDiv(createNum);
+		}
+
+
+		function addImg(path,ind) {
+			
+			if(ind > max){
+				return;
+			}
+
+			var len = filelen,
+				StrLen,
+				strV,
+				full,
+				imgEl = document.createElement('img');
+
+			StrLen = String(ind).length;	
+
+			len = len - StrLen;
+			strV = ind;
+
+			if(len > 0){
+				for(;len--;){
+					strV = '0'+strV;
+				}
+			}
+			
+
+			full = path + strV + extName;	
+
+			imgEl.onload = function(){
+
+				if(ind > dividNum){
+					addDividNum(ind);
+				}
+
+				$('#divId'+ind).append(imgEl);
+				//$imgBox.append(imgEl);
+			}
+
+			imgEl.onerror = function(){
+				errTimes--;
+			}
+
+			imgEl.src = full;
+
+			console.log(full);
+
+			addImg(path,++ind);
+
+		}
+		
+
+
+	</script>
+	
+
+
+
+
+
+</body>
+</html>
