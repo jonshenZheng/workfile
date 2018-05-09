@@ -103,6 +103,8 @@ jsp
  	ge  大于等于
  	le  小于等于
 
+   //奇葩的判断 $a = 0.00  表达式 { $a eq 0 } 、{ $a eq 0.00} 结果都未false ,改为le就可以
+
 
    判断列表为空
       <c:if test="${empty list}">

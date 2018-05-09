@@ -23,9 +23,13 @@
 
 	<script>
 
-		// 如果是要覆盖 只提供一个数据源参数就行
+
+		// 如果是要覆盖 只提供一个数据源参数就行(已完成)
 		//
-		//缺少的功能 1：更新（没有的属性就加上，同名的属性就更新） 2，添加（没有的属性就加上，同名的属性就保留原有的值）
+		//缺少的功能 1.添加（没有的属性就加上，同名的属性就保留原有的值） (已完成)
+		//			 2.浅拷贝 (已完成)
+		//			 3. 目前是 变量1 = copyObj（变量1，变量2） 改为 copyObj（变量1，变量2）这种形式
+
 
 
 		var testData1 = {
@@ -44,7 +48,58 @@
 					]
 				}
 			],
+			arr2 : [
+				4,
+				{
+					e : 1000,
+					f : [
+						'tt',
+					]
+				},
+				'ss'
+			],
 			obj : {
+				g : 10,
+				h : [
+					11,
+					12,
+					{
+						j : 'kk',
+						k : 222
+					}
+				]
+			},
+			obj2 : {
+				n : 100,
+				q : [
+					12,
+					{
+						j : 'llk',
+						k : 222
+					}
+				]
+			}
+		},
+		testData_c = {
+			a : 1,
+			b:666,
+			c:3,
+			arr : [
+				4,
+				5,
+				{
+
+					f : [
+						888,
+						9,
+						{
+							cc : 'zzz'
+						}
+					]
+				}
+			],
+			obj : {
+				bb : [1,2],
 				g : 10,
 				h : [
 					11,
@@ -93,20 +148,179 @@
 		var objToStr = Object.prototype.toString; 
 
 		function isObject(o){
-			return objToStr.call() === '[object Object]';
+			return objToStr.call(o) === '[object Object]';
 		}
 
 		function isArray(o){
-			return objToStr.call() === '[object Object]';
+			return objToStr.call(o) === '[object Array]';
+		}
+
+		function isBoolean(o){
+			return objToStr.call(o) === '[object Boolean]';
 		}
 
 
-		temp = copyObj(testData2);
+		copyObj(testData_c,testData1);
 
-		console.log(temp);
+		testData1.obj2.n = 200;
+		testData1.obj2.q[1].k = 333;
+
+		console.log(testData_c);
 
 
-		function copyObj(o){
+		function copyObj(o1,o2,isDeep){
+
+			function lcp(o1,o2){
+				if(isObject(o1) && isObject){
+
+				}
+			}
+
+			function dcp(o1,o2,isDeep){
+			
+				var newO = {},
+					key,
+					copyO,
+					Deep = true,
+					parmNum = arguments.length,
+					isArr = false;
+
+
+				if(parmNum >= 2){
+
+					if(isBoolean(o2)){
+						if( isArray(o1) ){
+							newO = [];
+						}
+						copyO = o1;
+						Deep = o2;
+					}
+					else{
+
+						if( isArray(o2) ){
+							newO = [];
+						}
+						copyO = o2;
+						if(parmNum === 3){
+							Deep = isDeep;
+						}
+
+					}
+
+				}
+				else{
+					if( isArray(o1) ){
+						newO = [];
+					}
+					copyO = o1;
+				}	
+
+
+				for(key in copyO){
+
+					if(parmNum >= 2 && o1[key]){
+						newO[key] = o1[key];
+						continue;
+					}
+
+					if( (isObject( copyO[key] ) || (isArr = isArray( copyO[key] )) ) && Deep ){
+						newO[key] = copyObj(copyO[key]);
+					}
+					else{
+						newO[key] = copyO[key];
+					}
+
+				}
+
+				return newO;
+			}
+
+			var parmCount = arguments.length,
+				temp;
+
+			if(parmCount === 0){
+				return;
+			}	
+			else if(parmCount === 1){
+
+			}
+
+
+			switch(parmCount){
+				case 1: return cp(o1);
+					break;	
+				case 2: temp = cp(o1,o2); cp(o1,temp,false); return o1;
+					break;
+				case 3: temp = cp(o1,o2,isDeep); cp(o1,temp,false); return o1;
+					break;	
+			}
+
+		}
+
+
+		/*function copyObj(o1,o2,isDeep){
+			
+			var newO = {},
+				key,
+				copyO,
+				Deep = true,
+				parmNum = arguments.length,
+				isArr = false;
+
+
+			if(parmNum >= 2){
+
+				if(isBoolean(o2)){
+					if( isArray(o1) ){
+						newO = [];
+					}
+					copyO = o1;
+					Deep = o2;
+				}
+				else{
+
+					if( isArray(o2) ){
+						newO = [];
+					}
+					copyO = o2;
+					if(parmNum === 3){
+						Deep = isDeep;
+					}
+
+				}
+
+			}
+			else{
+				if( isArray(o1) ){
+					newO = [];
+				}
+				copyO = o1;
+			}	
+
+
+			for(key in copyO){
+
+				if(parmNum >= 2 && o1[key]){
+					newO[key] = o1[key];
+					continue;
+				}
+
+				if( (isObject( copyO[key] ) || (isArr = isArray( copyO[key] )) ) && Deep ){
+					newO[key] = copyObj(copyO[key]);
+				}
+				else{
+					newO[key] = copyO[key];
+				}
+
+			}
+
+			return newO;
+		}*/
+
+
+
+
+		/*function copyObj(o){
 
 			var newO = {},
 				//newA = [],
@@ -120,21 +334,16 @@
 			for(key in o){
 
 				if( isObject( o[key] ) || (isArr = isArray( o[key] )) ){
-
 					newO[key] = copyObj(o[key]);
-
 				}
 				else{
 					newO[key] = o[key];
 				}
 
-
-
 			}
 
 			return newO;
-
-		}
+		}*/
 
 
 
