@@ -1,0 +1,143 @@
+/* pages/totalsolution/totalsolution.wxss */
+@import '../common/common.wxss';
+
+.warmTips{
+    margin-top: 30%;
+    text-align: center;
+    font-size: 30rpx;
+    color: #999;
+}
+
+.layout{
+    padding: 0 20rpx;
+}
+
+.videoBox{
+    width: 748.8rpx;
+    height: 424rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/pic_fullSerive_mainPicture.png);
+    background-size: 100% 100%;
+    padding-top: 10rpx;
+}
+
+.videoBox .video,.videoBox video{
+    width: 620rpx;
+    height: 376rpx;
+    margin: 0 auto;
+}
+
+.MainTilBox{
+    padding: 32rpx 0;
+    text-align: center;
+    font-size: 34rpx;
+    color: #1a191f;
+    font-weight: bold;
+}
+
+.formTil{
+    font-size: 26rpx;
+    color: #333;
+    margin-bottom: 20rpx;
+}
+
+.formTil .red{
+    color: #ff0000;
+}
+
+.mg-b{
+    margin-bottom: 35rpx;
+}
+
+.mg-t{
+    margin-top: 35rpx;
+}
+
+.phoneInp{
+    display: block;
+    border: 1px solid #cecccd;
+    background-color : #fff;
+    border-radius:12rpx;
+    font-size:24rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding-left: 20rpx;
+}
+
+.multOptBox{
+    margin-bottom: 12rpx;
+}
+
+.multOptBox .opt{
+    display: inline-block;
+    width: 140rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+    color: #8a8a8a;
+    margin:0 28rpx 23rpx 0;
+    border:1px solid #c2c0c2;
+}
+
+.multOptBox .opt.active{
+    background-color: #4f84c4;
+    border-color: #4f84c4;
+    color: #fff;
+}
+
+
+.uploadImgBox{
+    margin-bottom: 6rpx;
+}
+
+.uploadImgBox .box{
+    float: left;
+    margin: 0 40rpx 30rpx 0;
+    position: relative;
+}
+
+.uploadImgBox .box .delIco{
+    position: absolute;
+    right: -30rpx;
+    top: -20rpx;
+    width: 50rpx;
+    height: 50rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/pic_fullSerive_delImgBtn.png);
+    background-size: 100% 100%;
+}
+
+.uploadImgBox .imgBox{
+    width: 102rpx;
+    height: 102rpx;
+    border: 1px solid #dfdfdf;
+}
+
+.uploadImgBox .imgBox image{
+    width: 100%;
+    height: 100%;
+}
+
+.uploadImgBox .addImgBtn{
+    width: 102rpx;
+    height: 102rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/pic_fullSerive_addImgBtn.png);
+    background-size: 100% 100%;
+}
+
+.uploadImgBox .addImgBtn.hide{
+    display: none;
+}
+
+.subFormBtn{
+    width: 100%;
+    height: 102rpx;
+    line-height: 102rpx;
+    background-color: #4f84c4;
+    font-size: 32rpx;
+    color: #fff;
+}
+
+.bot-padding{
+    padding-bottom: 30rpx;
+}

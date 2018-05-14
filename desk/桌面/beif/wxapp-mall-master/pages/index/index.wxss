@@ -1,0 +1,454 @@
+@import '../common/common.wxss';
+.layout{padding: 0 20rpx;}
+swiper {
+    /*height: 421.5rpx;*/
+}
+swiper-item image {
+    width: 100%;
+    height: 100%;
+}
+
+.newest-title{
+    font-size: 30rpx;
+    padding:30rpx 20rpx 10rpx;
+    height: 40rpx;
+    color: #999;
+    padding-botom: 6rpx;
+    border-bottom: 2rpx solid #ccc; 
+}
+
+.newest-title .morePD{
+    padding-top: 2rpx;
+    float: right;
+    font-size: 26rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+} 
+
+.select-top-small{
+    width: 375rpx;
+    height: 375rpx;
+    float: left;
+}
+.select-bottom,.select-top{
+    width: 100%;
+    height: 375rpx;
+}
+.select-top-small image,.select-bottom image,.select-top-small navigator,.select-bottom navigator{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.newest-box{
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20rpx;
+    display: flex;
+    flex-flow: row wrap;
+}
+.newest-box .newest-list{
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    height: 460rpx;
+    box-sizing: border-box;
+    border-right: 3px solid #eee;
+    border-bottom: 3px solid #eee;
+    padding: 0 16rpx;
+}
+.newest-box .newest-text.pdName{
+    color: #666;
+    padding-bottom: 6rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.newest-box .newest-text{
+    color: #ccc;
+}
+
+.newest-box .newest-text .type{
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.newest-box .newest-list:nth-child(2n){
+    margin-right: 0;
+    border-right: 0;
+}
+
+.newest-box .newest-list image{
+    width: 344rpx;
+    height: 344rpx;
+    margin: 0rpx 0 10rpx;
+}
+.newest-box .newest-list .newest-text{
+    font-size: 28rpx;
+}
+
+.sereachBox{
+    margin: 30rpx 20rpx;
+}
+
+.sereachBox .sereach{
+    height: 92rpx;
+    position: relative;
+    border:2rpx solid #ccc;
+    border-radius: 10rpx;
+}
+
+.sereachBox input{
+    height: 92rpx;
+    line-height: 92rpx;
+    display: block;
+    margin-right: 210rpx;
+    padding-left: 10rpx;
+}
+
+.sereachBox .imgSereach{
+    position: absolute;
+    right: 150rpx;
+    top:50%;
+    margin-top: -32rpx;
+    width: 64rpx;
+    height: 64rpx;    
+}
+
+.sereachBox button{
+    position: absolute;
+    top: -2rpx;
+    right: -2rpx;
+    height: 96rpx;
+    width: 136rpx;
+    border: 0;
+    background-color: #ccc;
+    color:#fff;
+    border-radius: 0;
+    border-top-right-radius: 10rpx;
+    border-bottom-right-radius: 10rpx;
+}
+
+.sereachBox button::after{
+    display: none;
+}
+
+.hotKey .til{
+    display: block;
+    font-size: 30rpx;
+    color: #999;
+    padding-bottom:6rpx;
+    border-bottom: 2rpx solid #ccc;
+}
+
+.hotKey .hkbox{
+    padding-top: 18rpx;
+}
+
+.hotKey .hkbox text{
+    display: inline-block;
+    font-size: 30rpx;
+    color: #999;
+    background-color:#ccc;
+    border-radius:6rpx;
+    margin: 0 14rpx 18rpx 0;
+    padding: 4rpx 18rpx;
+ 
+}
+
+.useImgToFind{
+    position: fixed;
+    bottom:40rpx;
+    right: 40rpx;
+    width: 284rpx;
+    height: 118rpx;
+    line-height: 108rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/btn_index_picSearch.png);
+    background-size: 100% 100%;
+}
+
+.useImgToFind.useImgToFindOn{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/btn_index_picSearch2.png);
+    background-size: 100% 100%;
+}
+
+.useImgToFind text{
+    font-size: 26rpx;
+    color: #fff;
+    padding-left: 106rpx;
+}
+
+
+.useImgToFind .fl{
+    float: left;
+    width:46rpx;
+    height:40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/camera2.png);
+    background-size: 100% 100%;
+    margin-top: 14rpx;
+}
+
+.useImgToFind .fr{
+    float: left;
+    width: 210rpx;
+    font-size: 24rpx;
+    color: #fff;
+    line-height: 36rpx;
+    padding-left: 10rpx; 
+}
+
+
+.newest-box .line{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2rpx;
+    height: 100%;
+    background-color: #ccc;
+    margin-left: -2rpx;
+}
+
+.newest-box .line2{
+    position: absolute;
+    left: -50%;
+    bottom: 0;
+    height: 2rpx;
+    background-color: #ccc;
+    width: 500%;
+}
+
+.imgcss{
+    height: 0;
+    width: 100%;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/btn_index_picSearch2.png);
+}
+
+.first-page{
+    background-color: #f0f2f5;
+}
+
+.first-page image{
+    display: block;
+    width: 100%;
+}
+
+
+/*.first-page{
+    width: 100%;
+    height: 100%;
+}
+
+.first-page.midSize{
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/pic_index_mainPicture.png') no-repeat #fff;
+    background-size: 100% auto;
+}
+
+.first-page.bigSize{
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/pic_index_mainPicture_large.png') no-repeat #fff;
+    background-size: 100% auto;
+}
+
+*/
+
+.homeSereach{
+    padding: 10rpx 20rpx 30rpx;
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #c2c2c5;
+}
+
+.homeSereach .wp{
+    position: relative;
+}
+
+.homeSereach input{
+    display: block;
+    padding:0 158rpx 0 88rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    border-radius: 16rpx;
+    background-color: #fff;
+    border: 1px solid #d7d8db;
+}
+
+.homeSereach input.hide{
+    visibility: hidden;
+}
+
+.homeSereach icon,.homeSereach button{
+    position: absolute;
+    border: 0;
+}
+.homeSereach button::after{
+    display: none;
+} 
+
+.homeSereach .sereachIco{
+    left: 0;
+    top: 0;
+    height: 88rpx;
+    width: 88rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/ic_index_productSearch.png) no-repeat 20rpx 20rpx;
+    background-size: 48rpx 48rpx;
+}
+
+.homeSereach .sereachImgIco{
+    right: 0;
+    top: 0;
+    height: 88rpx;
+    width: 88rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/ic_index_picSearch.png) no-repeat 15rpx 15rpx;
+    background-size: 64rpx 64rpx;
+}
+
+.baokuang{
+    background-color: #333;
+    height:60rpx;
+    line-height:60rpx;
+    padding: 0 20rpx;
+    color: #fff;
+    border:0;
+}
+
+.baokuanImgBox{
+    padding: 10rpx 20rpx;
+}
+
+.baokuanImgBox .newest-list{
+    padding: 10rpx 0;
+}
+
+.baokuanImgBox image{
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 236.66292rpx;
+}
+
+.showAnimate{
+    position: absolute;
+    left: 50%;
+    bottom: 1%;
+    width: 10%;
+    margin-left: -5%;
+    padding-top: 5.56%;
+    background: url(http://localhost/image/showMorePage.png);
+    background-size: 100% 100%;
+    animation: slideUp 1.6s infinite;
+}
+
+@keyframes slideUp{
+    0%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    25%{
+        opacity: 1;
+    }
+
+    50%{
+        opacity: 1;
+    }
+
+    100%{
+        transform: translateY(-160%);
+        opacity: 0;
+    }
+
+}
+
+
+.indexPop{
+    position:fixed;
+    left: 0;
+    top: 0;
+    width:100%;
+    height:100%;
+}
+
+.indexPop.hide{
+    display: none;
+}
+
+.indexPop .popBg{
+    position:absolute;
+    left: 0;
+    top: 0;
+    width:100%;
+    height:100%;
+    background-color: #000;
+    opacity: 0.5;
+}
+
+.indexPop .close{
+    position: absolute;
+    right: -20rpx;
+    top: -20rpx;
+    width: 60rpx;
+    height: 60rpx;
+    text-align: center;
+    background:url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/indexPopClose.png);
+    background-size: 100% 100%;
+    border-radius: 50%;
+}
+
+
+.indexPop .cent{
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    margin: -168rpx 0 0 -216rpx;
+    width:432rpx;
+    height:336rpx;
+}
+
+
+.indexPop .cent image{
+    display:block;
+    margin:0 auto;
+    width:100%;
+}
+.indexPop .imgwpPop .imgSp{
+    display:block;
+    position:relative;
+    width:70%;
+    margin:0 auto;
+}
+
+.indexPop .ibox2 .popClose{
+    position:absolute;
+    right: -5%;
+    top: -5%;
+    width:16%;
+    padding-top: 16%;
+    background:url(img/closeIco.png);
+    background-size: 100% 100%;
+}
+
+
+.smallHomePop{
+    position: fixed;
+    right: 18rpx;
+    bottom: 12%;
+    width: 120rpx;
+}
+
+.smallHomePop.hide{
+    display: none;
+}
+
+.smallHomePop image{
+    display: block;
+    width: 100%;
+}
+
+
+
+
+
+
+
+

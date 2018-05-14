@@ -1,0 +1,242 @@
+@import '../common/common.wxss';
+
+page{
+    background-color: #eee;
+    position: relative;
+}
+/*.sereachBox{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 82rpx;
+}*/
+.sereachBox .sel-tab{
+    display: -webkit-flex;
+    display: flex;
+    height:74rpx;
+    justify-content : center ;
+    border-bottom:2rpx solid #ccc;
+    position: relative;
+    z-index: 2;
+    background-color: #fff;
+}
+.sereachBox .tab-lb{
+    flex-grow : 1;
+    text-align: center;
+    font-size: 26rpx;
+    color: #999;
+    align-self:center;
+    height:76rpx;
+    line-height:76rpx;
+    width:50%;
+}
+.sereachBox .tab-lb:nth-of-type(n+1){
+    border-right: 2rpx solid #ccc;
+}
+
+.sereachBox .tab-lb.show{
+    color: #333;
+}
+
+.sereachBox .tab-lb.show icon{
+    width: 30rpx;
+    height: 16rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tri_down.png) no-repeat;
+    background-size: 100% 100%;
+    margin-left: 6rpx;
+}
+
+.sereachBox .tab-lb icon{
+    width: 16rpx;
+    height: 30rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tri_right_off.png) no-repeat;
+    background-size: 100% 100%;
+    margin-left: 6rpx;
+    vertical-align: middle;
+    margin-top: -8rpx;
+}
+
+
+.sereachBox .selectArea{
+    position: relative;
+}
+.sereachBox .tab-pan{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    background-color: #f2f2f2;
+    -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+    transform:translateY(-110%);
+	-webkit-transform: translateY(-110%);
+    visibility: hidden;
+    z-index: 1;
+}
+.sereachBox .tab-pan.show{
+    animation: showPan 1s;
+    -webkit-animation: showPan 1s forwards;
+}
+
+@keyframes showPan{
+    from{
+        visibility: visible;
+        transform:translateY(-110%);
+	    -webkit-transform: translateY(-110%);
+    }
+    to{
+        visibility: visible;
+        transform:translateY(0);
+	    -webkit-transform: translateY(0);
+    }
+}
+
+.sereachBox .tab-pan .unit{
+    position: absolute;
+    top: 50%;
+    left: 52rpx;
+    margin-top : -20rpx;
+}
+
+.sereachBox .inp-line:first-child{
+    border-bottom: 2rpx solid #ccc;
+}
+.sereachBox .inp-line{
+    padding: 20rpx 10rpx;
+    text-align: center;
+    position: relative;
+}
+.sereachBox .inp-line input,.sereachBox .inp-line text{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.sereachBox .inp-line input{
+    width: 128rpx;
+    height: 64rpx;
+    border: 2rpx solid #ccc;
+    background-color: #fff;
+    font-size:30rpx;
+}
+
+.sereachBox .inp-line .sp{
+    margin:0 30rpx;
+}
+
+.sereachBox .btnBox .sel-btn{
+    width: 128rpx;
+    height: 64rpx;
+    line-height: 64rpx;
+    border-radius: 6rpx;
+    margin: 0 40rpx;
+    display: inline-block;
+    border: 0;
+    vertical-align: middle;
+    font-size: 32rpx;
+}
+
+.sereachBox .btnBox .cancle{
+    background-color: #ccc;
+    color: #999;
+}
+
+.sereachBox .btnBox .sel-btn::after{
+    display: none;
+}
+
+.sereachBox .btnBox .sel-btn.button-hover{
+    background-color: #eceaea;
+}
+
+.reserBox{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 76rpx;
+    bottom: 0;
+    /*display: flex;
+    display: -webkit-flex;
+    flex-flow : row wrap;*/
+}
+
+.reserBox .ajustbox{
+    min-height: 100%;
+    /*padding: 0 20rpx;*/
+    overflow: hidden;
+    /*margin-top: -86rpx;*/    
+}
+
+/*.reserBox .ajustbox .realbox{
+    padding: 86rpx 20rpx 0;
+}*/
+
+.realbox{
+    display: block;
+    width: 110%;
+}
+
+.reserBox .pd_it{
+    width: 29.6%;
+    flex: 1;
+    padding: 20rpx;
+    box-sizing: border-box;
+    float: left;
+    background-color: #fff;
+    margin-right:1%;
+    margin-bottom:1%;
+}
+
+.reserBox .pd_it:nth-of-type(3n){
+    margin-right: 0;
+}
+
+
+
+
+
+.reserBox .imgwp{width: 100%}
+
+.reserBox image{
+    width: 204rpx;
+}
+
+.reserBox .imgwp,.reserBox image{
+    height: 204rpx;
+}
+
+.reserBox .pdname{
+    padding: 10rpx 0 4rpx;
+    color: #666;
+    font-size:30rpx;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.reserBox .price{
+    font-size: 26rpx;
+    display: block;
+    overflow: hidden;
+}
+
+.no-data{
+    padding:40rpx 0;
+    color: #999;
+    text-align: center;
+}
+
+.danwei{
+    color:#999;
+    font-size:28rpx;
+    padding-top:20rpx;
+    width:540rpx;
+    margin:0 auto;
+}
+
+
+
+
+
+
+

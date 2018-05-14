@@ -1,0 +1,5 @@
+@import '../search/search.wxss';
+
+.reserBox{
+    top:0 !important;
+}

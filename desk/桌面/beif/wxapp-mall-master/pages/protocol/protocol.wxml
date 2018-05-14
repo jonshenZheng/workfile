@@ -1,0 +1,5 @@
+<!--page/component/protocol/protocol.wxml-->
+<view class='wp'>
+    <view class='title'>{{protocol.title}}</view>
+    <view class='content'>{{protocol.content}}</view>
+</view>

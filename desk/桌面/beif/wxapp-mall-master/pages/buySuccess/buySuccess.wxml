@@ -1,0 +1,22 @@
+<!--page/component/buySuccess/buySuccess.wxml-->
+<view class='buySuccese'>
+
+    <block wx:if="{{Pagetype === '全套服务'}}">
+        <icon type='success_no_circle' size='100'></icon>
+        <view class='tips' style="font-size:40rpx;color:#333;margin-top:-44rpx;padding-bottom:40rpx">提交成功</view>
+        <view class='tips' style="color:#a0a0a0">我们将在3个工作日内联系您，请耐心等待~</view>
+        <view class='tips'><navigator open-type="switchTab" url="../index/index" style="color:#489af7" >返回首页></navigator></view>
+    </block>
+
+    <block wx:elif="{{Pagetype === '下订单'}}">
+        <icon type='success' size='100'></icon>
+        <view class='tips'>下单成功!</view>
+        <view class='tips'>我们的客服将会在1个工作日内联系您！</view>
+        <view class='tips'>客服热线：<text class='pnum' bindtap='connectUs'>{{phoneNum}}</text></view>
+
+        <view class='moreInfo'><text>更多资讯</text></view>
+        <!--<image src=''></image>-->
+    </block>
+
+    
+</view>

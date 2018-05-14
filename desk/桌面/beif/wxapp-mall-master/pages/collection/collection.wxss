@@ -1,0 +1,267 @@
+@import '../common/common.wxss';
+
+page{
+    background-color: #f0f2f5;
+}
+.colBox{
+    background-color: #fff;
+}
+.colBox .cloIt{
+    padding: 20rpx 0 20rpx 0;
+    position: relative;
+    min-height: 100rpx;
+    border-bottom: 2rpx solid #ccc;
+    overflow: hidden;
+}
+
+.colBox .scrollBox{
+    width: 200%;
+    position: relative;
+    /*transform: translateX(0);
+    -webkit-transform: translateX(0);*/
+    transition: transform .4s;
+}
+
+.colBox .scrollBox.show{
+    /*animation: showDel .6s forwards;
+    -webkit-animation: showDel .6s forwards;*/
+    transform: translateX(-86rpx);
+    -webkit-transform: translateX(-86rpx);
+}
+
+@keyframes showDel{
+    form{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-86rpx);
+    }
+}
+
+@-webkit-keyframes showDel{
+    form{
+        -webkit-transform: translateX(0);
+    }
+    to{
+        -webkit-transform: translateX(-86rpx);
+    }
+}
+
+.colBox .scrollBox .oriWid{
+    width: 50%;
+    position: relative;
+}
+
+.colBox .scrollBox .oriWid navigator{
+    margin-right: 86rpx;
+}
+
+.colBox .scrollBox .realdelBtn{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    background-color: #f00;
+    color: #fff;
+    font-size:30rpx;
+    width: 86rpx;
+    text-align: center;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+.colBox .selBtn{
+    position: absolute;
+    top: 50%;
+    left: 20rpx;
+    margin-top: -26rpx;
+    width: 40rpx;
+    height: 40rpx;
+    border: 1px solid #797979;
+    border-radius:50%;
+
+}
+
+.colBox .selBtn.on{
+    border-color: #1ba2e8;
+    background-color :#1ba2e8;
+}
+
+.colBox .cloIt .imgwp{
+    position: absolute;
+    left : 20rpx;
+    top : 0;
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.colBox .imgwp .status{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 36rpx;
+    width: 100%;
+}
+
+.colBox .imgwp .status .bg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    opacity: 0.7;
+}
+.colBox .imgwp .status text{
+    position: relative;
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-size: 22rpx;
+    line-height: 36rpx;
+}
+
+.colBox .cloIt image{
+    max-width: 100rpx;
+    max-height: 100rpx;
+    display: block;
+}
+
+.colBox .right-info{
+    margin: 0 20rpx 0 150rpx;
+    position: relative;
+    min-height: 100rpx;
+}
+
+.colBox .cloIt .gdName{
+    font-size: 30rpx;
+    color: #666;
+    display: block;margin-right: 100rpx;
+}
+
+.colBox .cloIt .gdDec{
+    font-size: 28rpx;
+    color: #666;
+    min-height: 20rpx;
+    display: block;
+}
+
+.colBox .cloIt .gdPrice{
+    font-size: 26rpx;
+}
+
+.colBox .cloIt .gdNum{
+    font-size: 38rpx;
+    color: #666;
+    position:absolute;
+    right:0;
+    top:50%;
+    margin-top:-26rpx;
+
+}
+.textHide{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.colBox .cloIt .delBtn{
+    position: absolute;
+    right: 20rpx;
+    top: 0;
+    width: 36rpx;
+    height: 36rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/popup-close.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.mian .footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 116rpx;
+    border-top:2rpx solid #ccc;
+    background-color: #fff;
+}
+
+.mian .footer .selAllBtn{
+    position: absolute;
+    width: 100rpx;
+    text-align: center;
+}
+
+.mian .footer .selAllBtn icon{
+    display: block;
+    margin:16rpx auto 0;
+    width: 40rpx;
+    height: 40rpx;
+    border: 1px solid #797979;
+    border-radius:50%;
+}
+
+.mian .footer .selAllBtn icon.on{
+    border-color: #1ba2e8;
+    background-color: #1ba2e8;
+}
+
+.mian .footer .selAllBtn text{
+    font-size: 30rpx;
+    color: #999;
+}
+
+.mian .footer .selInfo{
+    font-size: 30rpx;
+    color: #999;
+}
+
+.mian .footer .addCartBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 230rpx;
+    text-align: center;
+    height: 116rpx;
+    line-height: 116rpx;
+    font-size: 38rpx;
+    color: #fff;
+    background-color:#999;
+
+}
+
+.mian .footer .selInfo{
+    margin: 0 240rpx 0 96rpx;
+    height: 116rpx;
+    text-align: right;
+    font-size: 30rpx;
+    color:#999; 
+    padding-top: 38rpx;
+}
+
+.mian .footer .cnum{
+    font-size: 42rpx;
+    color: #666;
+    padding: 0 8rpx;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2rpx;
+}
+
+.no-data{
+    padding:40rpx 0;
+    color: #999;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+

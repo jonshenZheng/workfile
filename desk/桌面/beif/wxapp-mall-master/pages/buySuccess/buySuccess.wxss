@@ -1,0 +1,41 @@
+/* page/component/buySuccess/buySuccess.wxss */
+
+.buySuccese{padding-top: 100rpx;text-align: center}
+
+.buySuccese icon{
+    margin-bottom: 40rpx;
+}
+
+.buySuccese .tips{
+    font-size: 30rpx;
+    color: #666;
+    padding: 10rpx 0;
+}
+
+.buySuccese image{
+    display: block;
+    margin: 60rpx auto;
+    width: 300rpx;
+    height: 300rpx;
+}
+
+.buySuccese .pnum{
+    color: #199ED8;
+}
+
+.buySuccese .moreInfo{
+    margin-top: 70rpx;
+    border-top: 2rpx solid #ccc;
+}
+
+.buySuccese .moreInfo text{
+    display: block;
+    padding: 4rpx 0;
+    background-color: #fbf9fe;
+    color: #ccc;
+    font-size: 30rpx;
+    margin: -28rpx auto 0;
+    width: 200rpx;
+    text-align: center;
+}
+

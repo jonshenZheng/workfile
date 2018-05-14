@@ -1,0 +1,93 @@
+<!--page/component/sereach/sereach.wxml-->
+
+<import src="../common/component.wxml"/>
+
+<view class='sereachBox'>
+
+    <!--<view class='selectArea'>
+                    
+        <view class='sel-tab'>
+            <view class="tab-lb" data-ind="0" bindtap='showpanFn'>价格区间<icon class='icon'></icon></view>
+            <view class="tab-lb" data-ind="1" bindtap='showpanFn'>规格<icon class='icon'></icon></view>
+        </view>
+        <block wx:for="{{showpanCt}}" wx:for-index="pani" wx:for-item="panO" wx:key="index_pn" >
+
+            <block wx:if="{{ 0 == pani}}">
+                <view class="{{'tab-pan '+panO.isshow}}">
+                    <form  bindsubmit="formSubmitFn2" bindreset="hidepanFn" data-ind="0">
+                        <view class='inp-line'>
+                            <text class='unit'>￥</text>
+                            <input name="minPriceV" placeholder='最低价' data-ind='0' value='{{minPrice}}' bindblur='sortPrice' type="digit" auto-focus=''></input>
+                            <text class='sp'>-</text>
+                            <input name='maxPriceV' placeholder='最高价' data-ind='1' value='{{maxPrice}}' bindblur='sortPrice' type="digit" ></input>
+                        </view>
+                        <view class='inp-line btnBox'>
+                            <button class="sel-btn" formType="reset">取消</button>
+                            <button class="sel-btn gray" formType="submit">确定</button>
+                            
+                        </view>
+                    </form>
+                </view>
+            </block>
+        
+            <block wx:else>
+                <view class="{{'tab-pan '+panO.isshow}}">
+                    <form  bindsubmit="formSubmitFn2" bindreset="hidepanFn" data-ind="1">
+                        <view class='danwei'>单位：毫米</view>
+                        <view class='inp-line'>
+                            <input name='lengthV' type="digit" placeholder='长度' auto-focus=''></input>
+                            <text class='sp'>-</text>
+                            <input name='widthV'  type="digit" placeholder='宽度'></input>
+                            <text class='sp'>-</text>
+                            <input name='heightV'  type="digit" placeholder='高度'></input>
+                        </view>
+                        <view class='inp-line btnBox'>
+                            <button class="sel-btn" formType="reset">取消</button>
+                            <button class="sel-btn gray" formType="submit">确定</button>
+                        </view>
+                    </form> 
+                </view>
+            </block>
+        
+        </block>
+
+    </view>-->
+
+    <!--<template is="sereachList" data="{{goodsList:goodsList,baseImgUrl : baseImgUrl}}"></template>--> 
+
+    <scroll-view wx:if="{{goodsList.length}}" class='reserBox' scroll-y="true" bindscrolltolower="upload">  
+
+        <view class='ajustbox'>  
+            <view class='realbox'>
+
+                <block wx:for="{{goodsList}}" wx:for-index="idx" wx:key="key">
+                    <navigator url="{{'../details/details?prodId='+item.prodId}}" class='pd_it'>
+                        <view class='it' wx:key="key">
+                            <view class='imgwp'>
+                                <image src="{{item.path}}" data-imgind="{{idx}}" binderror='onimgfail'></image>
+                            </view>
+                            <view class='pdname'>{{item.prodName}}</view>
+                            <text class='price mainColor'>￥{{item.price}}</text> 
+                        </view>
+                    </navigator>
+                </block>
+
+            </view>
+            
+        </view>
+
+        <view class="weui-loadmore" wx:if="{{goodsList.hasMore}}">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+        <view wx:else class="weui-loadmore">
+            <text class="weui-loadmore__tips">已无更多产品</text> 
+        </view>
+
+    </scroll-view>
+    <view wx:else>
+        <view class="no-data">加载中..</view>
+    </view>
+
+    
+</view>

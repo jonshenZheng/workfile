@@ -1,0 +1,84 @@
+
+<view class="mian">
+
+    <block wx:if="{{carts.length > 0}}">
+
+        <view class='colBox'>
+
+            <view class='cloIt' data-ind='{{colInd}}' bindtouchstart='tstart' bindtouchend='tend' wx:for="{{carts}}" wx:key="unique" wx:for-index="colInd" wx:for-item="colItem" >
+                <view class='scrollBox {{colItem.isShowDel}}'> 
+
+                    <view class='oriWid'>
+                        <icon class="selBtn {{colItem.selected}}" data-index='{{colInd}}' bindtap='selectGoodsInCart'></icon>
+                            <navigator url="../details/details?skuId={{colItem.skuId}}&prodId={{colItem.produceId}}">
+                                <view class='imgwp'>
+                                    <image mode="widthFix" binderror='onimgfail' data-imgind="{{colInd}}" src="{{colItem.imgUrl}}"></image>
+                                    <view class='status' wx:if="{{colItem.prodStatus}}">
+                                        <view class='bg'></view>
+                                        <text>{{colItem.prodStatus}}</text>
+                                    </view>
+                                </view>
+                            </navigator>
+                            <view class='right-info'>
+                                <navigator url="../details/details?skuId={{colItem.skuId}}&prodId={{colItem.produceId}}">
+                                    <text class='gdName textHide'>{{colItem.produceName}}</text>
+                                </navigator>
+                                <text class='gdDec'>{{colItem.property}}</text>
+                                <text class='gdPrice mainColor'>￥{{colItem.price}}</text>
+                                
+                            </view>
+                         
+                        <!--<icon class='delBtn' bindtap='delItemFn' data-ind='{{colInd}}'></icon>-->
+                        <view class="cart-count-box">
+                            <text class="cart-count-down {{colItem.curDisabled}}" bindtap="changeQuantity" data-change="-1" data-id="{{colItem.id}}" data-index="{{colInd}}">-</text>
+                            <!--<text class="cart-count-num">{{colItem.count}}</text>-->
+                            <view class="num-input">
+                                <input type="number" value="{{colItem.count}}" data-arrind='{{colInd}}' bindinput='limitNum' />
+                            </view>
+                            <text class="cart-count-add {{colItem.addDisabled}}" bindtap="changeQuantity" data-change="1" data-id="{{colItem.id}}" data-index="{{colInd}}">+</text>
+                        </view>
+                    </view>
+                    <view class='realdelBtn' data-ind="{{colInd}}" bindtap='delDataItemFn'>
+                        <text>删除</text>
+                    </view>
+                
+                </view>
+                
+            </view>
+
+            
+    
+        </view>
+
+    </block>
+    <view wx:else>
+        <view class="cart-no-data">购物车空空如也..</view>
+    </view>
+
+    <view class='footer'>
+        <view class="selAllBtn" bindtap='selectAll'>
+            <icon class='{{allSelected}}'></icon>
+            <text>全选</text>
+        </view>
+        <view class="selInfo" hidden="{{noSelect}}">
+            <view class='r1'>总计<text class='cnum1 mainColor'>{{totalPrice}}</text>元</view>
+            <view class='r2'>共<text class='cnum2'>{{selNum}}</text>件家具</view>
+        </view>
+        <form bindsubmit="placeOrder" report-submit="true">
+            <button class="addCartBtn {{(noSelect?'':'on ')+btnff}}" form-type="submit">下订单</button>
+            <!--<view class="addCartBtn {{(noSelect?'':'on ')+btnff}}" bindtap="placeOrder"  data-cname='addCartBtnOn' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn' >下订单</view>-->
+        </form>
+        
+    </view>
+
+</view>
+<view class='bindPhone' wx:if="{{showBindPhone}}">
+    <view class='bg'></view>
+    <view class='cent'>
+        <view class='til'>需要绑定手机号才能下单</view>
+        <view class="btnbx">
+            <text class='cancle' bindtap='hideBindPhone'>取消</text>
+            <button class='mainBgColor' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNum">绑定</button>
+        </view>
+    </view>
+</view>

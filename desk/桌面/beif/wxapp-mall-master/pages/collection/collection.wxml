@@ -1,0 +1,54 @@
+<view class="mian">
+
+    <view class='colBox'>
+
+        <view class='cloIt' data-ind='{{colInd}}' bindtouchstart='tstart' bindtouchend='tend' wx:for="{{coloData}}" wx:key="unique" wx:for-index="colInd" wx:for-item="colItem" >
+            <view class='scrollBox {{colItem.isShowDel}}'>
+
+                <view class='oriWid'>
+                    <navigator url="{{'../details/details?prodId='+colItem.produceId}}">
+                        <!--<icon class="selBtn {{colItem.isSel}}" data-ind='{{colInd}}' bindtap='selOneFn'></icon>-->
+                        <view class='imgwp'>
+                            <image mode="aspectFit" data-imgind="{{colInd}}" binderror='onimgfail' src="{{colItem.icon}}"></image>
+                            <view class='status' wx:if="{{colItem.prodStatus}}">
+                                <view class='bg'></view>
+                                <text>{{colItem.prodStatus}}</text>
+                            </view>
+                        </view>
+                        <view class='right-info'>
+                            <text class='gdName textHide'>{{colItem.produceName}}</text>
+                            <text class='gdDec'></text>
+                            <text class='gdPrice mainColor'>￥{{colItem.price}}</text>
+                            <!--<icon class='delBtn' bindtap='delItemFn' data-ind='{{colInd}}'></icon>-->
+                        </view>
+                    </navigator>
+                    <!--<icon class='delBtn' bindtap='delItemFn' data-ind='{{colInd}}'></icon>-->
+                </view>
+                <view class='realdelBtn' data-ind='{{colInd}}' bindtap='delDataItemFn'>
+                    <text>删除</text>
+                </view>
+            
+            </view>
+            
+        </view>
+
+        
+ 
+    </view>
+
+    <view wx:if="{{!coloData.length}}" class="no-data">暂无收藏</view>
+
+    <!--<view class='footer'>
+        <view class="selAllBtn" bindtap='selAllFn'>
+            <icon class='{{isSelALL}}'></icon>
+            <text>全选</text>
+        </view>
+        <view class="selInfo">
+            总计<text class='cnum'>{{totalMoney}}</text>元, 共<text class='cnum'>{{selNum}}</text>家具
+        </view>
+        <view class="addCartBtn" bindtap='addCartFn'>加入购物车</view>
+    </view>-->
+
+
+
+</view>

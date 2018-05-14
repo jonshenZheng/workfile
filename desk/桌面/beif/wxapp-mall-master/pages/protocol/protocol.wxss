@@ -1,0 +1,18 @@
+/* page/component/protocol/protocol.wxss */
+.wp{
+    padding: 0 20rpx;
+}
+.title{
+    text-align: center;
+    color: #333;
+    font-size: 40rpx;
+    padding: 40rpx 0 28rpx;
+}
+
+.content{
+    font-size: 30rpx;
+    color: #333;
+    text-indent: 60rpx;
+    line-height: 52rpx;
+    text-align: justify;
+}

@@ -1,0 +1,35 @@
+<view class="main">
+    <view class='imageBox'>
+        <image class="bgimg" src="../../image/userHeadBg.png" mode='widthFix'></image>
+        <view class="headbox flex_cen">
+            <view class='userInfoWp'>
+                <image src="{{thumb}}" class="thumb"></image>
+                <text class="nickname">{{nickname}}</text>
+            </view>
+        </view>
+    </view>
+
+    <view class='listbox'>
+    
+        <view class='list'>
+            <navigator url='../orders/orders'>
+                <view class="icowp"><icon class='ico1'></icon></view><text>我的订单</text><icon class='tri_rig'></icon>    
+            </navigator>
+        </view>
+        <view class='list'>
+            <navigator url='../collection/collection'>
+                <view class="icowp"><icon class='ico2'></icon></view><text>我的收藏</text><icon class='tri_rig'></icon>    
+            </navigator>
+        </view>
+
+    </view>
+
+    <view class='listbox'>
+        <button open-type="contact" session-from="weapp" class='list' style="display:block;"> 
+            <view class="icowp"><icon class='ico3'></icon></view><text>在线客服</text><icon class='tri_rig'></icon>
+        </button>
+        <view class='list' bindtap='callkf'><view class="icowp"><icon class='ico4'></icon></view><text>客服热线</text><icon class='tri_rig'></icon></view>
+
+    </view>
+   
+</view>

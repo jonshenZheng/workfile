@@ -1,0 +1,96 @@
+<view class='first-page {{windowSize}}'>
+    <image src='{{firstImgSrc}}' mode='widthFix'></image>
+    <!-- <icon class="showAnimate"></icon> -->
+</view>
+<view class="main">
+    <view class='homeSereach'>
+        <view class='wp'>
+            <form bindsubmit="search">  
+                <button form-type='submit' class='sereachIco'></button>        
+                <input class="{{hidesereachClass}}" placeholder='搜索商品' bindconfirm="search" confirm-type="search" name="sereachText"/>
+                <icon class='sereachImgIco' bindtap='onTapSearchImageButton'/>
+            </form>
+        </view>
+    </view>
+    <swiper indicator-dots="true" autoplay="true" interval="{{interval}}" duration="{{duration}}" circular="true">
+        <block wx:for="{{promotions}}" wx:key="{{index}}">
+            <swiper-item>
+                <image src="{{item.imgUrl}}" binderror='onimgfail' data-objname='promotions' data-imgind="{{index}}" class="slide-image" width="100%" data-uri="{{item.uri}}" bindtap='onTapCtrlProtoUri'/>
+            </swiper-item>
+        </block>
+    </swiper>
+    <view class='imgcss'></view>
+    <!-- <navigator url='../register/register'>注册</navigator>-->
+    <!--<view class="sereachBox">
+        <view class='sereach'>
+            <input  bindinput="bindKeySearchInput" placeholder="" maxlength="24" confirm-type="search"/>
+            <image class='imgSereach' src="../../image/camera.png" bindtap='onTapSearchImageButton'></image>  
+            <button bindtap="search">搜索</button>  
+        </view>
+      
+    </view>-->
+    <!--<view class='layout hotKey'>
+        <text class='til'>热门搜索</text>
+        <view class='hkbox'>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+            <text>大班椅</text>
+
+        </view>
+    
+    </view>-->
+
+    <view class="newest">
+        <view class="newest-title baokuang">
+            <text>爆款推荐</text>
+            <text class="morePD" bindtap='intocateg'>更多产品></text>
+        </view>
+        <!--<view class="newest-box">
+            <view class="newest-list" wx:for="{{recommend}}" wx:key="recKey" wx:for-item="recItem">  
+                <navigator url="../details/details?prodId={{recItem.prodId}}&skuId={{recItem.skuId}}">
+                    <image src="{{recItem.pic}}"  data-imgind="{{index}}" binderror='onimgfail' data-objName='recommend'></image>
+                    <view class="newest-text pdName"><text>{{recItem.prodName}}</text></view>
+                    <view class="newest-text"><text class='type'>品类：{{recItem.prodTypeName}}</text></view>
+                </navigator>
+            </view>
+            
+        </view>-->
+        <view class='baokuanImgBox'>
+            <view class="newest-list" wx:for="{{recommend}}" wx:key="recKey" wx:for-item="recItem">  
+                <navigator url="../details/details?prodId={{recItem.prodId}}&skuId={{recItem.skuId}}">
+                    <image mode='widthFix' src="{{recItem.pic}}"  data-imgind="{{index}}" binderror='onimgfail' data-objName='recommend'></image>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class='smallHomePop {{smPopHideClass}}'>
+    <image data-uri="{{homePopUri}}" bindtap='onTapCtrlProtoUri' src='{{PopImgSrc_small}}' mode='widthFix'></image>
+</view>
+
+<view class='indexPop {{popHideClass}}'>
+    <view class='popBg'></view>
+    <view class='cent'>
+        <icon class='close' bindtap='closeBigPopFn'></icon>
+        <view class='ibox'>
+            <image src='{{PopImgSrc_big}}' mode='widthFix' data-uri="{{homePopUri}}" bindtap='onTapCtrlProtoUri' ></image>
+        </view>
+    </view>
+</view>
+
+<!--<view class='useImgToFind {{btnff}}' bindtap='onTapSearchImageButton' data-cname='useImgToFindOn' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn' >
+    <text>以图搜产品</text>
+</view>-->
