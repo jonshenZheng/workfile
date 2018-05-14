@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>产品库</title>
+    
+    <base href="../../" />
+	<meta http-equiv="expires" content="0">  
+	<link href="common/css/console.css" rel="stylesheet">
+	<link href="common/css/iframhome.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="common/js/respond.min.js"></script>
+	    <![endif]-->
+	<!-- Bootstrap end--> 
+	<style>
+		body{
+			background-color: #f5f5f5;
+		}
+		.fatorySelect{
+			margin: 0;
+		    outline: none;
+		    box-shadow: none !important;
+		    height: 18px;
+		    line-height: 18px;
+		    padding: 4px 0 4px 5px;
+		    border: 1px solid #cdcdcd;
+		    border-radius: 3px;
+		    box-sizing: content-box;
+		    min-width: 85px;
+		}
+	</style>
+    
+</head>
+	 
+<body class="newProdLib-page">
+
+ 	<div class="locationBox">
+ 		<a href="">首页</a>
+ 		<span>&gt;</span>
+ 		<a href="">产品管理</a>
+ 		<span>&gt;</span>
+ 		<span>产品库</span>
+ 	</div>
+
+ 	<div class="contBox">
+ 		<div class="popBg" id="filterBg"></div>
+ 		<div class="topMune clearfix">
+ 			<div class="topWp">
+	 			<div class="fl category">
+	 				<a class="btnn" id="categoryBtn"><span>全部产品</span><i></i></a>
+	 				<div class="list" id="categoryList">
+	 					<div class="item">
+	 						<a class="it-til goto" onclick="cagrageProd('')">全部产品</a>
+	 					</div>
+	 				</div>
+	 			</div>
+	 			
+	 			<div class="fl searechFrom clearfix">
+	 				<form action="" class="fl">
+	 					<p class="inpWp">
+	 						<input type="text" id="prodName"/>
+	 						<a id="sereachBtn">搜索</a>
+	 					</p>
+	 				</form>
+	 				<a class="prodBySort"><span>价格</span><i></i></a>
+					<a class="prodBySort"><span>尺寸</span><i></i></a>
+					<a class="filterBtn" id="filterBtn">更多选项 ▽</a>
+	 			</div>
+	 			<div class="fr inputProdBtn">
+	 				<a href="html/product/uploadProdWay.html">产品录入</a>
+	 			</div>
+			</div>
+ 			<div class="filterBox" id="filterBox">
+				<div class="scrollBox">
+					<div class="filterlist">
+						<!--<div class="fitem clearfix">
+							<p class="til">产品名称：</p>
+							<div class="opt">
+								<input type="text" class="pdNameInp" />
+							</div>
+						</div>-->
+						<div class="fitem clearfix">
+							<p class="til">规格：</p>
+							<div class="opt">
+								<input type="text" class="" placeholder="长度" id="filter_width"/>
+								<span class="line">——</span>
+								<input type="text" class="" placeholder="宽度" id="filter_depth"/>
+								<span class="line">——</span>
+								<input type="text" class="" placeholder="高度" id="filter_height"/>
+								<span class="unit">mm</span>
+							</div>
+						</div>
+						<div class="fitem clearfix">
+							<p class="til">成本：</p>
+							<div class="opt">
+								<input type="text" class="" placeholder="最低价" id="filter_minPrice"/>
+								<span class="line">——</span>
+								<input type="text" class="" placeholder="最高价" id="filter_maxPrice"/>
+							</div>
+						</div>
+						<div class="fitem clearfix">
+							<p class="til">厂商：</p>
+							<div class="opt">
+								<select class="fatorySelect"  class="form-control" name="" id="factoryName"><option value="">请选择</option><option value="bz_lr">联润</option><option value="bz_ljt">朗捷特</option><option value="bz_mld">玛拉蒂</option><option value="bz_oms">欧美斯</option><option value="bz_hd">华旦</option><option value="bz_yf">雅风</option></select>
+							</div>
+						</div>
+						<div id="filterlist"></div>
+						<!-- <div class="fitem clearfix">
+							<p class="til">颜色：</p>
+							<div class="opt">
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+							</div>
+						</div>
+						<div class="fitem clearfix">
+							<p class="til">材质：</p>
+							<div class="opt">
+								 <label class="opt_lab on-sel"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒绒绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒绒绒绒绒绒绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒绒绒绒绒绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒绒绒</span></label>
+								 <label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>布绒绒</span></label>
+							</div>
+						</div>-->
+						 
+						 
+					</div>
+				</div>
+				<div class="btnBox">
+					<a class="cancle" id="filterCancle_plod">重置</a>
+					<a class="subBtn" id="filterSubBtn_plod">筛选</a>
+				</div>
+			</div>
+ 		</div>
+		<div class="scrollBox">
+			<div class="listBox clearfix" id="listBox">
+				<!-- 一次性出来三十个图片从排版的角度看 -->
+				
+			</div>
+		</div>
+		<div class="pagingBox">
+			<div class="fr wp">
+				<div id="kkpager">
+				</div>
+			</div>
+		</div>
+ 	</div>
+ 
+ 	<script src="common/js/jQuery-2.2.0.min.js"></script>
+ 	<script src="common/js/commonJs.js"></script>
+	<script src="common/js/config.js"></script>
+	<script src="common/js/kkpager.js"></script>
+	<script>
+
+	
+	//价格、尺寸排序
+	var $formSortEl =  $('.searechFrom .prodBySort');
+	
+	$formSortEl.click(function(){
+		
+		var $el = $(this),
+			cname,
+			rname,
+			sort,
+			oInd,
+			name = $el.find('span').html(),
+			isUp = $el.hasClass('showup'),
+			isDown = $el.hasClass('showdown');
+	    
+        if (!isUp && !isDown){
+            //向上
+            cname = 'showup';
+            sort = 'asc';
+        }
+        else if (isUp){
+            //向下
+            cname = 'showdown';
+            rname = 'showup';
+            sort = 'desc';
+        }
+        else if (isDown){
+            //还原
+            cname = '';
+            rname = 'showdown';
+            sort = '';
+        }
+        
+        if( name === '价格' ){
+        	oInd = 1;
+        	formParm.orderByPrice = sort;
+        	formParm.orderByWidth = '';        	
+        	
+        }else{
+        	oInd = 0;
+        	formParm.orderByPrice = '';
+        	formParm.orderByWidth = sort;
+        }
+        
+        if(rname){
+        	$el.removeClass(rname);
+        }
+        
+        if(cname){
+        	$el.addClass(cname);
+        }
+        
+        $formSortEl.eq(oInd).removeClass('showdown showup');
+        
+        filterHandle('sort');
+        
+	});
+	
+	
+	
+	
+	
+	
+	
+	function formatDataForPop(arr){
+		
+		var properties = [],
+			item,
+			optArr,
+			optArr_len,
+			opt_temp,
+			len = arr.properties.length,
+			i=0,
+			i2;
+		
+		for(;i<len;i++){
+			item = {};
+			item['name'] = arr.properties[i].name;
+			optArr = arr.properties[i].values;
+			optArr_len = optArr.length;
+			opt_temp = [];
+			i2 = 0;
+			for(;i2<optArr_len;i2++){
+				opt_temp.push(optArr[i2].name);
+			}
+			item['val'] = opt_temp;
+			properties.push(item);
+		}
+		
+		var data = {
+			name : arr.name,
+			price :arr.selected.price,
+			factoryPrice : arr.selected.factoryPrice,
+			sellPrice : arr.selected.sellPrice,
+			img : arr.selected.pics.length ? arr.selected.pics : ['common/img/noPic.png'],
+			text : properties	
+		};
+		
+		return data;
+		
+	}
+	
+	
+	
+	/*var data = {
+		data : {
+			name : '伯格椅子',
+			price ：100,
+			factoryPrice : 90,
+			sellPrice : 110,
+			img : ['img/temp/u2608.png','img/temp/u2608.png','img/temp/u2608.png'],
+			text : [
+				{name:'c',val : ['1','2','3']},
+			]
+		},
+
+	}*/
+	
+	
+		//产品预览
+		function prevProdInfo(pid){
+			
+			$.ajax({
+				//url : fullPath('prod/'+pid+'/detail'),
+				url : fullPath('prodLib/prod/'+pid+'/detail'),
+				dataType : 'json',
+				headers: { "with-selection": "true" },
+				success : function(r){
+
+					if(r.meta && r.meta.code != 200){
+						return;
+					}
+				
+					var data = {};
+					
+					r.data['pid'] = pid;
+					
+					data.data = r.data;//formatDataForPop(r.data);
+					
+					data.handerType = 'variable';
+					
+					window.top.runFnInHome('iframeHomeMethod.showProdDetailPop',data);
+					//var pop = new showProdDetailPop(data);
+
+				},
+				error : function(){
+					alert('产品预览失败');
+				}
+			});
+			
+		}
+	
+	
+		var pageConfig = {
+				pageSize : 30
+			},
+			filterOptData = [],
+			oldStartPage = '';
+	
+		/* 获取产品分类 */
+			var $categoryList = $('#categoryList');
+			
+			$.ajax({
+				url : fullPath('prod/prodType'),
+				success : function(r){
+					
+					if(r.meta && r.meta.code === 200){
+						randerCagrage(r.data);
+						
+					}
+					else{
+						alert('加载分类失败');
+					}
+				},
+				error : function(){
+					alert('加载分类失败');
+				}
+			});
+					
+			function randerCagrage(data){
+				
+				var tpl = '',
+					len = data.length,
+					len2,
+					type_len = 0,
+					opt_len,
+					child,
+					temp;
+				
+				for(;type_len < len;type_len++){
+					
+					temp = data[type_len];
+					child = temp.children;
+					len2 = child.length;
+					opt_len = 0;
+					
+					tpl += '<div class="item">';
+						tpl += '<a class="it-til showMune">'+temp.name+'</a>';
+						tpl += '<div class="mune">';
+							tpl += '<a class="a_btn goto" onclick="cagrageProd(\''+temp.id+'\')" >全部</a>';
+							
+						for(;opt_len < len2;opt_len++){
+							tpl += '<a class="a_btn goto" onclick="cagrageProd(\''+child[opt_len].id+'\')" >'+child[opt_len].name+'</a>';
+						}
+					
+						tpl += '</div>';
+					tpl += '</div>';							
+					
+				}	
+	
+				$categoryList.append(tpl);
+								
+			}
+	
+		/* 获取产品分类  end*/
+		
+		
+		
+		
+		/*获取产品*/ 
+		
+		var $listBox = $('#listBox'),
+			formParm = {prodTypeId:'',depth:'',heigth:'',width:'',maxMoney:'',minMoney:'',prodName:'',pageSize:''+pageConfig.pageSize,startPage:'1',dynamicCondition:[],orderByPrice : '',orderByWidth : ''};
+		
+		getProdFn();		
+		
+		function getProdFn(cb){
+			var isreset = oldStartPage ? true : oldStartPage !== formParm.startPage ? false : true;
+			$.ajax({
+				url : fullPath('prod/toProducesList'),
+				type:'POST',
+				data : JSON.stringify(formParm),
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(r){				
+					if(r.meta && r.meta.code === 200){
+						randerProd(r.data.prodIntros);
+						if(isreset){
+							resetParm();
+						}
+						randerPaging(r.data.prodCount);
+						if(cb && typeof cb === 'function'){
+							cb();
+						}
+						
+						iframeHomeMethod.resetIFRheight($('body'),$(window.top.document.getElementById('content')));
+					}
+					else{
+						alert('加载产品失败');
+					}
+				},
+				error : function(){
+					alert('加载产品失败');
+				}
+			});	
+		}
+		
+		
+		function randerProd(data){
+
+			var len = data.length,
+				tpl = '',
+				i = 0;
+			
+			$listBox.html('');
+			for(;i < len;i++){
+				tpl += '<div class="item"><a onclick="prevProdInfo(\''+data[i].prodId+'\')">';
+					tpl += '<img src="'+baseImgUrl+data[i].path+'" alt="" />';
+					tpl += '<p>'+data[i].prodName+'</p>';
+				tpl += '</a></div>';
+			}
+			
+			if(!len){
+				tpl = '<div class="textAli-c fontSz-26">无产品数据</div>'
+			}
+			
+			$listBox.append(tpl);
+			
+		}			
+		
+		/*获取产品 end*/
+		
+		
+		/*获取筛选属性*/
+		var $filterlist = $('#filterlist'),
+			$filterCancle_plod = $('#filterCancle_plod'),
+			$filterSubBtn_plod = $('#filterSubBtn_plod');
+		
+		$filterCancle_plod.click(function(){
+			hideFilterBox();
+		});
+		
+		$filterSubBtn_plod.click(function(){
+			filterHandle('filter',hideFilterBox);
+		});
+		
+		
+		function filterHandle(type,cb){
+			
+			switch(type){
+				case 'Pdname' : formParm.prodName = $prodName.val();
+								//不清除其他筛选条件
+								/*formParm.width = '';
+								formParm.depth = '';
+								formParm.heigth = '';
+								formParm.minMoney = '';
+								formParm.maxMoney = '';
+								formParm.dynamicCondition = [];*/
+					break;
+				case 'filter' : dealFilterVal();
+					break;
+					
+				case 'sort' : console.log('sort');
+					break;
+			
+			}
+			
+			formParm.startPage = 1;
+			
+			getProdFn(cb);
+			
+		}
+		
+		/*获取过滤的值*/
+		
+		var $sereachBtn = $('#sereachBtn'),           //搜索按钮
+			$prodName = $('#prodName'),               //产品名
+			$filter_width = $('#filter_width'),       //长度
+			$filter_depth = $('#filter_depth'),       //宽度
+			$filter_height = $('#filter_height'),     //高度
+			$filter_minPrice = $('#filter_minPrice'), //最低价
+			$filter_maxPrice = $('#filter_maxPrice'); //最高价
+			
+		$sereachBtn.click(function(){
+			filterHandle('Pdname');
+		});
+			
+		
+		function dealFilterVal(){
+			
+			var wid = $filter_width.val(),
+				dep = $filter_depth.val(),
+				hei = $filter_height.val(),
+				minPri = $filter_minPrice.val(),
+				maxPri = $filter_maxPrice.val(),
+				temp;
+						
+			/*$prodName.val('');
+			formParm.prodName = '';*/
+			
+			
+			if(minPri > maxPri){
+				temp = minPri;
+				minPri = maxPri;
+				maxPri = temp;
+			}
+			
+			formParm.width = wid;
+			formParm.depth = dep;
+			formParm.heigth = hei;
+			formParm.minMoney = minPri;
+			formParm.maxMoney = maxPri;
+			formParm.dynamicCondition = getSelectAllVal();
+			
+		};
+		
+		/*动态参数*/
+		function getSelectAllVal(){
+			var $valWrap = $filterlist.find('.fitem'),
+				$valEl,
+				$_el,
+				temp_len,
+				temp_el,
+				temp ='',
+				val = [],
+		    	len = $valWrap.length;
+		   
+		    for(;len--;){
+		    	
+		    	$_el = $valWrap.eq(len);
+		    	temp = '';
+
+	    		temp_el = $_el.find('.on-sel');
+	    		temp_len = temp_el.length;
+	    		if(temp_len <= 0){
+	    			continue;
+	    		}
+
+	   			for(;temp_len--;){
+	    			temp += ';'+temp_el.eq(temp_len).find('span').text();
+	    		}
+	    		temp = temp.substr(1);
+	    		val[val.length] = temp;
+	  
+		    }
+		    return val;
+		}
+			
+		
+		function getFilterOpt(fid){
+			
+			if(fid ===''){
+				$filterlist.html('');
+				return;
+			}
+			
+			$.ajax({
+				url: fullPath('prodProperty/getFilterProperty/'+fid),
+				success : function(r){
+					if(r.meta && r.meta.code === 200){
+						filterOptData = r.data.slice();
+						randerFilterOpt(r.data);
+					}
+					else{
+						alert('加载筛选属性失败');
+					}
+				},
+				error : function(){
+					alert('加载筛选属性失败');
+				}				
+				
+			})
+			
+		}
+		
+		function randerFilterOpt(data){
+				
+			var len = data.length,
+				opt_len,
+				i1 = 0,
+				i2,
+				temp,
+				tpl = '';
+			
+			$filterlist.html('');
+			
+			for(;i1 < len; i1++){
+				
+				temp = data[i1].values;
+				opt_len = temp.length;
+				i2 = 0;
+				
+				if(!opt_len){
+					continue;
+				}
+				
+				tpl += '<div class="fitem clearfix">';
+					tpl += '<p class="til">'+data[i1].name+'：</p>';
+					tpl += '<div class="opt">';
+					
+					for(;i2 < opt_len;i2++){
+						tpl += '<label class="opt_lab"><span onclick="filterSelOpt(event)"><i class="ico"></i>'+temp[i2]+'</span></label>';					
+					}
+					
+					tpl += '</div>';
+				tpl += '</div>';
+				
+				
+			}
+			
+			$filterlist.html(tpl);
+			
+		}
+		
+		
+		
+		
+		/*获取筛选属性 end*/
+		
+		
+		//重置表单数据、价格排序、尺寸排序
+		function resetFormData(){
+			resetSereachData();
+			formParm.depth = '';
+			formParm.heigth = '';
+			formParm.maxMoney = '';
+			formParm.minMoney = '';
+			formParm.startPage = '1';
+			formParm.dynamicCondition = [];	
+			formParm.orderByPrice = '';
+        	formParm.orderByWidth = '';		
+		}
+		
+		
+		var $prodName = $('#prodName');
+		
+		//重置搜索名
+		function resetSereachData(){
+			$prodName.val('');
+			formParm.prodName = '';
+		}
+		
+		
+		//回车搜索
+		$prodName.on('keydown',function(event){
+			
+			if(event.keyCode === 13){
+				event.originalEvent.preventDefault();
+				filterHandle('Pdname');
+			}
+
+		});
+		
+		
+		/* 选择分类 */
+		function cagrageProd(fid){
+			formParm.prodTypeId = fid.replace(' ','');
+			hideFilterBox();
+			resetFormData();
+			getProdFn(function(){
+				$categoryList.removeClass('active');
+				if($categoryList_mune){
+					$categoryList_mune.hide();
+					$categoryList_mune.removeClass('active');
+				}
+				getFilterOpt(formParm.prodTypeId);
+			});
+		}
+		
+		
+		/* 选择分类  end*/
+		
+		
+		
+		/* 重置一些参数 */
+		function resetParm(){
+			prevSelPageNum = '';
+		}
+		/* 重置一些参数 end */
+		
+		
+		/* 分页 */
+		var $kkpage = $('#kkpager'),
+			prevSelPageNum = '';
+			
+		function randerPaging(num){
+			
+			if( prevSelPageNum !== ''){
+				return;
+			}
+		
+			$kkpage.html("");
+		    var totalPage = Math.ceil(num/pageConfig.pageSize);
+	        //生成分页控件
+	        kkpager.generPageHtml({
+	            pno : 1,
+	            mode : 'click', //设置为click模式
+	            //总页码
+	            total : totalPage,
+	            //总数据条数
+	            totalRecords : num,
+	            isShowCurrPage:false,
+	            isShowTotalRecords:true,
+	            isShowGoPageNum: false,
+	            //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+	            //适用于不刷新页面，比如ajax
+	            click : function(n){
+	                //记录当前页码
+	                prevSelPageNum = n;
+	                //翻页
+	                flip(n);
+	                //处理完后可以手动条用selectPage进行页码选中切换
+	                this.selectPage(n);
+	            },
+	            //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+	            getHref : function(n){
+	                return '#';
+	            },
+	            isShowTotalRecords : false,
+	            lang				: {
+	                firstPageText			: '首页',
+	                firstPageTipText		: '首页',
+	                lastPageText			: '尾页',
+	                lastPageTipText			: '尾页',
+	                prePageText				: '&lt; 上一页',
+	                prePageTipText			: '&lt; 上一页',
+	                nextPageText			: '下一页 &gt;',
+	                nextPageTipText			: '下一页 &gt;',
+	                totalPageBeforeText		: '共',
+	                totalPageAfterText		: '页',
+	                currPageBeforeText		: '当前第',
+	                currPageAfterText		: '页',
+	                totalInfoSplitStr		: '/',
+	                totalRecordsBeforeText	: '共',
+	                totalRecordsAfterText	: '条数据',
+	                gopageBeforeText		: '跳到第',
+	                gopageButtonOkText		: '确定',
+	                gopageAfterText			: '页',
+	                buttonTipBeforeText		: '第',
+	                buttonTipAfterText		: '页'
+	            }	            
+
+	        },true);
+		}
+		
+		/*
+		*翻页:获取上一次的搜索条件翻页
+		 */
+		function flip(startPage){
+			formParm.startPage = ''+startPage;
+			getProdFn();
+		}
+		
+		/* 分页  end*/
+		
+	
+		/*分类*/
+		var $categoryBtn = $('#categoryBtn'),
+			$categoryList_til = $categoryList.find('.showMune'),
+			$categoryList_mune = '',
+			$categoryBtn_selName = $categoryBtn.find('span');
+
+		$categoryBtn.click(function(){
+
+			if($categoryList.hasClass('active')){
+				$categoryList.removeClass('active');
+				if($categoryList_mune){
+					$categoryList_mune.hide();
+					$categoryList_mune.removeClass('active');
+				}
+			}
+			else{
+				$categoryList.addClass('active');
+			}
+
+		});
+		
+		$categoryList.on('click','.showMune',function(){
+			var $mune = $(this).parent().find('.mune');
+
+			//切换类别
+			if( $categoryList_mune &&  !$mune.is($categoryList_mune)){
+				$categoryList_mune.hide();
+				$categoryList_mune.removeClass('active');
+			}
+			$categoryList_mune = $mune;
+			//点第二下隐藏
+	 		if($mune.hasClass('active')){
+	 			$mune.hide();
+				$mune.removeClass('active');
+	 		}
+	 		else{
+	 			$mune.addClass('active');
+				$mune.slideDown();
+	 		}
+		});
+		
+		/*分类 end*/
+
+
+		/*更多选项*/
+		var $filterBtn = $('#filterBtn'),
+			$filterBg = $('#filterBg'),
+			$filterBox = $('#filterBox');
+
+
+		function showFilterBox(){
+			$filterBg.show();
+
+			var hei = (-$filterBox.height()+1)+'px';
+
+			$filterBox.stop().animate({bottom:hei}, 500);
+			$filterBtn.addClass('active');
+		}
+
+		function hideFilterBox(){			
+			$filterBtn.removeClass('active');
+			$filterBg.hide();
+			$filterBox.stop().animate({bottom:0}, 500);
+		}
+
+
+		$filterBtn.click(function(event) {
+			var self = $(this);
+
+			if(self.hasClass('active')){
+				hideFilterBox();
+			}
+			else{
+				showFilterBox();
+			}
+
+		});
+
+		function filterSelOpt(e){
+    	    
+         var ent = e || window.event,
+             obj_js = ent.currentTarget || e.srcElement,
+             $self = $(obj_js),
+             $parent = $self.parents('.opt_lab');
+       
+           if(ent.stopPropagation){
+             ent.stopPropagation();
+           }
+           else{
+             ent.cancelable = true;
+           } 
+                
+           if($parent.hasClass('on-sel')){
+             $parent.removeClass('on-sel');
+           }
+           else{
+             $parent.addClass('on-sel');
+           }
+               
+       } 
+
+
+		/*更多选项 end*/
+
+
+	</script>
+</body>
+</html>

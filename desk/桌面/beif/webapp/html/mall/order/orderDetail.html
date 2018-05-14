@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>订单列表</title>
+
+    <!-- Bootstrap -->
+    <link href="../../../common/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../../../common/css/console.css" rel="stylesheet">
+    <link href="../../../common/css/iframhome.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="common/js/respond.min.js"></script>
+	    <![endif]-->
+	<!-- Bootstrap end--> 
+    <script src="../../../common/js/jQuery-2.2.0.min.js"></script>
+    <script src="../../../common/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <style>
+        /*垂直居中*/
+        .middle {
+            float: none;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .ProdBottom{ float:right; _position:relative; }
+        #order ul li{
+            float:left; /* 往左浮动 */
+            list-style:none;
+        }
+        .changeStatus_detail{display:inline-block;line-height:26px;padding:0 5px;margin-left:10px;text-align:center;border-radius:5px;color:#fff;font-size:12px;background-color:#6c9;}
+    	.changeStatus_detail:hover{background-color:#77dfab;color:#fff}
+    </style>
+</head>
+<body>
+<div class="layout order-detail-page">
+
+	<div class="row margin-b-20">
+	    <div class="col-xs-10">
+	        <h4><a class="goback"  href="javascript:window.history.go(-1);">&lt;&lt;返回</a></h4>
+	    </div>
+	    <div class="col-xs-1 textAli-r">
+	        <button id="edit" onclick="switchEditOrder()" type="button" class="btn btn-primary" style="display:none">编辑订单</button>
+	    </div>
+	    <div class="col-xs-1 textAli-r">
+	        <button id="cancleOrderBtn" type="button" class="btn btn-primary" style="display:none">取消订单</button>
+	    </div>
+	</div>
+	<input id="orderId" style="display:none" />
+	<div class="panel panel-default">
+	    <div class="panel-body">
+	        <div class="row">
+	            <div class="col-xs-5">
+	                订单号：<span id="orderCode"></span>
+	            </div>
+	            <div class="col-xs-5">
+	                下单时间：<span id="orderDate"></span>
+	            </div>
+	            <div class="col-xs-2 editStatus" style="display:none">
+	                订单状态：<span id="status"></span>
+	            </div>
+	            <div class="col-xs-2 editStatusSelect">
+	            		<span id="showStatus"></span>
+	                <!--<select class="form-control input-sm" id="statusSelect">
+	                </select>-->
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="panel panel-default">
+	    <div class="panel-heading">订单状态变更记录</div>
+	    <div class="panel-body changeRecord" id="changeRecord">
+	        <!-- <p style="text-align:center;font-size:20px">无变更记录</p>
+	        <div class="list">
+	        	<span class="til">未付款>已付款：</span><span class="text">对方已付款到账号 XXX XXXX XXXX；</span><span class="time">- 2018.01.31 12:34</span>
+	        </div>-->
+	    </div>
+	</div>
+	<form id="userInfoForm" method="post" action="">
+	<div class="panel panel-default">
+	    <div class="panel-heading">个人信息</div>
+	    <div class="panel-body" id="userInfo">
+	        <input id="userId" name="userId" style="display:none" value=""/>
+	    </div>
+	</div>
+	</form>
+	<div class="panel panel-default">
+	    <div class="panel-heading">订购家具列表</div>
+	    <div class="panel-body" id="prodInfo">
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-xs-12">
+	        <div class="ProdBottom">
+	            <s id="originalCtl">原价 <span id="originalPrice"></span> 元</s>&nbsp;&nbsp;&nbsp;
+	            合计  <span id="discountedPrice"></span> 元
+	        </div><br/>
+	        <div class="ProdBottom">共  <span id="prodCount"></span> 件家具</div><br/>
+	        <div class="ProdBottom edit"><button data-toggle="modal" data-target="#discountModal" type="button" class="btn btn-default btn-sm">修改优惠</button></div>
+	    </div>
+	</div>
+	<br/>
+	<div class="panel panel-default">
+	    <div class="panel-heading">其他</div>
+	    <div class="panel-body" id="order">
+	        <div class="row">
+	            <div class="middle col-xs-5 edit">
+	                备注：<textarea class="textarea" id="memo" style="vertical-align:middle;height: 80px;width: 300px;resize: none;"></textarea>
+	            </div>
+	            <div class="middle col-xs-2">
+	                合同：<span id="attachmentName"></span>
+	            </div>
+	            <div class="middle col-xs-3 edit">
+	                <ul>
+	                    <li><input type="file" name="attachment" id="attachment"/></li>
+	                    <li><a href="javascript:deleteAttachment()">删除</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+
+</div>
+
+
+<!-- 修改优惠弹框 -->
+<div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;">设置优惠</h4>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label class="form-label">减少总价 </label>
+                        <input id="discount" class="form-control" style="width: 50%" type="text" value=""/>
+                        <label class="form-label"> 元</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button onclick="calcDiscountPrice()" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../common/js/config.js"></script>
+<script>
+
+var pagedata,
+    $changeRecord = $('#changeRecord');
+
+$(document).ready(function(){
+    
+    function rptDownLoad(orderId2){         
+   	    var form = $("<form>");  
+   	       form.attr('style', 'display:none');  
+   	       form.attr('target', '');  
+   	       form.attr('method', 'post');  
+   	       form.attr('action', fullPath('mall/order/export/'+orderId2));  
+   
+   	       $('body').append(form);  
+
+   	       form.submit();  
+   	       form.remove();  
+   	}  
+	
+	//导出订单
+	var lock = false,
+		$expoleOrd_btn = $('#expoleOrder');
+	
+	$expoleOrd_btn.click(function(){
+		var oid = $('#orderCode').text();
+		rptDownLoad(oid);
+			
+	});
+	
+	//获取从列表页面传过来的订单号
+    var orderId = document.URL.split("?")[1];
+    $.ajax({
+        type: "GET",
+        async:true,
+        url: fullPath('mall/order/detail/'+orderId),
+        success: function(result) {
+            var data = result.data;
+            if(null != data){
+                //订单详情
+                if(null != data.detail){
+                	pagedata = data.detail;
+                    var detail = data.detail;
+                    //订单基本信息
+                    showOrderBaseInfo(detail);
+                    //个人信息
+                    showUserInfo(detail.userInfo);
+                    //订购家具列表
+                    showOrderDataInfo(detail.prodInfo);
+                    //家具总数
+                    var prodCount = detail.prodInfo.count;
+                    //家具总额
+                    $("#prodCount").html(prodCount);
+                    $("#originalPrice").html(detail.originalPrice);
+                    $("#discountedPrice").html(detail.discountedPrice=="0.00"?detail.originalPrice:detail.discountedPrice);
+                    //其它项
+                    //备注
+                    $("#memo").val(detail.memo);
+                    //合同
+                    $("#attachmentName").html((detail.attachment=="")?"无":detail.attachment);
+                    //重新加载iframe的高度
+                    setIframeHeight();
+                    //设置不允许编辑的内容
+                    cannotEdit();
+                    //默认进来关闭编辑
+                    switchEditOrder();
+                    
+                    if( pagedata.currentStatus.value !== '99' && pagedata.currentStatus.value !== '20'){
+                    	$('#edit').show();
+                    	$('#cancleOrderBtn').show();
+                    }
+                    var str = '<a class="changeStatus_detail" onclick="changeStatus(\''+pagedata.id+'\',\''+pagedata.currentStatus.value+'\')">更改订单状态</a>';
+                    $('.editStatusSelect').append(str)
+                    
+                    $('#showStatus').html(pagedata.currentStatus.name);
+
+                    getOrderStatusChangeMsg();
+                    
+                }
+            }
+            //订单状态列表
+            
+
+            
+            /*
+            var orderStatus = data.orderStatus;
+            if(null != orderStatus){
+                if(null != orderStatus && orderStatus.length>0){
+                    $.each(orderStatus,function(index,status){
+                        var opt = "<option value='"+status.value+"'>"+status.name+"</option>";
+                        $("#statusSelect").append(opt);
+                    });
+                    //选中当前订单状态
+                    var currStatus = $("#status").html();
+                    var orderStatus = $("#statusSelect").find("option:contains('"+currStatus+"')").attr("selected",true).val();
+                    
+                    if( orderStatus !== '99' && orderStatus !== '20'){
+                    	$('#edit').show();
+                    }
+                }
+            }
+            */
+        },
+        error: function(err) {
+            alert("获取订单详情失败");
+        }
+    });
+    
+    
+    /*  获取订单状态更改记录 */
+    
+    function getOrderStatusChangeMsg(){
+    
+    	$.ajax({
+            type: "GET",
+            async:true,
+            url: fullPath('mall/order/getOrderStatusChangeMsg/'+pagedata.id),
+            success: function(r) {
+            	if(r.meta && r.meta.code === 200){
+            		var str = '',
+            			len = r.data.length,
+            			temp,
+            			i = 0;
+
+            		if(len < 1){
+            			str = '<p style="text-align:center;font-size:20px">无变更记录</p>';
+            		}
+            		else{
+            			 
+            			for(;i<len;i++){
+            				str += '<div class="list">';
+            				temp = r.data[i].status.replace('>','&gt;');
+            				
+            				str += '<span class="til">'+temp+'：</span><span class="text">'+r.data[i].memo+'</span><span class="time">- '+r.data[i].changeTime+'</span>'; 
+            				str += '</div>';
+            			}
+            			 
+            		}
+            		
+            		$changeRecord.html(str);
+            		
+            	}
+            	else{
+            		alert(r.meta.msg);
+            	}
+            	
+            },
+        	error : function(){
+        		alert('获取订单状态更改记录失败');
+        	}
+        });
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+});
+//图片路径
+var ossOuterPath = "https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/";
+/*
+*订单基本信息
+ */
+function showOrderBaseInfo(detail){
+    $("#orderId").val(detail.id);
+    $("#orderCode").html(detail.orderCode);
+    $("#orderDate").html(detail.orderDate);
+    $("#status").html(detail.currentStatus.name);
+}
+
+/* 更改订单状态 */
+function changeStatus(oid){
+	var status = pagedata.currentStatus.value,
+		canChangeStatus = pagedata.canChangeStatus; 
+		cb = function(name,val){
+			if(name === '取消订单'){
+				name = '已取消';
+			}
+			pagedata.currentStatus.name = name;
+			pagedata.currentStatus.value = val;
+			$("#status").html(name);
+			$('#showStatus').html(name);
+			if(name == '已完成' || name == '已取消'){
+				$('#edit').hide();
+				$cancleOrderBnt.hide();
+			}
+		};
+	window.top.showChangeOrderStatus(oid,status,canChangeStatus,cb);
+}
+
+
+/* 取消订单按钮 */
+
+var $cancleOrderBnt = $('#cancleOrderBtn');
+
+$cancleOrderBnt.click(function(){
+	var optData =[{name:"取消订单",value:"99"}],
+		cb = function(name,val,data){
+			$('#status').html('已取消');
+			$('#edit').hide();
+			$cancleOrderBnt.hide();
+			pagedata.currentStatus.name = '已取消';
+			pagedata.currentStatus.value = '99';
+			
+			if(!data){
+				return;
+			}
+
+			var str = '',
+			temp,
+			i = 0;
+
+			str += '<div class="list">';
+			temp = data.status.replace('>','&gt;');
+			
+			str += '<span class="til">'+temp+'：</span><span class="text">'+data.memo+'</span><span class="time">- '+data.changeTime+'</span>'; 
+			str += '</div>';				 
+			
+			$changeRecord.append(str);
+			
+		};
+	window.top.showChangeOrderStatus(pagedata.id,pagedata.currentStatus.value,optData,cb);
+});
+
+
+
+/*
+*个人信息
+ */
+function showUserInfo(userInfo){
+    $("#userId").val(userInfo.id);
+    $userRow = $("<div class='row'></div>");
+    $userRow.append(pairCol("用户姓名","name",userInfo.name));
+    $userRow.append($(creatContentCol(1,userInfo.gender,1)));
+    $userRow.append($(creatInputCol(2,"","")));//占位列
+    $userRow.append(pairCol("手机号码","phone",userInfo.phone));
+    $("#userInfo").append($userRow);
+
+    $("#userInfo").append("<br/>");
+    $userRow2 = $("<div class='row'></div>");
+    $userRow2.append(pairCol("微信号","openid",userInfo.openid));
+    $userRow2.append(pairCol("","",""));//占位列
+    $userRow2.append(pairCol("企业类型","companyType",userInfo.companyType));
+    $("#userInfo").append($userRow2);
+
+    $("#userInfo").append("<br/>");
+    $userRow3 = $("<div class='row'></div>");
+    $userRow3.append(pairCol("企业名称","companyName",userInfo.companyName));
+    $userRow3.append(pairCol("","",""));//占位列
+    $userRow3.append(pairCol("地址","address",userInfo.address));
+    $("#userInfo").append($userRow3);
+}
+/*
+*成对显示
+*/
+function pairCol(tip,name,val){
+    var col1 = creatContentCol(1,tip);
+    var colClass;
+    //微信号不允许编辑
+    if(name == "openid"){
+        colClass = 2;
+    }else{
+        colClass = 2+" edit";
+    }
+    var col2 = creatInputCol(colClass,name,val);
+    $pair = $(col1+""+col2);
+    return $pair;
+}
+/*
+*创建文本列 <div class="col-xs-">
+*可以在传入的列的大小后面加其它的class 如：creatInputCol(1+" edit","xxx")
+ */
+function creatContentCol(size,content,orhter){
+	var textcol;
+	/*if(orhter){
+		 textcol = "<div class='middle col-xs-"+size+"'><span id='showChooseSex'>"+content+"</span><span id='chooseSex' class='chooseSex'><label><input type='radio' name='sex'/>先生</label><label><input type='radio' name='sex'/>女士</label></span></div>"; 	
+	}
+	else{
+		textcol = "<div class='middle col-xs-"+size+"'>"+content+"</div>";	
+	}
+	*/
+	
+	textcol = "<div class='middle col-xs-"+size+"'>"+content+"</div>";
+    
+    return textcol;
+}
+/*
+ *创建input列 <div class="col-xs-">
+ * 可以在传入的列的大小后面加其它的class 如：creatInputCol(1+" edit","xx","xxx")
+ */
+function creatInputCol(size,name,val){
+    if(null == name||name == ""){
+        return "<div class='middle col-xs-"+size+"'></div>";
+    }
+    var inputcol = "<div class='middle col-xs-"+size+"'><input type='text' class='form-control' name='"+name+"' value='"+val+"'/></div>";
+    return inputcol;
+}
+/*
+ *订购家具列表
+ */
+function showOrderDataInfo(prodInfo){
+    var orderItemInfos = prodInfo.orderItemInfo;
+    if(orderItemInfos != null && orderItemInfos.length>0){
+        for(var i = 0;i<orderItemInfos.length;i++){
+            creatRow4Prod(i+1,orderItemInfos[i]);
+        }
+    }
+}
+/*
+*创建一行用于展示每款产品
+ */
+function creatRow4Prod(sequence,orderItemInfo){
+    $prodRow = $("<div class='row'></div>");
+    //序号
+    $sequencecol = $(creatContentCol(1,"<span>"+sequence+"</span>"));
+    //图片
+    var img = "<img src='"+ossOuterPath+orderItemInfo.pic+"' width='100' height='100'>";
+    $imgcol = $(creatContentCol(1,img));
+    //产品信息
+    var name = "<span>"+orderItemInfo.name+"</span><br/>";
+    var price = "<span>"+orderItemInfo.price+" 元</span>";
+    var factoryPrice = "<span> （出厂价："+orderItemInfo.factoryPrice+"元）</span>";
+    $prodMsgcol = $(creatContentCol(3,name+price+factoryPrice));
+    //产品属性
+    var propertyList = orderItemInfo.propertyList;
+    var prop = "";
+    if(null != propertyList && propertyList.length>0){
+        for(var i=0;i<propertyList.length;i++){
+            var map = propertyList[i];
+            for(var key in map){
+                prop += "<span>"+key+" : "+map[key]+"</span><br/>";
+            }
+        }
+    }
+    $propcol = $(creatContentCol(4,prop));
+    //该产品数量
+    var count = "<span>数量："+orderItemInfo.count+"</span><br/>";
+    $countcol = $(creatContentCol(1,count));
+
+    $prodRow.append($sequencecol);
+    $prodRow.append($imgcol);
+    $prodRow.append($prodMsgcol);
+    $prodRow.append($propcol);
+    $prodRow.append($countcol);
+    $("#prodInfo").append($prodRow);
+    $("#prodInfo").append("<br/>");
+}
+/*
+*重新加载iframe的高度
+ */
+function setIframeHeight() {
+    var iframe = window.parent.document.getElementById("content");
+    if (iframe) {
+        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+        if (iframeWin.document.body) {
+            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+        }
+    }
+}
+/*
+ *控制编辑订单信息能否编辑 true:允许编辑 false:不允许编辑
+ */
+var fistTime=true;
+function switchEditOrder(){
+    //编辑订单<->保存切换 第一次不做修改
+    if(!fistTime){
+        if($("#edit").html()=="编辑订单"){
+            $("#edit").html("保存");
+        }else{
+            $("#edit").html("编辑订单");
+            //保存订单信息
+            saveOrder();
+        }
+    }
+    fistTime=false;
+    //input输入框
+    $(".edit>input").each(function(i){
+        setReadonly(this);
+    });
+    //原价
+    setShowHide("#originalCtl");
+    //修改优惠
+    setShowHide(".edit>button");
+    //textarea
+    setReadonly(".edit>textarea");
+    //显示隐藏上传删除合同
+    setShowHide(".edit>ul");
+    //显示订单状态列表
+    setShowHide(".editStatusSelect");
+    setShowHide(".editStatus");
+}
+/*
+*设置只读
+*/
+function setReadonly(selector){
+    if($(selector).attr('readonly')=="readonly"){
+        $(selector).attr('readonly',false);
+    }else{
+        $(selector).attr('readonly',true);
+    }
+}
+/*
+*设置显示隐藏
+*/
+function setShowHide(selector){
+    if($(selector).css('display')=="none"){
+        $(selector).show();
+    }else{
+        $(selector).hide();
+    }
+}
+//不允许编辑的内容
+function cannotEdit(){
+    //微信号
+    $('input[name="openid"]').attr('readonly',true);
+}
+//保存状态:是否全部都保存完成
+var updateStatus = true;
+var saveCount = 1;
+function updateOrderStatus(code){
+    if(code!=200){
+        updateStatus = false;
+    }
+    if(updateCount==saveCount){
+        if(updateStatus){
+            alert("保存成功!");
+        }else{
+            alert("保存失败!");
+        }
+        saveCount = 1;
+        return;
+    }
+    saveCount++;
+}
+/*
+*保存订单信息 包括:用户信息 折后价 合同文件保存删除 备注信息
+ */
+var updateCount = 3;
+function saveOrder(){
+    //保存用户信息
+    updateUserInfo();
+    //折后价 备注信息 订单状态 地址
+    updateOrderInfo();
+    //保存合同文件
+    updateAttachment();
+}
+/*
+*保存用户信息
+ */
+function updateUserInfo(){
+    var userInfo = $("#userInfoForm").serializeArray();
+    userInfo[0].name = "id";
+    var obj = {};
+    $.each(userInfo,function(i,v){
+                obj[v.name] = v.value;
+    })
+    $.ajax({
+        type: "PUT",
+        async:true,
+        data:JSON.stringify(obj),
+        dataType:"json",
+        contentType: "application/json;charset=utf-8",
+        url: fullPath("mall/user/updateUserInfo"),
+        success: function(result) {
+            updateOrderStatus(result.meta.code);
+        },
+        error: function(err) {
+            updateStatus = false;
+            alert("保存客户个人信息失败");
+        }
+    });
+}
+/*
+*折后价 备注 订单状态 地址
+ */
+function updateOrderInfo(){
+    var orderid= $("#orderId").val();
+    var memo = $("#memo").val();
+    var discountedPrice = $("#discountedPrice").html();
+    var status = pagedata.currentStatus.value;//$("#statusSelect").val();
+    var address = $("input[name='address']").val();
+    var obj = {"fid":orderid,"memo":memo,"discountedPrice":discountedPrice,"status":status,"address":address};
+    $.ajax({
+        type: "PUT",
+        async:true,
+        data:JSON.stringify(obj),
+        dataType:"json",
+        contentType: "application/json;charset=utf-8",
+        url: fullPath("mall/order/updateOrderInfo"),
+        success: function(result) {
+            //显示修改状态
+            /*var statusText = $("#statusSelect").find("option:selected").text();
+            $("#status").html(statusText);*/
+            updateOrderStatus(result.meta.code);
+        },
+        error: function(err) {
+            updateStatus = false;
+            alert("保存折后价/备注信息失败");
+        }
+    });
+}
+/*
+*计算折扣价
+ */
+function calcDiscountPrice(){
+    var discount = $("#discount").val();
+    //校验输入值
+    var patrn = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+    if (!patrn.test(discount)) {
+        alert('输入不合法');
+        return;
+    }
+
+    var originalPrice = $("#originalPrice").html();
+    var discountedPrice = $("#discountedPrice").html();
+    $("#discountedPrice").html((originalPrice-discount).toFixed(2));
+    //关闭优惠设置框
+    $('#discountModal').modal('hide');
+}
+/*
+ *保存合同文件
+ */
+function updateAttachment(){
+    if(null == $("#attachment")[0].files[0]){
+        //没有更新
+        updateOrderStatus(200);
+        return;
+    }
+    var formData = new FormData();
+    formData.append("attachmentfile",$("#attachment")[0].files[0]);
+    formData.append("orderId",$("#orderId").val());
+    formData.append("orderCode",$("#orderCode").html());
+
+    $.ajax({
+        url: fullPath("mall/order/contract"),
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (result) {
+            //更新合同显示名称
+            changeAttachName();
+            updateOrderStatus(result.meta.code);
+        },
+        error: function () {
+            alert("保存合同文件失败！");
+        }
+    });
+}
+/*
+*删除合同文件
+ */
+function deleteAttachment(){
+    var orderId = $("#orderId").val();
+    $.ajax({
+        type: "DELETE",
+        async:true,
+        url: fullPath("attchment/"+orderId),
+        success: function (data) {
+            if (data.meta.code==200) {
+                alert("删除成功!");
+                clearAttach();
+            }
+        },
+        error: function () {
+            alert("保存合同文件失败！");
+        }
+    });
+}
+
+/*
+* 完成上传合同文件,更新显示名称
+ */
+function changeAttachName(){
+    var attachmentName = $("#attachment")[0].files[0].name;
+    $("#attachmentName").html(attachmentName);
+}
+/*
+* 清空合同文件路径
+ */
+function clearAttach(){
+    $("#attachmentName").html("无");
+    $("#attachment").val("");
+}
+</script>
+</body>
+</html>

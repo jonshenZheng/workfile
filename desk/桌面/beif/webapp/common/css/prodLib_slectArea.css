@@ -1,0 +1,140 @@
+a:hover{text-decoration: none !important;}
+/* 筛选区域 */
+.noselect{-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+.table-formBox tr td:first-child{width:82px;}
+.table-formBox tr td{line-height: normal;}
+.selectAreaBox label{white-space: nowrap;position: relative;  display: inline-block;  line-height: 20px; height: 20px;font-size: 12px;margin:0;box-sizing: content-box;}
+.selectAreaBox div label{padding: 10px 5px 10px 4px;color: #806F66;width:150px;}
+.selectAreaBox .option-l span:hover,.selectAreaBox .option-l span.active{cursor: pointer;color: #ff0036;cursor:pointer}
+.selectAreaBox .opt-til{padding: 10px 0 10px 2px;color:#333;text-overflow: ellipsis;overflow: hidden;}
+.selectAreaBox .opt-box{padding: 0 105px 0 10px;position:relative;max-height: 240px;overflow:hidden;}
+.selectAreaBox .option-l span{position:relative;border:1px solid transparent;display:inline-block;padding:0 0 0 2px;text-overflow: ellipsis;overflow: hidden;max-width: 150px;}
+.selectAreaBox .opt-box .clo{position:absolute;right:3px;top:50%;margin-top:-7px;width:13px;height:13px;background:url('../img/selectArea-ico.png') no-repeat;display:none;}
+.selectAreaBox .more-btn-box{position:absolute;right:10px;top:11px;width:102px;text-align: right;}
+.selectAreaBox .more-btn-box a{display:inline-block;position:relative;font-size: 12px;color:#806F66;}
+.selectAreaBox .more-btn-box a:hover{cursor:pointer;}
+.selectAreaBox .more-btn-box i{position:absolute;top:50%;}
+.selectAreaBox .multy-btn{padding: 0 5px 0 15px;background-color: #F2F0EF;border: 1px solid #EFEBE9;height:18px;line-height: 18px;}
+.selectAreaBox .more-btn{padding-right: 11px;height:20px;line-height: 20px;margin-left: 10px;}
+.selectAreaBox .multy-btn:hover{border-color: #DEDAD8;}
+.selectAreaBox .multy-btn i{background:url('../img/selectArea-ico.png') no-repeat -62px 0;width:8px;height:8px;left:5px;margin-top: -4px;}
+.selectAreaBox .more-btn i{background:url('../img/selectArea-ico.png') no-repeat -40px 0;width:9px;height:5px;right: 0;margin-top: -3px;}
+.selectAreaBox .more-btn:hover{color: #806F66;}
+.selectAreaBox .more-btn .up{display:none;}
+
+.selectAreaBox .more-btn:hover{color:#ff0036;}
+.selectAreaBox .more-btn:hover i{background-position:0 -29px;}
+
+.selectAreaBox .multyBtnBox{text-align: center;padding:5px 0 15px;display:none;}
+.selectAreaBox .multyBtnBox span{height: 20px; line-height: 20px; font-size: 12px;border:1px solid #ccc;margin:0 5px;padding:2px 7px;background:url('../img/btn_line.png') repeat-x 0 -301px #ccc;border-radius: 2px;}
+.selectAreaBox .multyBtnBox span:hover{background-position: 0 -321px;cursor:pointer;}
+.selectAreaBox .multyBtnBox .btn-true{border: 1px solid #ccc; background: #f2f2f2; color: #c5c5c5; cursor: default;}
+.selectAreaBox .multyBtnBox .btn-true:hover{cursor: default;}
+
+/* 控制选项值高度 */
+.selectAreaBox .valueWrap{position:relative}
+.selectAreaBox .valueWrap{height:40px;overflow:hidden;}
+.selectAreaBox .valueWrap.valBox-open{height:auto;}
+.selectAreaBox .valueWrap.valBox-open .opt-box{overflow-y:auto;}
+.selectAreaBox .valueWrap.valBox-open .more-btn .down{display:none;}
+.selectAreaBox .valueWrap.valBox-open .more-btn .up{display:block;}
+.selectAreaBox .valueWrap.valBox-open .more-btn i{background-position: -29px 0;}
+.selectAreaBox .valueWrap.valBox-open .more-btn:hover i{background-position: 0 -35px;}
+
+.selectAreaBox .valueWrap.multy-open{background-color: #EFECEB;}
+.selectAreaBox .valueWrap.multy-open .multyBtnBox{display:block;}
+.selectAreaBox .valueWrap.multy-open .more-btn-box{display:none;}
+/* .selectAreaBox .valueWrap.multy-open .on-sel span{border-color: #B0A59F;}
+.selectAreaBox .valueWrap.multy-open .on-sel .clo{display:block;}
+
+.selectAreaBox .valueWrap.multy-open .on-sel:hover span{border-color: #ff0036;}
+.selectAreaBox .valueWrap.multy-open .on-sel:hover .clo{background-position: -13px 0;} */
+
+/* test */
+.selectAreaBox .valueWrap .on-sel span{border-color: #B0A59F;padding-right:22px}
+.selectAreaBox .valueWrap .on-sel .clo{display:block;}
+
+.selectAreaBox .valueWrap .on-sel:hover span{border-color: #ff0036;color:#ff0036;}
+.selectAreaBox .valueWrap .on-sel:hover .clo{background-position: -13px 0;}
+/* test end */
+
+.selectAreaBox .valueWrap.multy-open.multy-select .btn-true{cursor:pointer;background: url('../img/btn_line.png') repeat-x 0 0 #ccc;color:#fff;border-color: #ff0036;}
+.selectAreaBox .valueWrap.multy-open.multy-select .btn-true:hover{background-position:0 -20px;}
+
+/* 筛选区域end */
+
+/* 面包屑 */
+.crumbCon{padding-bottom: 10px;position:relative;z-index: 1;overflow:hidden}   
+.crumbCon ul{list-style: none;padding: 0;margin:0;}
+.crumbCon li{float:left;box-sizing: content-box;border:1px dotted transparent;}  
+.crumbCon .til-lab{display:inline-block;color:#666;padding-top: 2px;padding-bottom: 2px;}
+.crumbCon .til-lab.tri{height: 24px; line-height: 24px;}
+.crumbCon .til-lab span,.crumbCon .til-lab i{display:inline-block;}
+.crumbCon a.til-lab:hover{color:#ff0036;}
+.crumbCon span.til-lab{padding:0 5px;}
+.crumbCon a.til-lab i{margin-left:3px;width:9px;height:5px;background: url(img/selectArea-ico.png) no-repeat 0 -17px;position:relative;top:-1px;}
+.crumbCon .hasDownMenu{position:relative;padding-left: 4px;padding-right: 4px;border-color:#999;}
+.crumbCon .hasDownMenu .menu{display:none;position:absolute;top:26px;left:-2px;padding:10px 8px;width:147px;overflow: hidden;border-radius: 3px;border: 1px solid #dbdbdb;}
+.crumbCon .hasDownMenu .bg{opacity:0.65;filter: alpha(opacity=65);position:absolute;left:0;top:0;width:100%;height:100%;background-color: #000;}
+.crumbCon .hasDownMenu .menu a{color:#fff;display:block;}
+.crumbCon .hasDownMenu .menu a:hover{color:#F2DCC7;}
+.crumbCon .hasDownMenu .menu li{padding:2px 0;float:none;}
+.crumbCon .hasDownMenu .menu ul{position:relative;z-index: 1;}
+.crumbCon .hasDownMenu:hover .menu{display:block;}
+.crumbCon .hasDownMenu:hover i{background-position: 0 -23px;}
+.crumbCon .removeBox{padding-left: 4px;padding-right: 16px;border-color:#ff0036;padding-left:3px;position:relative;}
+.crumbCon .removeBox a{color:#ff0036;}
+.crumbCon .removeBox:hover{border-style: solid;}
+.crumbCon .removeBox .remove-ico{position:absolute;right:4px;top:50%;margin-top: -3px;width:7px;height:7px;background-position: -15px -16px;}
+/* 面包屑end */
+
+.input-size{padding:7px 0 0 14px;}
+.input-size input[type="text"],.input-size span{display:inline-block;vertical-align: middle;font-size: 12px;box-sizing: content-box;}
+.input-size input[type="text"]{height: 18px; line-height: 18px; padding: 4px 0 4px 5px; border: 1px solid #cdcdcd; border-radius: 3px;box-sizing: content-box;background-color: #fff; background-image: none;box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);}
+.input-size span{padding:0 3px;}
+.input-size .big-inp{width:474px;}
+.ipad .selectAreaBox div label{width:110px;-webkit-width:110px}
+.ipad .selectAreaBox .option-l span{max-width: 110px;-webkit-max-width:110px}
+.ipad .selectAreaBox .option-l span:hover,.ipad .selectAreaBox .option-l span:active,.ipad .selectAreaBox .option-l span:focus{colo:#806F66}
+
+
+.selectAreaBox .submit-btn{background-color: #fff !important;}
+.selectAreaBox .submit-btn a{display:block;width:160px;height:26px;line-height: 26px;color:#fff;font-size: 16px;margin:5px auto;background-color: #28b5d6; border-radius: 4px;text-align: center;}
+.selectAreaBox .submit-btn a:hover{cursor:pointer;background-color: #2cc2e5;}
+
+.selectAreaBox .select_imgBox{display: inline-block;height: 28px;line-height: 28px;color: #fff;font-size: 12px;background-color: #199ed8;vertical-align: middle;margin-left:10px;padding:0 8px;border-radius:4px;}
+.selectAreaBox .select_imgBox i{display:inline-block;width:20px;height:17px;background:url('../img/u3059.png') no-repeat;}
+.selectAreaBox .select_imgBox i,.selectAreaBox .select_imgBox span{vertical-align:middle;}
+
+
+/* 以图搜图 */
+.selectAreaBox .img_downPane{position: absolute;left: 505px;top: 38px;z-index: 1;}
+.selectAreaBox .img_downPane .pane{display:none;width:208px;box-sizing:content-box;padding:2px 15px 15px;background-color: #f2f2f2;border:1px solid #ccc;-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.349019607843137);}
+.selectAreaBox .img_downPane dl{padding-top: 10px;overflow:visible;}
+.selectAreaBox .img_downPane dt,.selectAreaBox .img_downPane dd{float: left;line-height: 26px;}
+.selectAreaBox .img_downPane dd{width:119px;padding-left: 8px;}
+.selectAreaBox .img_downPane dt{color:#333;font-size: 14px;width:78px;}
+.selectAreaBox .img_downPane .imgfileBox{width:118px;position:relative;overflow:hidden;}
+.selectAreaBox .img_downPane .imgfileBox span{font-size: 13px;color:#999;display:block;background-color: #fff;text-align: center;height:24px;line-height: 24px;border:1px solid #999;border-radius: 4px;}
+.selectAreaBox .img_downPane .imgfileBox input{position:absolute;width:800%;height:800%;font-size: 100px;right:0;top: 0;opacity: 0;filter:alpha(1);cursor:pointer;}
+.selectAreaBox .img_downPane .imgfileBox input:hover{cursor:pointer;}
+.selectAreaBox .img_downPane dd select{display:block;border-radius: 4px;height:18px;padding:4px 0;box-sizing: content-box;width:118px;font-size:12px;}
+.selectAreaBox .img_downPane .btnBox{padding-top: 10px;text-align: center;}
+.selectAreaBox .img_downPane .btnBox a,.selectAreaBox .img_downPane .btnBox button{border:0;display:inline-block;width:85px;margin:0 8px;height:24px;font-size:14px;line-height: 24px;background-color: #169bd5;border-radius: 4px;color:#fff;cursor:pointer;}
+.selectAreaBox .img_downPane .btnBox a:hover,.selectAreaBox .img_downPane .btnBox button:hover{background-color: #33ccff;}
+
+
+/* 以图搜图 预览图片 */
+.selectAreaBox .showSereachImg{width:200px !important;height:120px !important;margin:6px auto 0;}
+.selectAreaBox .showSereachImg img{max-width:120px !important;max-height:120px !important; margin:0 auto;}
+
+
+
+
+
+
+
+
+
+
+

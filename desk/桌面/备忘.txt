@@ -217,9 +217,21 @@ html 一些常用方法
    获取当前选中项的value
    $(".selector").val(); setSelectVal
 
+   设置值为lr的下拉选项选中
+   $('#fatory_select').find('option[value="lr"]').prop("selected", true);
+
 
 测试webView
-chrome://inspect/
+   chrome://inspect/
+
+java 传参格式 
+
+   传时间具体到秒格式为
+   '2018-5-1 T23:59:59.000+0000'
+
+   要传字符串数组
+   先序列化 里面就个数组
+
 
 
 

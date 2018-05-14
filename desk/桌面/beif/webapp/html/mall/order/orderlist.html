@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>订单列表</title>
+    
+    <base href="../../../" />
+
+    <link rel="stylesheet" href="common/pager/kkpager_blue.css"/>
+
+	<meta http-equiv="expires" content="0">
+	<link href="common/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="common/lib/dialog/bootstrap-dialog.min.css"/>
+	<link href="common/css/console.css" rel="stylesheet">
+	<link href="common/css/iframhome.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	      <script src="common/js/respond.min.js"></script>
+	    <![endif]-->
+	<!-- Bootstrap end--> 
+    
+</head>
+<body>
+
+	<h3 class="page-til">订单列表</h3>
+   	<div class="layout">
+   		<div class="order-page">
+   			<form class="form-inline" id="form">
+	    	  	<div class="form-group">
+    	  			<label for="exampleInputName2">订单状态：</label>
+	        		<select	class="form-control" id="orderStatus">
+	        			<option value="">全部</option>
+			        	<option v-for="v in selet.opt" :value="v.value">{{v.name}}</option>
+			        </select>
+		      	</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="orderCode" placeholder="订单号">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="phone" placeholder="手机号">
+				</div>
+      			<button type="button" class="btn btn-primary" id="sereachBtn">搜索</button>
+	    	</form> 
+	    	
+			<div class="orderList" id="orderTab">
+				<table class="table" style="table-layout:fixed">
+					<thead>
+						<tr>
+							<th width="40px">
+								<input type="checkbox" @change="isSelectAll"/>
+							</th>
+							<th width="60px">序号</th>
+							<th>客户</th>
+							<th>订单号</th>
+							<th>联系电话</th>
+							<th>下单时间</th>
+							<th>订单状态</th>
+							<th width="320px">操作</th>
+							<th width="100px">订单情况记录</th>    
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr v-if="!table.list.length && table.over"><td colspan="9">无记录</td></tr>
+						<tr v-if="table.laodOver" v-for="(value, key, index) in table.list">
+							<td>
+								<input type="checkbox" v-model="value.checkbox" @click="seletItem(key)"/>
+							</td>
+							<td>{{ xuhao(key) }}</td>
+							<td>{{value.name ? value.name : ''}}</td>
+							<td>{{value.orderCode}}</td>
+							<td>{{value.phone}}</td>
+							<td>{{value.orderDate}}</td>
+							<td>{{value.currentStatus.name}}</td>
+							<td class="hangdle">
+								<div class="maxWid clearfix">
+									<!--<p class="btnWp btnW1">
+										<a class="btn bg-green">有效订单</a>	
+									</p>-->
+									<p class="btnWp btnW1">
+										<a class="btn bg-green" @click="changeOrderStatus(value.id,value.currentStatus.value,key,value.canChangeStatus)">更改订单状态</a>	
+									</p>
+									<p class="btnWp btnW2">
+										<a v-if=" value.currentStatus.name =='已取消' || value.currentStatus.name =='已完成' " :href="'html/mall/order/orderDetail.html?'+value.id">查看</a>
+										<a v-else :href="'html/mall/order/orderDetail.html?'+value.id">编辑</a>
+									</p>
+									<p class="btnWp btnW3">
+										<a v-if="value.currentStatus.name !='已取消' && value.currentStatus.name !='已完成'" @click="closeOrder(value.id,value.currentStatus.value,key)">取消订单</a>	
+									</p>
+								</div>
+							</td>
+							<td class="record-ico">
+								<a @click="handleRecord(value.id,value.name)"></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	
+		<div class="pageing margin-t-20 padding-b-20" id="kkpager">	
+	</div>
+	
+
+
+</div>
+<script src="common/js/jQuery-2.2.0.min.js"></script>
+<script src="common/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="common/lib/dialog/bootstrap-dialog.min.js"></script>
+<script src="common/lib/vue/vue.min.js"></script>
+<script src="common/js/config.js"></script>
+<script>
+	
+	var pop = window.top.runFnInHome('easyPop',{
+
+		doFn : function(oid){
+			var self = this;
+			this.extent.oid = oid;
+			$.ajax({
+				url : fullPath('mall/order/record/'+oid), 
+				success : function(r){
+					self.itemBox.html('');
+					self.extent.addMsg(r.data);
+					self.showBox();
+				}
+			});
+
+		},
+		extent : {
+			oid : '',
+			addMsg : function(data){
+				this.extent.makeTlp(data);
+			},
+			formatDate : function(time) { 
+				var now;
+				if(time){
+					now = new Date(time);
+				}
+				else{
+					now = new Date();
+				}
+				var year=now.getFullYear(); 
+				var month=now.getMonth()+1; 
+				var date=now.getDate(); 
+				var hour=now.getHours(); 
+				var minute=now.getMinutes(); 
+				var second= now.getSeconds(); 
+				
+				month = month >= 10 ? month : '0'+month;
+				date = date >= 10 ? date : '0'+date;
+				hour = hour >= 10 ? hour : '0'+hour;
+				minute = minute >= 10 ? minute : '0'+minute;
+				second = second >= 10 ? second : '0'+second;
+				
+				return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
+			}, 
+			sentMsg : function(){
+				var self = this,
+					msg = this.textArea.val(),
+					data = {"orderId":this.extent.oid,"memo":""};
+				if(!msg && msg !== 0){
+					return;
+				}
+				data.memo = msg.replace(/\n/g,'<br/>');
+				data.memo = data.memo.replace(/ /g,'&nbsp;');
+				this.textArea.val('');
+				
+				$.ajax({
+					url : fullPath('mall/order/record'), 
+					type : 'post',
+					contentType: "application/json; charset=utf-8",
+					data : JSON.stringify(data),
+					success : function(r){
+						var arr = [];
+						if(r.meta && r.meta.code === 200){
+							arr[0] = {};
+							arr[0]['recordTime'] = self.extent.formatDate(r.data.recordTime);
+							arr[0]['name'] = r.data.name;
+							arr[0]['memo'] = r.data.memo;
+							self.extent.addMsg(arr);
+						}
+					},
+					error:function(e){
+						alert('发送失败');
+					}
+				});
+				
+			},
+			makeTlp : function(arr){
+				var tpl = '',
+					i = 0,
+					len;
+
+				if( !arr || !arr.length || (len = arr.length) < 1){
+					return;
+				}
+
+				for(;i < len;i++){
+					tpl += '<div class="item">';
+						tpl += '<p class="time">'+arr[i].recordTime+'</p>';
+						tpl += '<p class="text"><span class="name">'+arr[i].name+'：</span><span class="sendMsg">'+arr[i].memo+'</span></p>';
+					tpl += '</div>';
+				}
+
+				this.itemBox.append(tpl);
+				
+				this.itemBox[0].scrollTop = this.itemBox[0].scrollHeight;
+				
+			}
+		},
+		trueFn : function(handle){
+			pop.extent.sentMsg();
+		},
+		cancleFn : function(handle){
+			handle.hidenBox();
+		}
+
+	});
+	
+	
+	
+	var orderlist = new Vue({
+		el :'#orderTab',
+		data : {
+			table : {
+				laodOver : false,
+				over : true,
+				list : []
+			}
+		},
+		methods : {
+			/*序号*/
+			xuhao : function(ind){
+				var startPage = paramData.startPage >= 1 ? paramData.startPage : 1;
+				startPage -= 1;
+				return pageSize*startPage+1+ind;
+			},
+			/*取消订单*/
+			closeOrder : function(oid,status,key){
+		
+				/*var self = this,
+					cbFn = function(name,val){
+						self.table.list[key].currentStatus.name = name;
+						self.table.list[key].currentStatus.value = val;
+					};
+				window.top.showWeixinpop(oid,status,cbFn);*/
+				
+				var self = this,
+				isOver = function(name,val){
+					self.table.list[key].currentStatus.name = '已取消';
+					self.table.list[key].currentStatus.value = val;
+					
+					/* 不限制状态选择
+					var cont = 0,
+						len = self.table.list[key].canChangeStatus.length;
+					
+					if(len < 1){
+						return;
+					}
+					
+					for(;len--;){
+						if( parseInt(self.table.list[key].canChangeStatus[len].value) <= parseInt(val)  ){
+							self.table.list[key].canChangeStatus[len]['disable'] = true;
+						}
+					}						
+					*/
+				};
+				var optData =[{name:"取消订单",value:"99"}];
+				window.top.showChangeOrderStatus(oid,status,optData,isOver);
+				
+			},
+			/*订单记录*/
+			handleRecord : function(oid){
+				pop.doFn(oid);
+			},
+			/*选中一条*/
+			seletItem : function(ind){
+				
+				var sel = this.table.list[ind].checkbox;
+				if(sel){
+					sel = '';
+				}
+				else{
+					sel = 'checked';
+				}
+				this.table.list[ind].checkbox = sel;
+			},
+			/*全选 or 反选*/
+			isSelectAll : function(e){
+				var sel = e.target.checked,
+					arr = this.table.list,
+					len = arr.length,
+					val;
+				if(sel){
+					val = 'checked';
+				}
+				else{
+					val = '';
+				}
+				
+				if(len < 1){
+					return;
+				}
+				for(;len--;){
+					arr[len].checkbox = val;
+				}
+			},
+			changeOrderStatus : function(oid,status,key,optData){
+				var self = this,
+					isOver = function(name,val){
+						self.table.list[key].currentStatus.name = name;
+						self.table.list[key].currentStatus.value = val;
+						
+						/* 不限制状态选择
+						var cont = 0,
+							len = self.table.list[key].canChangeStatus.length;
+						
+						if(len < 1){
+							return;
+						}
+						
+						for(;len--;){
+							if( parseInt(self.table.list[key].canChangeStatus[len].value) <= parseInt(val)  ){
+								self.table.list[key].canChangeStatus[len]['disable'] = true;
+							}
+						}						
+						*/
+					};
+				window.top.showChangeOrderStatus(oid,status,optData,isOver);
+			}
+		}
+	});
+	
+	
+	var formStatus = new Vue({
+		el : '#form',
+		data : {
+			selet : {
+				opt : []
+			}
+		}
+	});
+	
+	
+
+//保存订单总数
+var orderCount=0;
+//每页大小
+var pageSize = 20.0;
+//记录页码
+var pageNum = 1;
+
+/*请求的参数*/
+var paramData = {"orderStatus":"","orderCode":"","phone":"","startPage":"1","pageSize":pageSize};
+
+$(document).ready(function(){
+    /*
+     * 获取订单所有状态
+     */
+    $.ajax({
+        type: "GET",
+        async:true,
+        url: fullPath("mall/order/status"), 
+        success: function(result) {
+        	
+            var data = result.data;
+            if(null != data && data.length>0){
+
+            	Vue.set(formStatus.selet,'opt',data);
+            }
+        },
+        error: function(err) {
+            alert("获取订单所有状态失败");
+        }
+    });
+
+    /*
+    *展示订单数据
+    */
+    
+    showOrderList();
+
+    //状态下拉列表改变
+    $("#orderStatus").change(function(){
+        orderStatus = $(this).val();
+        paramData.orderStatus = orderStatus;
+        paramData.startPage = '1';
+        showOrderList();
+    });
+});
+/*
+ *展示订单数据
+ */
+function showOrderList(Fn,fy){
+    //清空表格数据
+    orderlist.table = jQuery.extend({}, this.table, {
+	  list: [],
+	  over: false
+	});
+    
+    var Successcb = function(data){
+    	
+    	if(null != data && data.count>0 && data.orderInfos.length>0){
+    		
+    		if( typeof Fn === 'function'){
+    			fn(data);
+    		}
+    		if(!fy){
+    			kkPager(data.count);	
+    		}
+    		
+            //orderCount = data.count;
+            //var orders = orderData.orderInfos;
+            
+            /*$.each(orders,function(index,order){
+                index += (pageNum-1)*pageSize+1;
+                //创建每一行数据
+                createOrderRow(index,order);
+            });*/
+        }else{
+            //$("#listTable tbody").append("无搜索结果！");
+            kkPager(0);
+        }
+    },
+    errorcb = function(){
+    	kkPager(0);
+    };
+    
+    getOrderList(Successcb,errorcb);
+    
+}
+
+/*
+ *创建每一行数据
+ */
+function createOrderRow(index,order){
+    $tr=$("<tr orderId='"+order.id+"'></tr>");
+
+    $tr.append(createTd("<input type='checkbox'>"));
+    $tr.append(createTd(index));
+    $tr.append(createTd(order.name));
+    $tr.append(createTd(order.orderCode));
+    $tr.append(createTd(order.phone));
+    $tr.append(createTd(order.orderDate));
+    $tr.append(createTd(order.status));
+
+    //查看 编辑
+    var detailStr = "<a href='orderDetail.html?"+order.id+"'>查看</a>";
+    var cancelOrder = "取消订单";
+    $tr.append(createTd(detailStr+"  "+cancelOrder));
+    //订单情况记录图标
+    var icon = "<span class='glyphicon glyphicon-list-alt' aria-hidden='true'></span>";
+    $tr.append(createTd(icon));
+
+    $("#listTable tbody").append($tr);
+}
+function createTd(content){
+    if(null == content){
+        return $("<td></td>");
+    }else{
+        return $("<td>"+content+"</td>");
+    }
+}
+
+
+var zxs_module = {
+	initTab : function(arr){
+		
+		var len = arr.length;
+		
+		if(len < 1){
+			return;
+		}
+		for(;len--;){
+			arr[len]['checkbox'] = '';
+		}
+		
+	}	
+}
+
+/*
+ *获取订单列表
+ */
+function getOrderList(scb,ecb){
+
+    $.ajax({
+        type: "POST",
+        async:false,
+        data:JSON.stringify(paramData),
+        dataType:"json",
+        contentType: "application/json;charset=utf-8",
+        url: fullPath("mall/order/list"),
+        success: function(result) {
+        	
+        	zxs_module.initTab(result.data.orderInfos);
+
+        	Vue.set(orderlist.table,'list', result.data.orderInfos.slice() );
+        	Vue.set(orderlist.table,'laodOver',true);
+        	
+        	if( typeof scb === 'function'){
+        		scb(result.data);
+        	}
+        	
+        },
+        error: function(err) {
+        	if( typeof ecb === 'function'){
+        		ecb(err);
+        	}
+        },
+        complete : function(){ 
+        	Vue.set(orderlist.table,'over',true);
+        }
+    });
+
+}
+
+var $sereachBtn = $('#sereachBtn');
+
+/*搜索*/
+$sereachBtn.click(function(){
+	searchOrder();
+});	
+
+
+
+/*
+ *搜索订单
+ */
+function searchOrder(){
+    orderCode = $("#orderCode").val();
+    phone = $("#phone").val();
+    
+    orderCode = orderCode ? orderCode : '';
+    phone = phone ? phone : '';
+    
+    paramData.orderCode = orderCode;
+    paramData.phone = phone;
+    paramData.startPage = '1';
+    showOrderList();
+}
+/*
+*翻页:获取上一次的搜索条件翻页
+ */
+function flip(startPage){
+    paramData.startPage = ''+startPage;
+    showOrderList('',1);
+}
+
+function kkPager(totalRecords){
+    $("#kkpager").html("");
+    var totalPage = Math.ceil(totalRecords/pageSize);
+    $.getScript('common/js/kkpager.js',function(){
+        //生成分页控件
+        kkpager.generPageHtml({
+            pno : 1,
+            mode : 'click', //设置为click模式
+            //总页码
+            total : totalPage,
+            //总数据条数
+            totalRecords : totalRecords,
+            isShowCurrPage:false,
+            isShowTotalRecords:true,
+            isShowGoPageNum: false,
+            //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+            //适用于不刷新页面，比如ajax
+            click : function(n){
+                //记录当前页码
+                pageNum = n;
+                //翻页
+                flip(n);
+                //处理完后可以手动条用selectPage进行页码选中切换
+                this.selectPage(n);
+            },
+            //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+            getHref : function(n){
+                return '#';
+            },
+            isShowTotalRecords : false,
+            lang				: {
+                firstPageText			: '首页',
+                firstPageTipText		: '首页',
+                lastPageText			: '尾页',
+                lastPageTipText			: '尾页',
+                prePageText				: '上一页',
+                prePageTipText			: '上一页',
+                nextPageText			: '下一页',
+                nextPageTipText			: '下一页',
+                totalPageBeforeText		: '共',
+                totalPageAfterText		: '页',
+                currPageBeforeText		: '当前第',
+                currPageAfterText		: '页',
+                totalInfoSplitStr		: '/',
+                totalRecordsBeforeText	: '共',
+                totalRecordsAfterText	: '条数据',
+                gopageBeforeText		: ' 到',
+                gopageButtonOkText		: '确定',
+                gopageAfterText			: '页',
+                buttonTipBeforeText		: '第',
+                buttonTipAfterText		: '页'
+            }
+
+        });
+    });
+}
+
+</script>
+</body>
+</html>
