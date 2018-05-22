@@ -244,6 +244,27 @@ java 传参格式
 
       showSizePaneModeFn
 
+   3.Ajax传到后台(java)的格式
+      数据格式：
+         //data : JSON.stringify([skuIdStr]),                     string[]
+         //data : [skuIdStr],                                     不能直接接收数组
+         //data : 'skuIdArr='+JSON.stringify([skuIdStr]),         string
+         //data : 'skuIdArr='+String([skuIdStr]),                 string
+         //data : {skuIdArr:[skuIdStr]},                          json
+         //data : {skuIdArr:JSON.stringify([skuIdStr])},          json
+         //data : JSON.stringify({skuIdArr:[skuIdStr]}),          string
+
+      提交方式：
+         POST
+         GET
+         DELET
+         PUT
+
+      后台接收的类型
+         string[]          JSON.stringify([skuIdStr])
+
+
+
 
 
 
