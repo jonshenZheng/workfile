@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+
+
+		<script>
+
+                var len1 = 3,
+                    len2 = 4,
+                    len3 = 4;
+
+                var i1,i2,i3;
+
+                var isbreak = false;
+                
+                var c = 0;
+
+
+                i1=0;
+                for(;i1<len1;i1++){
+
+                    isbreak = false;
+
+                    i2=0;
+                    for(;i2<len2;i2++){
+
+                        i3=0;
+                        for(;i3<len3;i3++){
+
+                            if(i3 === 2){
+                                isbreak = true;
+                                break;
+                            }
+                            c++;
+
+                            console.log('总条数：'+c+'   i1:'+i1+'  i2:'+i2+'  i3:'+i3);
+
+                        }
+
+                        if(isbreak){
+                            break;
+                        }
+
+                    }
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+				//未有实现的思路
+
+				/*for(;temp_i<temp_len;temp_i++){
+                or_temp = data_r.selectPropertyMap.properties;
+                temp_j = 0;
+                temp_len2 = or_temp.length;
+                isBre = false;
+
+                for(;temp_j<temp_len2;temp_j++){
+
+                    if(or_temp[temp_j].id === protoryId[temp_i]){
+
+                        or_temp2 = data_r.selectPropertyMap.properties[temp_j].values;
+                        temp_k = 0;
+                        temp_len3 = or_temp2.length;
+
+                        for(;temp_k<temp_len3;temp_k++){
+
+                            if(or_temp2[temp_k].name === protoryVal[temp_i]){
+                                skuKey += temp_j+'@'+temp_k+'#'+protoryVal[temp_i]+';'
+                            }
+
+                        }
+
+
+                    }
+                    
+                    /*if(isBre){
+                        continue;
+                    }*/
+
+        /*        }
+
+
+            }
+*/
+
+       
+
+
+		</script>
+
+
+
+
+    </body>
+</html>
