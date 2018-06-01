@@ -161,7 +161,7 @@
                                        class="inp1 showCost-js-1 display-n"
                                 </c:if>
                             </c:if>
-
+							   onfocus="conditionFocus('transMoney')"
                                disabled="true">
 						<input type="text" id="transMoney" name="transMoney" onchange="sumMoney()"
                             <c:if test="${empty client.transMoney}">
@@ -201,7 +201,7 @@
                                        class="inp1 showCost-js-2 display-n"
                                 </c:if>
                             </c:if>
-
+							   onfocus="conditionFocus('taxRate')"
                                disabled="true">
                         <input type="text" id="taxRate" name="taxRate" onchange="validatetaxRate();sumMoney();"
 
@@ -557,6 +557,9 @@
     //price prodProfit prodProfitRate transMoney taxRate输入框获得光标事件
     function conditionFocus(curr){
         preval = $('input[name="'+curr+'"]').val();
+        if(preval === '0.00'){
+            $('input[name="'+curr+'"]').val("");
+		}
         //$('input[name="'+curr+'"]').val("");
     }
     //price prodProfit prodProfitRate taxRate输入框失去光标事件
@@ -651,15 +654,16 @@
         });
  },300);	 */
 
-    if(window.parent.editsaveFromTisHandle && !window.parent.iseditSubimit){
-        console.log('resetHei');
-        setTimeout(function(){
-            PublicSetSelfIframeHeiTop({
-                set_hei: bodyHei,
-                parent: $(window.parent.document.getElementById('baojiaIfr')),
-            });
-        },300);
-    }
+    $(function(){
+        if(window.parent.editsaveFromTisHandle && !window.parent.iseditSubimit){
+            setTimeout(function(){
+                PublicSetSelfIframeHeiTop({
+                    set_hei: bodyHei,
+                    parent: $(window.parent.document.getElementById('baojiaIfr')),
+                });
+            },350);
+        }
+	});
 
     //检验产品价格是否唯一（保存的时候用）
     function checkProdPrice2(){

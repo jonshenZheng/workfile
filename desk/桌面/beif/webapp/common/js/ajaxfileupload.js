@@ -21,7 +21,7 @@ jQuery.extend({
 
             return jQuery('#' + frameId).get(0);            
     },
-    createUploadForm: function(id, fileElementId, data){
+    createUploadForm: function(id, fileElementId, data,parmObj){
         //create form   
         var formId = 'jUploadForm' + id;
         var fileId = 'jUploadFile' + id;
@@ -35,29 +35,62 @@ jQuery.extend({
              
         }
 
-        var oldElement = jQuery(fileElementId);
-        
-        var newElement = jQuery(oldElement).clone();
-        jQuery(oldElement).attr('id', fileId);
-        jQuery(oldElement).before(newElement);
-        jQuery(oldElement).appendTo(form);
+        if(parmObj){
+            var oldElement = jQuery(fileElementId),
+                name = oldElement.attr('name'),
+                accept = oldElement.attr('accept'),
+                style = oldElement[0].style,
+                Cname = oldElement[0].className,
+                eventFn = oldElement[0].onchange;
 
-        
+            var newEl = document.createElement('input');
+            //newEl.name = name;
+            newEl.accept = accept;
+            newEl.style = style;
+            newEl.className = Cname;
+            newEl.onchange = eventFn;
+
+            var newElement = oldElement.clone(true);
+
+            var $orEl = $(parmObj.PreviewImage_file);
+            $orEl.attr({name:name});
+            $orEl.before(newElement);
+            $orEl.appendTo(form);
+
+            parmObj.placeEl = newElement;
+        }
+        else{
+            var oldElement = jQuery(fileElementId);
+
+            var newElement = jQuery(oldElement).clone();
+            jQuery(oldElement).attr('id', fileId);
+            jQuery(oldElement).before(newElement);
+            jQuery(oldElement).appendTo(form);
+        }
+
+
         //set attributes
         jQuery(form).css('position', 'absolute');
         jQuery(form).css('top', '-1200px');
         jQuery(form).css('left', '-1200px');
-        jQuery(form).appendTo('body');      
+        jQuery(form).appendTo('body');
+
+        //console.log(form.find('input[name="img"]').val());
+
+        //console.log(form);
         return form;
     },
     ajaxFileUpload: function(s) {
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout        
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
-        var id = new Date().getTime()        
-        var form = jQuery.createUploadForm(id, s.fileElementId, (typeof(s.data)=='undefined'?false:s.data));
+        var id = new Date().getTime();
+        var parmObj = s.parmObj || null;
+        var form = jQuery.createUploadForm(id, s.fileElementId, (typeof(s.data)=='undefined'?false:s.data),parmObj);
         var io = jQuery.createUploadIframe(id, s.secureuri);
         var frameId = 'jUploadFrame' + id;
-        var formId = 'jUploadForm' + id;        
+        var formId = 'jUploadForm' + id;
+        s.dataType = 'text/html';
+
         // Watch for a new set of requests
         if ( s.global && ! jQuery.active++ )
         {
@@ -167,7 +200,13 @@ jQuery.extend({
             else
             {   
                 jQuery(form).attr('enctype', 'multipart/form-data');            
-            }           
+            }
+
+            //var $fileEl = form.find('#jUploadFile'+id);
+            //$fileEl.val(dooval); //value = dooval;
+
+            //console.log($fileEl.value);
+
             jQuery(form).submit();
 
         } catch(e) 

@@ -407,6 +407,7 @@
                 res = data.slice(dataInd,-6);
                 datas = JSON.parse(res);
                 if(datas.meta.code!=200){
+                    publicLoadingHide();
                     alert(datas.meta.msg);
                     return;
                 }
@@ -473,6 +474,7 @@
                 res = data.slice(dataInd,-6);
                 datas = JSON.parse(res);
                 if(datas.meta.code!=200){
+                    publicLoadingHide();
                     alert(datas.meta.msg);
                     return;
                 }
@@ -512,6 +514,7 @@
             				
             			}
             			else{
+                            publicLoadingHide();
             				alert(r.meta.msg);
             			}
             		},

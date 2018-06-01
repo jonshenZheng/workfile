@@ -81,16 +81,22 @@
                         <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title="${produce.createTime}"><fmt:formatDate value="${produce.createTime}" pattern="yyyy-MM-dd" /></td>
                         <td>
                             &nbsp;&nbsp;
-                            <a type="button"  class="btn btn-default btn-xs" href="${prc}/product/getProductInfo?fid=${produce.fid}">
+                            <%--<a type="button"  class="btn btn-default btn-xs" href="${prc}/product/getProductInfo?fid=${produce.fid}">
+                                详情
+                            </a>--%>
+                            <a type="button"  class="btn btn-default btn-xs" data-idv="${produce.fid}" onclick="showProdlibDetail(this)" >
                                 详情
                             </a>
-                            &nbsp;&nbsp;
+                            <%--&nbsp;&nbsp;
                             <a type="button"  class="btn btn-default btn-xs" href="#">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
+                            </a>--%>
                             &nbsp;&nbsp;
-                            <a type="button" class="btn btn-default btn-xs" href="#">
+                            <%--<a type="button" class="btn btn-default btn-xs" href="#">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>--%>
+                            <a type="button" class="btn btn-default btn-xs" data-idv="${produce.fid}" onclick="soldOut(this)">
+                                下架
                             </a>
                         </td>
                     </tr>
@@ -102,13 +108,13 @@
         </div>
         <!-- <div class="col-sm-1 col-md-1"></div> -->
     </div>
-    <div class="row">
+    <%--<div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <button type="button" class="btn btn-default btn-xs">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除
             </button>
         </div>
-    </div>
+    </div>--%>
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div style="" id="kkpager"></div>
@@ -165,6 +171,110 @@
             }
         });
     }*/
+
+    window.top.iframeHomeMethod.showProdDetailPop_case = null;
+
+    //产品详情
+   /* $prodlistBox.on('click','li',function (event) {
+        event.stopPropagation();
+        showProdDetailHander(this);
+    });*/
+    function showProdlibDetail(self) {
+
+        var $el = $(self),
+            id = $el.data('idv');
+
+        window.top.publicLoadingShow();
+
+        $.ajax({
+            url : '${prc}/prodLib/prod/'+id+'/detail/1',
+            dataType: 'json',
+            headers: {"with-selection": "true"},
+            success : function (r) {
+
+                if(r.data){
+                    //try{
+                    showProdDetail(r.data,id);
+                    //}
+                    /*catch(e){
+                            alert('加载数据异常');
+                        }*/
+                }
+                else{
+                    alert('加载数据异常');
+                }
+
+            },
+            error : function () {
+                alert('加载详情失败');
+            },
+            complete : function () {
+                window.top.publicLoadingHide();
+            }
+
+        })
+
+    }
+
+    function showProdDetail(dataV,prodId) {
+        var data = {};
+        data.showType = 'audit';
+        data.handerType = 'variable';
+        data.data = dataV;
+        data.data.pid = prodId;
+        data.noBtn = true;
+        data.btn1Fn = function (handle) {
+            handle.hide();
+            window.location.href = 'html/product/editProdRecord.html?pid='+prodId;
+        };
+        data.btn2Fn = function (handle) {
+
+            $.ajax({
+                url : fullPath('prod/'+prodId+'/review/1'),
+                success : function (r) {
+                    if(r.meta.code !== 200){
+                        alert(r.meta.msg);
+                        return;
+                    }
+                    alert('审核通过成功');
+                    handle.hide();
+                    window.location.reload(true);
+                },
+                error : function () {
+                    alert('发送请求失败');
+                }
+            })
+        };
+        window.top.runFnInHome('iframeHomeMethod.showProdDetailPop',data);
+    }
+
+    //下架
+    function soldOut(self){
+        var $el = $(self),
+            id = $el.data('idv');
+
+        if(!confirm('确定要下架该产品？')){
+            return;
+        }
+
+        window.top.publicLoadingShow();
+
+        $.ajax({
+            url : '${prc}/prod/pulloff/'+id,
+            success : function (r) {
+                $el.parents('tr').remove();
+            },
+            error : function () {
+                alert('下架失败');
+            },
+            complete : function () {
+                window.top.publicLoadingHide();
+            }
+        });
+
+    }
+
+
 </script>
 </body>
 </html>

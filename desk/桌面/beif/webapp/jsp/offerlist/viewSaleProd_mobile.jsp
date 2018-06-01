@@ -629,7 +629,12 @@
 
 <div style="display:none" id="recommendTempls">
     <c:forEach items="${recommendTempls}" var="type">
-        <option value="${type.fid}">${type.name}</option>
+        <c:if test="${temp.fid eq area.recommendderTemplID}">
+            <option value="${temp.fid }" selected="selected">${temp.name }</option>
+        </c:if>
+        <c:if test="${temp.fid ne area.recommendderTemplID}">
+            <option value="${temp.fid }" >${temp.name }</option>
+        </c:if>
     </c:forEach>
 </div>
 

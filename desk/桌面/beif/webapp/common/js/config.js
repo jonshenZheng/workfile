@@ -1,6 +1,7 @@
 var orderHost,
 	orderPrc,
 	baseUrl,
+    baseImgUrl_dev = 'http://dev-baize-webresource.oss-cn-shenzhen.aliyuncs.com/',
 	baseImgUrl = 'http://baize-webresource.oss-cn-shenzhen.aliyuncs.com/',
 	baseImgUrl2 = 'https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/';
 

@@ -5,7 +5,9 @@ var publicRegx = {
     password : /(^.*?[a-zA-Z]+.*?\d+.*?$)|(^.*?\d+.*?[a-zA-Z]+.*?$)/,  //密码不能为纯数字或纯英文且不能为中文
     trim : /^\s+|\s+$/g,
     contOneSpace : /\s+/g,
-    phone : ''
+    phone : '',
+    words : /[^\u4e00-\u9fa5\s\w]/g,
+    addProtypeReg : /[;&#@；]/g
 };
 
 
@@ -66,6 +68,7 @@ function whichBroser(version){
       ie8 : 'MSIE 8.0',
       ie9 : 'MSIE 9.0',
       ie10 : 'MSIE 10.0',
+      IE : 'MSIE',
       FF : 'Firefox',
       Chrome : 'Chrome'
     },
@@ -220,7 +223,17 @@ var easyTree = (function(opt){
 
 
 var publicRegxMethod = {
-    
+
+    filterInputWord : function (el_js,opt) {
+        var that = $(el_js),
+            reg = publicRegx.addProtypeReg,
+            val = $.trim(that.val());
+
+        if( reg.test(val)){
+            that.val(val.replace(reg,''));
+        }
+    },
+
     trim : function(str){
         return str.replace(publicRegx.trim,'');
     },
@@ -832,6 +845,87 @@ var iframeHomeMethod = {
 
     },
 
+    showBigImgBy_hover:function(opt){
+        var x = 10;
+        var y = 20;
+        var src = opt.src || 'imgsrc';
+        var deraction = opt.deraction || 'left';
+
+        var wp_wid = 0;
+        var wp_hei = 0;
+        var off_y,off_x,wid,hei;
+
+
+        function run(e) {
+
+            if(deraction === 'left'){
+                off_y = e.pageY+y;
+                off_x = e.pageX+x;
+            }
+            else if(deraction === 'left top'){
+                off_y = e.pageY - y - hei;
+                off_x = e.pageX - x - wid;
+            }
+            else if(deraction === 'left middle'){
+                off_y = e.pageY - parseInt( hei/2);
+                off_x = e.pageX - x - wid;
+            }
+        }
+
+        //var tooltip = "<div id='tooltip'><img src='"+ $el.siblings('.img-id-js').data(src) +"' alt='产品预览图'/>"+imgTitle+"<\/div>";
+        var $tooltip = $('<div id="tooltip" style="display: none"><div class="imgp1"><div class="imgp2" id="imgp2"></div></div></div>');
+        $("body").append($tooltip);
+
+        if(opt.sizeFixed){
+            wp_wid = $tooltip.width();
+            wp_hei = $tooltip.height();
+        }
+
+        //未分装成公用的效果(功能很少，没有处理边界问题,小图长边没有铺满)
+        $(opt.warp).on('mouseover',opt.target,function(e){
+            this.myTitle = this.title;
+            this.title = "";
+            var $el = $(this);
+
+            var imgTitle = this.myTitle? "<br/>" + this.myTitle : "";
+            var imgStr = '<img src="'+ $el.siblings('.img-id-js').data(src) +'" alt="产品预览图"/>'+imgTitle;
+            $tooltip.find('#imgp2').html(imgStr);
+
+            if(opt.sizeFixed){
+                wid = wp_wid;
+                hei = wp_hei;
+            }
+            else{
+                $img = $tooltip.find('img');
+                wid = $img[0].width;
+                hei = $img[0].height;
+            }
+
+            run(e);
+
+            $("#tooltip")
+                .css({
+                    "top": off_y + "px",
+                    "left":  off_x + "px"
+                }).show("fast");
+
+        }).mouseout(function(){
+            //this.title = this.myTitle;
+            //$("#tooltip").remove();
+            $("#tooltip").hide();
+        }).mousemove(function(e){
+
+
+            run(e);
+
+            $("#tooltip")
+                .css({
+                    "top": off_y + "px",
+                    "left":  off_x  + "px"
+                });
+        });
+    },
+
 	resetIFRheight : function (target_jq,ifr_jq,Fncb,setBeforeDataFn){
 
 		var temp_data = {
@@ -1124,7 +1218,7 @@ var iframeHomeMethod = {
 			};
 			
 			this.rander = function(data){
-				
+
 				if(this.source.showType && this.source.showType === "preView"){
 					
 					this.prodlibDetail_data = data;
@@ -1293,7 +1387,7 @@ var iframeHomeMethod = {
 			};
 			
 			this.DetailrightInfo = function(data,that){
-				
+
 				var goodsDetail,
 					specification,
 					proto_opt_len,
@@ -1342,25 +1436,29 @@ var iframeHomeMethod = {
 				    	img_len = goodsDetail.pics.length;
 				    	for(;i1<img_len;i1++){
 				    		tpl_detial += '<div class="swiper-slide">';
+
+                                tpl_detial += '<img src="'+goodsDetail.pics[i1]+'" alt="" />';
 				    		
-				    			if(this.source.showType && this.source.showType === 'preView'){
+				    			/*if(this.source.showType && this.source.showType === 'preView'){
 				    				tpl_detial += '<img src="'+goodsDetail.pics[i1]+'" alt="" />';
 				    			}
 				    			else{
 				    				tpl_detial += '<img src="https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/'+goodsDetail.pics[i1]+'" alt="" />';
-				    			}
+				    			}*/
 				    							       
 					        tpl_detial += '</div>';
 				    	}
 				    	
 				    	if(!img_len){
-				    		isScroll = false;
 				    		tpl_detial += '<div class="swiper-slide">';
 					        	tpl_detial += '<img src="common/img/noPic.png" alt="" />';
 					        tpl_detial += '</div>';
 				    	}
-				    	
-			
+
+				    	if(img_len <= 1){
+                            isScroll = false;
+                        }
+
 				    	tpl_detial += '</div>'; 
 				    tpl_detial += '<div class="swiper-pagination"></div>';
 				    							    
@@ -1453,8 +1551,10 @@ var iframeHomeMethod = {
                         tpl_detial += '<a onclick="iframeHomeMethod.showProdDetailPop_case.btn1Fn(iframeHomeMethod.showProdDetailPop_case)">提交产品</a>';
                     }
                     else if(this.source.showType === 'audit'){
-                        tpl_detial += '<a onclick="iframeHomeMethod.showProdDetailPop_case.btn1Fn(iframeHomeMethod.showProdDetailPop_case)">编辑产品</a>';
-                        tpl_detial += '<a onclick="iframeHomeMethod.showProdDetailPop_case.btn2Fn(iframeHomeMethod.showProdDetailPop_case)">审核通过</a>';
+				        if(!this.source.noBtn){
+                            tpl_detial += '<a onclick="iframeHomeMethod.showProdDetailPop_case.btn1Fn(iframeHomeMethod.showProdDetailPop_case)">编辑产品</a>';
+                            tpl_detial += '<a onclick="iframeHomeMethod.showProdDetailPop_case.btn2Fn(iframeHomeMethod.showProdDetailPop_case)">审核通过</a>';
+                        }
                     }
                     else{
 				        //产品库
@@ -1463,18 +1563,20 @@ var iframeHomeMethod = {
 				tpl_detial += '</div>';		
 			
 				that.pd_detial.html(tpl_detial);
-			
-				new Swiper ('#swiperId'+randomNum, {
-				    direction: 'horizontal',
-				    autoplay : isScroll,
-				    loop: isScroll,
-				    
-				    // 如果需要分页器
-				    pagination: {
-				      el: '.swiper-pagination',
-				    }
-			   
-				});
+
+				setTimeout(function () {
+                    new Swiper ('#swiperId'+randomNum, {
+                        direction: 'horizontal',
+                        autoplay : isScroll,
+                        loop: isScroll,
+
+                        // 如果需要分页器
+                        pagination: {
+                            el: '.swiper-pagination',
+                        }
+
+                    });
+                },500);
 
 			};
 			
@@ -1487,8 +1589,7 @@ var iframeHomeMethod = {
 			}
 			
 			this.init(data,source);
-			
-			
+
 		}
 		
 		

@@ -61,8 +61,8 @@
 		                    </div>    	
               			</c:forEach>
 						<!-- <a href="/bzms/html/product/prodLib.html" target="content"><i class="ico-list"></i><span>产品库</span></a> -->
-						<a href="/bzms/html/product/auditProd.html" target="content"><i class="ico-list"></i><span>产品审核</span></a>
-                        <a href="/bzms/html/product/editProdRecord.html?pid=MSXIXljRnOFeJ2vj4J8aw" target="content"><i class="ico-list"></i><span>产品编辑</span></a>
+						<%--<a href="/bzms/html/product/auditProd.html" target="content"><i class="ico-list"></i><span>产品审核</span></a>
+                        <a href="/bzms/html/product/editProdRecord.html?pid=MSXIXljRnOFeJ2vj4J8aw" target="content"><i class="ico-list"></i><span>产品编辑</span></a>--%>
 						<%--<a href="/bzms/jsp/product/addProdRecordSuccess.jsp" target="content"><i class="ico-list"></i><span>cg</span></a>--%>
                         <!-- <a href="" class="active"><i class="ico-list"></i><span>我的清单列表</span></a>
                         <a href=""><i class="ico-addlist"></i><span>创建报价清单</span></a> -->
@@ -107,6 +107,18 @@
            </div>
         </div> 
     </div>
+  
+	<div class="modal fade hone_prodlib_pop hone_prodlib_pop2018" id="modifySaleProdImg" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" >
+			<div class="modal-content" style="width:900px;min-height:800px;margin-top:auto;margin-left: auto;">
+				<div class="modal-body" style="padding:0px">
+					<iframe id="content_saleProdImg" src="" name="content" frameborder="0"
+							scrolling="no" style="min-height: 800px" width="100%"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+	
     <!-- 订单记录 -->
     <div class="easyPopBg" id="easyPopBg"></div>
 	<div class="orderRecord shadow" id="easyPop">
@@ -362,7 +374,9 @@
     
     	/* 打开产品库 */
     	function openProdLibPop(fid,startPage,isReflash,areaId,offerId,replSaleProdId,num){
-    		
+            $homeMyModal = $('#myModal'),
+                $saleProdFrame_ifr = document.getElementById('content_prodlib').contentWindow;
+            
     		$homeMyModal.modal('show');
     		if(replSaleProdId){
     			$saleProdFrame_ifr.showProdLibMsg(fid,startPage,isReflash,areaId,offerId,replSaleProdId,num);
@@ -371,13 +385,35 @@
     			$saleProdFrame_ifr.showProdLibMsg(fid,startPage,isReflash,areaId,offerId);	
     		}
     	}
-    	
+
+        //打开修改销售产品图片
+        var modifySaleProdId = "";
+		function openModifySaleProdImgPop(saleProdId){
+            modifySaleProdId = saleProdId;
+            var furIframe = contIframe.contentWindow.document.getElementById('saleProdFrame');
+            var currntSpan = $(furIframe).contents().find("span#"+modifySaleProdId);
+            var hiddenInput = $(currntSpan).find("input")[0];
+            var selectPicPath = $(hiddenInput).val();
+            
+            $('#content_saleProdImg').attr('src',"${prc }/offerList/modifySaleProdImg.th?saleProdId="+saleProdId+"&selectPicPath="+selectPicPath);
+            $("#modifySaleProdImg").modal('show');
+            $saleProdFrame_ifr = document.getElementById('modifySaleProdImg').contentWindow;
+            $homeMyModal = $("#modifySaleProdImg");
+		}
+		
+		//修改主图
+		function modifySaleProdImg(mainPicPath,displayPicPath){
+            var furIframe = contIframe.contentWindow.document.getElementById('saleProdFrame');
+            var currntSpan = $(furIframe).contents().find("span#"+modifySaleProdId);
+            var imgsrc = $(currntSpan).find("img")[0];
+            imgsrc.setAttribute("src",displayPicPath);
+            var hiddenInput = $(currntSpan).find("input")[0];
+            $(hiddenInput).val(mainPicPath);
+        }
+
     	function hideProdLibPop(){
     		$homeMyModal.modal('hide');
     	}
-    	
-    	
-    	
     
 	    /*顶部导航点击样式*/
 	    var $header_nav_a = $('.header-nav a'),

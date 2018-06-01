@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <link rel="stylesheet" th:href="@{/common/css/swiper.min.css}" />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    body{background-color: #252525}
+    .clearfix:after {
+      visibility: hidden;
+      display: block;
+      content: "";
+      height: 0;
+      line-height: 0;
+      clear: both;
+    }
+    .clearfix {
+      zoom: 1;
+    }
+    html, body {
+      position: relative;
+      height: 100%;
+    }
+    body {
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-container {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .gallery-top {
+      padding-bottom: 12px;
+      width: 100%;
+    }
+    .gallery-top .swiper-slide {
+      max-width: 100%;
+      max-width: 100%;
+      width: auto;
+      overflow: hidden;
+      opacity: 0.5;
+    }
+    .gallery-top .swiper-slide img {
+      max-width: 100%;
+      height: 100%;
+    }
+    .gallery-top .swiper-slide-active {
+      opacity: 1;
+    }
+    .gallery-thumbs {
+      height: 90px;
+      box-sizing: border-box;
+      padding-top: 2px;
+    }
+    .gallery-thumbs .swiper-slide {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: 80%;
+      overflow: hidden;
+    }
+    .gallery-thumbs .swiper-slide img {
+      max-width: 100%;
+      height: 100%;
+    }
+    .gallery-thumbs-box {
+      position: relative;
+      width: 100%;
+      height: 90px;
+    }
+    .gallery-thumbs-box .swiper-container {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .gallery-thumbs-box .swiper-button-prev {
+      width: 10px;
+      height: 90px;
+      background-size: 10px 18px;
+      left: 10px;
+      margin-top: 0;
+      top: 0;
+      outline: none;
+    }
+    .gallery-thumbs-box .swiper-button-next {
+      width: 10px;
+      height: 90px;
+      background-size: 10px 18px;
+      right: 10px;
+      margin-top: 0;
+      top: 0;
+      outline: none;
+    }
+    .gallery-top-box {
+      position: relative;
+      width: 100%;
+    }
+    .gallery-top-box .swiper-container {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .gallery-top-box .swiper-button-prev {
+      width: 18px;
+      background-size: 18px 38px;
+      left: 10px;
+      margin-top: 0;
+      top: 50%;
+      outline: none;
+      transform: translate(0, -50%)
+    }
+    .gallery-top-box .swiper-button-next {
+      width: 18px;
+      background-size: 18px 38px;
+      right: 10px;
+      margin-top: 0;
+      top: 50%;
+      outline: none;
+      transform: translate(0, -50%)
+    }
+    .slideshow {
+      float: right;
+      margin-right: 30px;
+      margin-top: 15px;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: center right;
+      cursor: pointer;
+      padding-right: 15px;
+      color: #999;
+      transition: all 0.3s ease
+    }
+    .pauseed {
+    }
+
+    .imgBorder{
+      border:3px solid #16b1ec;
+    }
+    .setMainPic{
+      max-width: 100%;
+      position: absolute;margin-top:-22px;
+      color: white;
+      background-color: #000000;
+      opacity:0.5;
+      text-align: center;
+    }
+    .hideContent{
+      display: none;
+    }
+    .pdLibTop{
+      width: 50px;
+      height: 5%;
+    }
+    .pdLibTop .closeBtn{
+      line-height: 36px;
+      font-size: 14px;
+      color: #666;
+      right: 10px;
+      position: absolute;
+      top: 6px;
+    }
+  </style>
+</head>
+<body style="background-color:transparent;width: 100%;height:90%;overflow-x: auto">
+<input type="hidden" th:value="@{/}" id="projPath"/>
+<div class="pdLibTop"><a style="cursor: pointer;" class="closeBtn" onclick="prodlib_closeBtn();">关闭</a></div>
+<!-- Swiper -->
+<div class="gallery-top-box" style="height: 95%">
+  <div class="swiper-container gallery-top">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" th:each="img,iterStat:${bigImgs}" th:attr="data-id=${iterStat.index}">
+        <img th:src="${pathPrefix+img}" />
+      </div>
+    </div>
+    <div class="swiper-scrollbar"></div>
+  </div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+<div class="gallery-thumbs-box">
+  <div class="swiper-container gallery-thumbs">
+    <div class="swiper-wrapper">
+      <div th:each="img,iterStat:${smallImgs}"
+           th:attr="data-id=${iterStat.index}"
+           th:id="img+${iterStat.index}"
+           th:class="${saleProdPath==img}?'imgBorder swiper-slide':'swiper-slide'">
+        <img th:onclick="'javascript:clickThumbs(\''+${iterStat.index}+'\')'" th:src="${pathPrefix+img}" />
+        <a th:if="${saleProdPath==img}" style="cursor: pointer;" th:onclick="'javascript:selectAsMainPic(\''+${iterStat.index}+'\')'" class="setMainPic" th:id="word+${iterStat.index}">封面</a>
+        <a th:if="${saleProdPath!=img}" style="cursor: pointer;" th:onclick="'javascript:selectAsMainPic(\''+${iterStat.index}+'\')'" class="setMainPic hideContent" th:id="word+${iterStat.index}">设为封面</a>
+        <input type="hidden" th:name="path+${iterStat.index}" th:value="${img}" />
+      </div>
+    </div>
+  </div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<!-- Swiper JS -->
+<script th:src="@{/common/js/jQuery-2.2.0.min.js}"></script>
+<script th:src="@{/common/js/swiper.min.js}"></script>
+<script>
+
+    $(document).ready(function(){
+        var projPath = $('#projPath').val().slice(0,-1);
+        $('.gallery-thumbs-box .swiper-button-next').attr("background-image",projPath+"/common/img/next-small.png")
+        $('.slideshow').attr("background-image",projPath+"/common/img/play.png")
+        $('.pauseed').attr("background-image",projPath+"/common/img/pause.png")
+        $('.gallery-top-box .swiper-button-prev').attr("background-image",projPath+"/common/img/left-lg.png")
+        $('.gallery-thumbs-box .swiper-button-prev').attr("background-image",projPath+"/common/img/left-small.png")
+
+    })
+
+    //图片等比例
+    galleryTopHeight()
+    $(window).resize(function(){
+        galleryTopHeight()
+    })
+
+    var galleryTop = new Swiper('.gallery-top-box .gallery-top', {
+        centeredSlides: true,
+        autoplay:false,
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.gallery-top-box .swiper-button-next',
+            prevEl: '.gallery-top-box .swiper-button-prev',
+        },
+        scrollbar: {
+            el: '.swiper-scrollbar',
+            hide: false,
+            draggable: true,
+            dragSize:150,
+        },
+        on: {
+            slideChangeTransitionEnd: function(){
+                clickThumbs(this.activeIndex);
+            },
+        },
+    });
+
+    $(".slideshow").click(function(){
+        if($(this).hasClass("pauseed")){
+            //播放
+            $(this).removeClass("pauseed")
+            galleryTop.autoplay.start()
+        }else{
+            //暂停
+            $(this).addClass("pauseed")
+            galleryTop.autoplay.stop()
+
+        }
+    })
+
+    galleryTop.scrollbar.$el.css({
+        "bottom":"0px",
+        "background":"none",
+        "height":"5px"
+    });
+    galleryTop.scrollbar.$dragEl.css({
+        'background':'rgba(171,171,171,171.6)'
+    });
+    galleryTop.scrollbar.updateSize();
+
+    var galleryThumbs = new Swiper('.gallery-thumbs-box .gallery-thumbs', {
+        spaceBetween: 10,
+        slidesPerView: 'auto',
+        touchRatio: 0.2,
+        navigation: {
+            nextEl: '.gallery-thumbs-box .swiper-button-next',
+            prevEl: '.gallery-thumbs-box .swiper-button-prev',
+        }
+    });
+
+    galleryTop.controller.control = galleryThumbs;
+
+    <!--注意添加objThumbs,objTop对应的索引值1 ~ N -->
+    var objThumbs = $(".gallery-thumbs .swiper-wrapper .swiper-slide");
+    var objTop = $(".gallery-top .swiper-wrapper .swiper-slide");
+    objThumbs.click(function(e){
+        var currentId = $(this).attr("data-id");
+        for(var i = 0 ; i< objTop.length; i++){
+            if($(objTop[i]).attr("data-id") === currentId){
+                $(objTop[i-1]).addClass("swiper-slide-prev")
+                $(objTop[i-1]).siblings().removeClass("swiper-slide-prev")
+                $(objTop[i]).addClass("swiper-slide-active")
+                $(objTop[i]).siblings().removeClass("swiper-slide-active")
+                $(objTop[i+1]).addClass("swiper-slide-next")
+                $(objTop[i+1]).siblings().removeClass("swiper-slide-next")
+                e.preventDefault();
+                galleryTop.slideTo(i,1000, false);
+            }
+        }
+    })
+
+    function galleryTopHeight(){
+        //处理图片比例
+        var wh = $(window).height();
+        var galleryThumbs_height = $(".gallery-thumbs").height()
+        var galleryTop_height = wh - galleryThumbs_height - 52
+        $(".gallery-top").css("height",galleryTop_height)
+        //缩略图
+        var galleryThumbs_width = $(window).width() - 60
+        $(".gallery-thumbs-box .swiper-container").css("width",galleryThumbs_width)
+        $(".gallery-thumbs-box .swiper-container .swiper-slide .setMainPic").css("width",galleryThumbs_width)
+        //大图
+        var galleryTop_width = $(window).width() - 80
+        $(".gallery-top-box .swiper-container").css("width",galleryTop_width)
+    }
+
+    /* 关闭产品库 */
+    function prodlib_closeBtn() {
+        window.top.hideProdLibPop();
+    }
+
+    //默认选择主图
+    setCurrentPic();
+    function setCurrentPic() {
+        $("div[id^='img']").each(function(index){
+            if($(this).find("a").text() == "封面"){
+                galleryTop.slideTo(index, 1000, false);
+            }
+        });
+    }
+
+    //点击小图
+    function clickThumbs(index){
+        $("div[id^='img']").each(function(){
+            if($(this).hasClass("imgBorder")){
+                $(this).removeClass("imgBorder");
+                if($(this).find("a").text()!="封面"){
+                    $(this).find("a").addClass("hideContent");
+                }
+            }
+        });
+        $("#img"+index).addClass("imgBorder");
+        $("#word"+index).removeClass("hideContent");
+    }
+
+    //选中作为封面
+  function selectAsMainPic(index){
+      $("div[id^='img']").each(function(){
+          $(this).find("a").text("设为封面");
+          $(this).find("a").addClass("hideContent");
+      });
+      $("#word"+index).text("封面");
+      $("#word"+index).removeClass("hideContent");
+      var mainPicPath = $("input[name='path"+index+"']").val();
+      var displayPicPath = $("#img"+index).find("img")[0].src;
+      window.top.modifySaleProdImg(mainPicPath,displayPicPath);
+  }
+
+</script>
+</body>
+</html>

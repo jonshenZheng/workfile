@@ -8,7 +8,7 @@ function getFunctionName(fn){
 
 
 function loadFn(s,v){
-	var t
+	var t;
 	if( s.hasownproperty = '' ){
 		s = window;
 	}
@@ -19,6 +19,10 @@ function loadFn(s,v){
 		else{
 			t = window[v] ? s : v;
 		}
+
+		if(!docEl){
+            docEl = showMianDoc;
+        }
 		
 		s['ext'] = docEl[v];
 		
@@ -33,7 +37,7 @@ var docEl;
 function PreviewImageRemove(self,vlb){
 
 	var that = $(self),
-		$imgBox = that.parents('.imgBox'),
+		/*$imgBox = that.parents('.imgBox'),
 		$otherImgBox,
 		$inpBox = $imgBox.siblings('.addImgBtn'),
 		$inp = $inpBox.find('input'),
@@ -41,14 +45,14 @@ function PreviewImageRemove(self,vlb){
 		i = 0,
 		ind = $imgBox.data('index'),
 		temp,
-		name = $imgBox.data('name'),
+		name = $imgBox.data('name'),*/
 		strEl = {kk:'',cc:0};
 	
 	//删除展示的图片和对应的输入框
-	$imgBox.remove();
-	$inp.eq(ind).remove();
-	
-	function cb(){
+	/*$imgBox.remove();
+	$inp.eq(ind).remove();*/
+
+	/*function cb(){
 		
 		$imgBox.remove();
 		$inp.eq(ind).remove();
@@ -66,12 +70,12 @@ function PreviewImageRemove(self,vlb){
 			$inp.eq(i).attr('name',temp);
 			
 		}
-	}
+	}*/
 	
 	loadFn(strEl,vlb);
 	
 	if(strEl.ext){
-		strEl.ext.dofn(that,cb);
+		strEl.ext.dofn(that);
 	}
 	else{
 		cb();
@@ -194,16 +198,18 @@ function PreviewImage(fileObj,limit,isMulti,tpl,inpName,variableName) {
 
         $inserTpl = $(str);
 
-        if(isMulti){
-            $parent.before($inserTpl);
-        }
-        else{
-            $imgBox = $parent.siblings('.imgBox');
-            if($imgBox.length === 0){
+        if($parent.length){
+            if(isMulti){
                 $parent.before($inserTpl);
             }
             else{
-                $imgBox.eq(0).replaceWith($inserTpl);
+                $imgBox = $parent.siblings('.imgBox');
+                if($imgBox.length === 0){
+                    $parent.before($inserTpl);
+                }
+                else{
+                    $imgBox.eq(0).replaceWith($inserTpl);
+                }
             }
         }
 
@@ -229,7 +235,7 @@ function PreviewImage(fileObj,limit,isMulti,tpl,inpName,variableName) {
             	formName = '';
             }
 
-            str = '<input '+formName+' style="filter:alpha(opacity=1)" onchange="PreviewImage(this,'+limit+','+isMulti+','+tpl_FnName+',\''+inpName+'\',\''+variableName+'\');" class="uploadImg-inp" type="file">';
+            str = '<input '+formName+' accept="image/*" style="filter:alpha(opacity=1)" onchange="PreviewImage(this,'+limit+','+isMulti+','+tpl_FnName+',\''+inpName+'\',\''+variableName+'\');" class="uploadImg-inp" type="file">';
             $self.parent().append(str);
         }
 
@@ -350,20 +356,42 @@ function asynUpload(opt){
 	if(typeof opt.before === 'function'){
 		opt.before(opt);
 	}
-	
+
+    if(opt.PreviewImage_file.value === ''){
+        return;
+    }
+
 	$.ajaxFileUpload({
         url: opt.url, //用于文件上传的服务器端请求地址
         secureuri: false, //是否需要安全协议，一般设置为false
         fileElementId: opt.filesEl, //文件上传域的ID
         dataType: 'application/json', //返回值类型 一般设置为json
         data : opt.data,
+        parmObj : opt,
         contentType: "application/json; charset=utf-8",
         success: function (data, status){  //服务器成功响应处理函数
-        	
-        	var res,
+
+            if(data === 'error' || !data){
+                clearFileVal(opt.placeEl,opt.PreviewImage_browserVersion);
+                return;
+            }
+
+            var datas = {
+                data : {}
+            };
+
+            datas.data = JSON.parse(data);
+
+            showPreViewImg(opt.PreviewImage_file,opt.PreviewImage_browserVersion);
+            if(typeof opt.success === 'function'){
+                //opt.success(datas,status,opt.PreviewImage_file);
+                opt.success(datas,status,opt.placeEl);
+            }
+
+        	/*var res,
 	    		datas,
 	    		dataInd;
-	
+
 	    	dataInd = data.indexOf('{');
 	     
 	    	if(dataInd < 0){
@@ -376,16 +404,19 @@ function asynUpload(opt){
         	if(datas.meta && datas.meta.code === 200){
         		showPreViewImg(opt.PreviewImage_file,opt.PreviewImage_browserVersion);
         		if(typeof opt.success === 'function'){
-            		opt.success(datas,status,opt.PreviewImage_file);
+            		//opt.success(datas,status,opt.PreviewImage_file);
+                    opt.success(datas,status,opt.placeEl);
             	}
         	}
         	else{
-        		clearFileVal(opt.PreviewImage_file,opt.PreviewImage_browserVersion);
-        	}			
+        		//clearFileVal(opt.PreviewImage_file,opt.PreviewImage_browserVersion);
+                clearFileVal(opt.placeEl,opt.PreviewImage_browserVersion);
+        	}*/
          	
         },
         error: function (data, status, e){//服务器响应失败处理函数
-        	clearFileVal(opt.PreviewImage_file,opt.PreviewImage_browserVersion);
+        	//clearFileVal(opt.PreviewImage_file,opt.PreviewImage_browserVersion);
+            clearFileVal(opt.placeEl,opt.PreviewImage_browserVersion);
         	if(typeof opt.error === 'function'){
         		opt.error(data,status);
         	}
@@ -393,7 +424,13 @@ function asynUpload(opt){
         	/* console.log(data);
         	console.log(status);
         	console.log(e); */
+        },
+        complete : function () {
+            if(typeof opt.complete === 'function'){
+                opt.complete();
+            }
         }
+
     }); 
 
 }

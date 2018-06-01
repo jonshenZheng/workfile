@@ -3,6 +3,12 @@ http://shenqi.baizeai.com/BGManage/home 或 http://shenqi.baizeai.com
 
 账号 bzd_leo 123
 
+
+wxapp1@baizeai.com
+Comicer123
+
+
+
 100测试地址：
    bzms : http://192.168.0.100:8083/bzms
    pms : http://192.168.0.100:8084/pms
@@ -262,6 +268,12 @@ java 传参格式
 
       后台接收的类型
          string[]          JSON.stringify([skuIdStr])
+
+
+正则 
+   [\u4E00-\u9FA5\s]+ 多个汉字，包括空格
+   [\u4E00-\u9FA5]+ 多个汉字，不包括空格
+   [\u4E00-\u9FA5] 一个汉字
 
 
 

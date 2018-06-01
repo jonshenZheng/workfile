@@ -1927,6 +1927,60 @@ transition: transform .4s ease-out;
 	padding-bottom: 10px;
 }
 
+.addProdRecord-page .baseInfoDiv .zhutu{
+	width: 200px;
+	height: 200px;
+	border: 1px solid #ddd;
+	position: relative;
+	overflow: hidden;
+}
+
+.addProdRecord-page .baseInfoDiv .zhutu span{
+	font-size: 40px;
+	color: #fff;
+}
+
+.addProdRecord-page .baseInfoDiv .zhutu img{
+	max-width: 200px;
+	max-height: 200px;
+}
+
+.addProdRecord-page .baseInfoDiv .zhutu .imgbox{
+	width: 100%;
+	height: 100%;
+	display: table;
+	background-color: #fff;
+}
+
+.addProdRecord-page .baseInfoDiv .zhutu .w{
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.addProdRecord-page .baseInfoDiv .zhutu .btnwp{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+	background-color: #199ed8;
+	text-align: center;
+	width: 100%;
+	overflow: hidden;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+
+.addProdRecord-page .baseInfoDiv #setZhutuImg{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 300%;
+	height: 300%;
+	font-size: 60px;
+}
+
 .addProdRecord-page .selectProtype dd .selOpt{
 	float: left;
 	font-size: 14px;
@@ -2048,6 +2102,22 @@ transition: transform .4s ease-out;
 	color:#3399CC;
 }
 
+.addProdRecord-page .setAllSkuImg{
+    width: 84px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.addProdRecord-page .setAllSkuImg input{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 400%;
+    height: 400%;
+    font-size: 60px;
+}
+
 .addProdRecord-page .splitLine{
 	border-bottom: 1px dashed #999;
 	margin-bottom: 15px;
@@ -2058,6 +2128,15 @@ transition: transform .4s ease-out;
 	overflow-x: auto;
 	overflow-y: hidden;
 	padding-bottom: 20px;
+	min-height: 180px;
+}
+
+.addProdRecord-page .selectProtype .addTips{
+	float: left;
+	font-size: 12px;
+	height: 26px;
+	line-height: 26px;
+	color: #ddd;
 }
 
 .addProdRecord-page .tableScroll table{
@@ -2095,6 +2174,10 @@ transition: transform .4s ease-out;
 	background-color: #e7eef3;
 }
 
+.addProdRecord-page .selectProtype dd input.selOpt {
+    color: #333;
+}
+
 .addProdRecord-page .tableScroll .tb-inp{
 	display:block;
 	width:86%;
@@ -2105,7 +2188,39 @@ transition: transform .4s ease-out;
 	line-height: 18px;
 	padding: 4px 3px;
 	box-sizing: content-box;
+    color: #333;
 }
+
+.addProdRecord-page .tableScroll .disableTr td{
+	color: #ccc;
+}
+
+.addProdRecord-page .tableScroll .disableTr .prod_dec_ico,.addProdRecord-page .tableScroll .disableTr .prod_dec_ico:hover{
+	background: url(../img/order/list-ico-off.png);
+    cursor: default;
+}
+
+.addProdRecord-page .tableScroll .disableTr .set_Proto_btns,.addProdRecord-page .tableScroll .disableTr .set_Proto_btns:hover{
+	background-color: #bdbdbd;
+    cursor: default;
+}
+
+.addProdRecord-page .tableScroll .disableTr .addImgBtn{
+	background-color: #e6e6e6;
+	cursor: default;
+}
+
+.addProdRecord-page .disableTr .addImgBtn input[type="file"]{
+	z-index: -10;
+}
+
+
+
+.addProdRecord-page .tableScroll .disableTr td{
+	color: #ccc;
+}
+
+
 
 .addProdRecord-page .tableScroll .prod_dec_ico{
 	display:inline-block;
@@ -2113,6 +2228,18 @@ transition: transform .4s ease-out;
 	height:15px;
 	background:url('../img/order/list-ico-off.png');
 	cursor:pointer;
+}
+
+.addProdRecord-page .tableScroll .prod_disable_ico{
+	display: inline-block;
+	width: 33px;
+	height: 20px;
+	background: url(../img/product/prod_sku_off.png);
+	cursor: pointer;
+}
+
+.addProdRecord-page .tableScroll .prod_disable_ico.active{
+	background: url(../img/product/prod_sku_on.png);
 }
 
 .addProdRecord-page .tableScroll .prod_dec_ico:hover{
@@ -2825,13 +2952,109 @@ transition: transform .4s ease-out;
 }
  
 /* 产品详情弹窗 用于产品管理中 end */
- 
- 
- 
 
 
 
 
+
+#tooltip{
+	position:absolute;
+	border:1px solid #ccc;
+	background:#333;
+	padding:2px;
+	display:none;
+	color:#fff;
+	width: 800px;
+	height: 800px;
+}
+
+#tooltip .imgp1{
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+#tooltip .imgp2{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#tooltip img{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+
+
+.addProdRecord-page .filterlistBox{
+	display: inline-block;
+	width: 90%;
+}
+
+.addProdRecord-page .filterlistBox .til{
+	font-size: 16px;
+	color: #666;
+	height: 26px;
+	line-height: 26px;
+	float: left;
+}
+
+.addProdRecord-page .filterlistBox .optSel{
+	width: 100%;
+	color:#000;
+	font-size: 14px;
+	position: relative;
+}
+
+.addProdRecord-page .filterlistBox .optSel .showSelText{
+	border: 1px solid #171717;
+	padding: 0 10px 0 5px;
+	height: 24px;
+	line-height: 24px;
+}
+
+.addProdRecord-page .filterlistBox .optSel .ico{
+	position:absolute;
+	right: 3px;
+	top:50%;
+	width: 7px;
+	height: 7px;
+	background:url('../img/product/product-select-ico.png');
+	margin-top: -3px;
+}
+
+.addProdRecord-page .filterlistBox .hideValBox{
+	position:absolute;
+	width:100%;
+	top:0;
+	padding-top: 26px;
+	margin-top: -3px;
+	height:152px;
+	display:none;
+	z-index: 1;
+	text-align: left;
+}
+
+.addProdRecord-page .filterlistBox .hideValBox ul{
+	border:1px solid #a1a1a1;
+	padding:10px;
+	height:130px;
+	background-color: #fff;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.addProdRecord-page .filterlistBox .hideValBox li,.addProdRecord-page .filterlistBox .optSel .showSelText{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow:hidden;
+}
+
+.addProdRecord-page .filterlistBox .hideValBox .cke-js,.addProdRecord-page .filterlistBox .hideValBox .checkV {
+	display: inline-block;
+	vertical-align: middle;
+}
 
 
 

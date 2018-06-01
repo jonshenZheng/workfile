@@ -410,6 +410,7 @@
 	    $(function(){
 
 	        var oldDateVal = '',
+                prodId_pub = '',
 	            oldFormData = {
 	                prodName : '',
 	                status : '2', //这个参数不可改，用来标识审核产品
@@ -489,8 +490,8 @@
                         tpl += '<div class="imgBox">';
                         tpl += '<div class="centerBox">';
                         tpl += '<div class="cell">';
-                        if(data[i].imgSrc){
-                            imgSrc = data[i].imgSrc;
+                        if(data[i].mainPic){
+                            imgSrc = data[i].mainPic;
                         }
                         else{
                             imgSrc = './common/img/noPic.png';
@@ -516,9 +517,9 @@
 
             getProdFn();
 
-
 	        function filterFn(type,data) {
                 isNewKKpager = true;
+                oldFormData.startPage = 1;
 	            if(type === 'pdName'){
                     oldFormData.prodName = $sereachProdName.val();
                 }
@@ -532,6 +533,7 @@
             }
 
             function getProdFn() {
+
                 window.top.publicLoadingShow();
                 //获取审核产品
                 $.ajax({
@@ -594,7 +596,7 @@
                             //适用于不刷新页面，比如ajax
                             click : function(n){
                                 //记录当前页码
-                                oldFormData.startPage = n;
+                                oldFormData.startPage = parseInt(n);
                                 //翻页
                                 this.selectPage(n);
                                 getProdFn(n);
@@ -654,7 +656,13 @@
                     success : function (r) {
 
                         if(r.data){
-                            showProdDetail(r.data,id);
+                            //try{
+
+                                showProdDetail(r.data,id);
+							//}
+/*							catch(e){
+                                alert('加载数据异常');
+							}*/
                         }
                         else{
                             alert('加载数据异常');
@@ -668,27 +676,27 @@
                         window.top.publicLoadingHide();
                     }
 
-
                 })
-
-
-
 
             }
             
             function showProdDetail(dataV,prodId) {
+
                 var data = {};
                 data.showType = 'audit';
                 data.handerType = 'variable';
                 data.data = dataV;
                 data.data.pid = prodId;
+                prodId_pub = prodId;
                 data.btn1Fn = function (handle) {
 
+                    handle.hide();
+                    window.location.href = 'html/product/editProdRecord.html?pid='+prodId_pub;
                 };
                 data.btn2Fn = function (handle) {
 
                     $.ajax({
-                        url : fullPath('prod/'+prodId+'/review/1'),
+                        url : fullPath('prod/puton/'+prodId_pub),
                         success : function (r) {
                             if(r.meta.code !== 200){
                                 alert(r.meta.msg);

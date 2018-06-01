@@ -136,8 +136,8 @@
                                 <td width="20%">
                                     <div class="clearfix prodIcoBox">
                                         <div class="fl imgbox">
-												<span class="tableC">
-													<img src="${filepath}${salP.picPath}" id="prods[${salePInd.index}].picPath"/>
+												<span class="tableC" id="${salP.fid}">
+													<img src="${filepath}${salP.picPath}" style="cursor: pointer;" title="选择图片" id="prods[${salePInd.index}].picPath" onclick="window.top.openModifySaleProdImgPop('${salP.fid}');"/>
 													<input type="hidden" name="prods[${salePInd.index}].picPath" value="${salP.picPath}"/>
 												</span>
                                         </div>
@@ -150,7 +150,8 @@
                                 </td>
 
                                 <td width="40%">
-                                    <div class="protype clearfix">
+                                    <div class="protype clearfix" onmouseover="addDashed(this)" onmouseout="rmDashed(this)" >
+                                        <img class="editImg" style="display:none" src="../common/img/edit.png" onclick="updateSkuProperty(this,'${salP.fid}','${salP.skuId}','${area.fid}','${area.offerId}','${salP.prodId}');" />
                                         <div class="fl">
                                             <c:forEach items="${salP.propertyValue}" var="property" varStatus="pInd" >
                                             <c:if test="${pInd.index eq 4 }">
@@ -939,6 +940,13 @@
         resetFurHEI();
     });
 
+    //修改sku属性
+    function updateSkuProperty(obj,saleProdId,skuId,areaId,offerId,prodId){
+        //获取数量
+        var prodNum = $(obj).parents('tr').find('.count-js').val();
+        window.top.openProdLibPop(saleProdId+':'+skuId,1,true,areaId,offerId,prodId,prodNum);
+    }
+    
     //替换当前产品
     function replCurrentRow(obj,replSaleProdId){
 
@@ -1500,6 +1508,16 @@
     var pasteInfo = '${pasteInfo}';
     if("notips" != pasteInfo){
         alert(pasteInfo);
+    }
+
+    function addDashed(self){
+        $(self).children(".editImg").css({"display":"block"});
+        $(self).children(".editImg").css({"position":"absolute","float":"right","right":"0","top":"0"});
+        $(self).css({"position":"relative","border":"1px dashed #ccc"});
+    }
+    function rmDashed(self){
+        $(self).children(".editImg").css({"display":"none"});
+        $(self).css("border","none");
     }
 </script>
 </body>

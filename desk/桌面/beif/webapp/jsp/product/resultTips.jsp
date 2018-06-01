@@ -24,9 +24,15 @@
     </style>
 </head>
 <body>
-
-<h4>产品录入成功</h4>
-<p><a href="${prc}/html/product/addProdRecord.html" target="content" >继续录入产品</a><a href="">进入编辑</a></p>
+<c:choose>
+    <c:when test="${empty error}">
+        <h4>产品录入成功</h4>
+        <p><a href="${prc}/html/product/addProdRecord.html" target="content" >继续录入产品</a><a href="${prc}/html/product/editProdRecord.html?pid=${prodId}">进入编辑</a></p>
+    </c:when>
+    <c:otherwise>
+        录入失败,错误信息: ${error}
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>
