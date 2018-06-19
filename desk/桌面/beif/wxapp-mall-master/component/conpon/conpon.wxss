@@ -1,0 +1,189 @@
+
+ 
+.ticketWp{
+    margin: 0 15rpx;
+}
+
+.ticketWp .it{
+    position: relative;
+    padding-left: 204rpx;
+    background-color: #fff;
+    margin-top: 16rpx;
+    border-radius: 10rpx;
+}
+
+.ticketWp .moneyBox{
+    padding: 1px;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    height: 100%;
+    flex-direction : column;
+    width: 204rpx;
+    border-top-left-radius:10rpx; 
+    border-bottom-left-radius:10rpx; 
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-tiket2.jpg) repeat-y top right;
+    background-size: 9rpx auto;
+}   
+
+.ticketWp .moneyBox.disableBtn{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-tiket.jpg) repeat-y top right;
+    background-size: 9rpx auto;
+}
+
+
+
+.ticketWp .moneyBox .unit{
+    font-size: 36rpx;
+}
+
+.ticketWp .moneyBox .num{
+    font-size: 61rpx;
+}
+
+
+.ticketWp .info{
+    position: relative;
+    width: 422rpx;
+    padding: 20rpx 10rpx 20rpx 30rpx;
+}
+
+.ticketWp .info .ico-use{
+    position: absolute;
+    right: 5rpx;
+    top: 7rpx;
+    width: 168rpx;
+    height: 115rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-used.png);
+    background-size: 100% 100%;
+}
+
+.ticketWp .ico-expired{
+    position: absolute;
+    right: 5rpx;
+    top: 7rpx;
+    width: 168rpx;
+    height: 115rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-expired.png);
+    background-size: 100% 100%;
+}
+
+.ticketWp .info .wd{
+    font-size: 26rpx;
+    line-height: 42rpx;
+    position: relative;
+}
+
+.ticketWp .info .point{
+    position: absolute;
+    left: -14rpx;
+    top: 18rpx;
+    width: 4rpx;
+    height: 4rpx;
+}
+
+
+
+.ticketWp .ico-select{
+    width: 38rpx;
+    height: 38rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tikect-off.png);
+    background-size: 100% 100%;
+    position: absolute;
+    right: 30rpx;
+    top: 50%;
+    margin-top: -19rpx;
+}
+
+.ticketWp .ico-select.active{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tikect-on.png);
+    background-size: 100% 100%;
+}
+
+
+
+
+
+.couponPopWpBg{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: background 1s;
+    -webkit-transition: background 1s;
+}
+
+.couponPopWpBg.active{
+    display: block;
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.couponPop{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    transform : translateY(100%);
+    transition: transform 1s;
+    -webkit-transition: transform 1s;
+    z-index: 5;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
+}
+
+.couponPop.active{
+    transform : translateY(0);
+}
+
+
+
+.couponPop .til{
+    /* position: absolute;
+    left: 0;
+    top: 0; */
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: #000;
+}
+
+.couponPop .list{
+    /* position: absolute;
+    left: 0;
+    width: 100%;
+    top: 60rpx;
+    bottom: 80rpx; */
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 20rpx;
+}
+
+/* .couponPop .btnBox{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 80rpx;
+    width: 100%;
+} */
+
+.couponPop .btnBox .qd{
+    display: block;
+    text-align: center;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+
+
+
+
+
+
+
+
+@import '../../pages/common/common.wxss';

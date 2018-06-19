@@ -1,58 +1,192 @@
-<view class="main">
 
-    <view class="order-box" wx:for="{{orders}}" wx:key="oKey" wx:for-index="oind" wx:for-item="oitem" >
-        <view class="order-list">
-            <view class='tilbox'>
-                <text class='til'>订单号：{{oitem.orderCode}}</text>
-                <view class='status'>
-                    <view bindtap='showStatusDetailFn' data-ind='{{oind}}'>
-                        <text class='status_name mainColor'>{{oitem.orderStatus}}</text>
-                        <icon class='blue_tri'></icon>
-                    </view>
-                    
-                    <view class='status-detail' wx:if="{{oitem.statusDetail.isShow}}" >
-                        <icon class='black_tri'></icon>
-                        <view>
-                            <text wx:for="{{oitem.statusDetail.info}}" wx:key="stakey" class="{{ item.key == '发货' ? 'blue' : '' }}" >{{item.statusName+'：'+item.createTime}}</text>
-                        </view>
+<view class='scrollBtnwp border-b'>
+    <scroll-view class='scrollBtnBox'  scroll-x scroll-with-animation='true'  scroll-into-view='index-{{curTabIndex-2>=0?curTabIndex-2:0}}'>
+    <view class='scrollBtnIt' id='index-{{idx}}' data-index='{{idx}}' wx:for="{{tabs}}" wx:key="unique" wx:for-index="idx" wx:for-item="setting1" bindtap='onTapTab'>
+        <text class='scrollBtnName color000'>{{setting1.text}}</text>
+        <icon class='btn-border {{idx==curTabIndex?"mianBtn":""}}'></icon>
+    </view>
+    </scroll-view>
+</view>
+
+<block wx:if="{{orders.length}}">
+
+<view class='order-lt border-tb' bindtap='onTapOrderView' data-idx='{{oind}}' wx:for="{{orders}}" wx:key="oKey" wx:for-index="oind" wx:for-item="oitem" >
+    <view class='statusBox clearfix'>
+        <block wx:if='{{!oitem.browse && isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+            <!-- 经销商未查看订单用点表示 -->
+            <icon class='mianBtn point'></icon>        
+        </block>
+        <block wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+            <text class='label mianBtn'>{{oitem.type}}</text>
+        </block>
+        <text class='linkMan color999'>联系人：{{oitem.linkman}}</text>
+        <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+            <text class='status mianColor'>{{oitem.orderStatusName}}</text>
+        </block>
+        <block wx:else>
+            <text class='status mianColor'>{{oitem.visitOrderStatusName}}</text>
+        </block>
+    </view>
+    <view class='order-prod'>
+        <view class='order-pdIt clearfix bgColorf7f7f7' wx:for="{{oitem.items}}" wx:key="vkey" wx:for-index="vind" wx:for-item="vitem">
+            <view class='o-imgBox'>
+                <image src="{{baseImgUrl+vitem.icon}}" data-imgind="{{vind}}" data-oind="{{oind}}" binderror='onimgfail' mode='aspectFit'></image>
+            </view>
+            <view class='o-info'>
+                <view class='clearfix'>
+                    <text class='fl mianSize color000'>{{vitem.produceName}}</text>
+                    <text class='fr mianSize color000'>￥{{vitem.price}}</text>
+                </view>
+                <view class='decBox'>
+                    <text class='dec breakLine color999'>{{vitem.property}}</text>
+                    <view class='numBox'>
+                        <view wx:if="{{role==ROLE_DISTRIBUTOR && oitem.orderType===ORDER_TYPE_VISITOR}}" class='fontSiz-22 color999'>(成本价￥{{vitem.factoryPrice}})</view>
+                        <text class='fontSiz-28 color999'>×{{vitem.count}}</text>
                     </view>
                 </view>
             </view>
-            <view class='goodsBox'>
 
-                <view class='goodsIt' wx:for="{{oitem.items}}" wx:key="vkey" wx:for-index="vind" wx:for-item="vitem">
-                    <navigator url='../details/details?prodId={{vitem.produceId}}&skuId={{vitem.skuId}}'>
-                        <view class="imgwp">
-                            <image src="{{vitem.icon}}" data-imgind="{{vind}}" data-oind="{{oind}}" binderror='onimgfail' mode='aspectFit'></image>
-                        </view>
-                        <view class='right-info'>
-                            <text class='gdName textHide'>{{vitem.produceName}}</text>
-                            <text class='gdDec'>{{vitem.property}}</text>
-                            <text class='gdPrice'>￥{{vitem.price}}</text>
-                            <text class='gdNum'>× {{vitem.count}}</text>
-                        </view>
-                    </navigator>
+        </view>
+ 
+
+    </view>
+    <view class='countInfo' wx:if='{{isDataInjected}}'>
+      <!--分销商-->
+      <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+        <!--游客订单 显示店铺合计跟成本合计-->
+        <block  wx:if="{{oitem.orderType===ORDER_TYPE_VISITOR}}">
+          <view class='it border-b'>
+                <view class='clearfix'>
+                    <text class='fl mianSize color000'>店铺价合计</text>
+                    <!--是否打过折-->
+                    <block wx:if="{{ oitem.origPrice==oitem.discountedPrice }}">
+                        <text class='fr mianSize color000'>{{oitem.origPrice}}元</text>
+                    </block>
+                    <block wx:else>
+                        <text class='fr mianSize color000'>{{oitem.discountedPrice}}元</text>
+                        <text class='fr mianSize color999 textDec-lt margin-r-10'>{{oitem.origPrice}}元</text>
+                    </block>  
+                </view>            
+          </view>
+          <view class='it border-b'>
+                <view class='clearfix'>
+                    <text class='fl mianSize color000'>成本合计</text>
+                    <text class='fr mianSize color000'>{{oitem.totalFactoryPrice}}元</text>
+                </view> 
+          </view>
+        </block>
+        <!--采购订单 直接显示成本-->
+        <block wx:else>
+            <view class='it border-b clearfix'>
+                <view class='clearfix'>
+                    <text class='fl mianSize color000'>合计</text>
+                    <text class='fr mianSize color000'>{{oitem.totalFactoryPrice}}元</text>
                 </view>
-
-
             </view>
-            <view class='countBox'>
-                <block wx:if="{{ !oitem.discountedPrice }}">
-                    总价：{{oitem.origPrice}}元
+        </block>
+      </block>
+      <!--游客-->
+      
+      <block wx:else>
+        <view class='it border-b clearfix'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>合计</text>
+                <block wx:if="{{ oitem.origPrice==oitem.discountedPrice }}">
+                    <text class='fr mianSize color000'>{{oitem.origPrice}}元</text>
                 </block>
                 <block wx:else>
-                    <text class='oriPrice'>原价{{oitem.origPrice}}元</text><text class='youhui'>实收<text class='cNum'>{{oitem.discountedPrice}}</text>元</text>
+                    <text class='fr mianSize color000'>{{oitem.discountedPrice}}元</text>
+                    <text class='fr mianSize color999 textDec-lt margin-r-10'>{{oitem.origPrice}}元</text>
                 </block>
-                
             </view>
         </view>
+      </block>
+      
+
+        <!-- <view class='it border-b clearfix' wx:if="{{oitem.orderType===ORDER_TYPE_VISITOR}}">
+            <text class='fl mianSize color000'>店铺价合计</text>
+            <text class='fr mianSize color000'>{{oitem.origPrice}}</text>
+        </view>
+        <view class='it border-b clearfix'>
+            <text class='fl mianSize color000'>{{oitem.orderType===ORDER_TYPE_VISITOR?'成本':''}}合计</text>
+            <text class='fr mianSize color000'>{{oitem.discountedPrice}}</text>
+            <text wx:if="{{role!=ROLE_DISTRIBUTOR && order.discountedPrice != order.origPrice }}" class='fr mianSize color999 textDec-lt margin-r-10'>{{order.origPrice}}</text>
+        </view> -->
     </view>
-
-    <view wx:if="{{!orders.length}}" class="no-data">暂无订单</view>
-
 </view>
+</block>
+<view wx:else class="no-data">暂无订单</view>
+
+<!-- <view class="main">
+  <scroll-view scroll-x style=" white-space: nowrap; display: flex">
+    <view wx:for="{{tabs}}" wx:key="index" data-index="{{index}}" bindtap='onTapTab'>
+      <text wx:if="{{item.selected}}">*</text>{{item.text}}
+    </view>
+  </scroll-view>
+  <view class="order-box" wx:for="{{orders}}" wx:key="oKey" wx:for-index="oind" wx:for-item="oitem">
+      <view class="order-list" bindtap='onTapOrderView' data-idx='{{oind}}'>
+        <view class='tilbox'>
+          <text class='til'>订单号：{{oitem.orderCode}}</text>
+          <block wx:if='{{!oitem.browse}}'>
+            [未查看]
+          </block>
+          <block wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+            <text>{{oitem.type}}</text>
+          </block>
+          <text class='til'>联系人：{{oitem.linkman}}</text>
+          <view class='status'>
+            <view bindtap='showStatusDetailFn' data-ind='{{oind}}' wx:if='{{isDataInjected}}'>
+              <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+                <text class='status_name mainColor'>{{oitem.orderStatusName}}</text>
+              </block>
+              <block wx:else>
+                <text class='status_name mainColor'>{{oitem.visitOrderStatusName}}</text>
+              </block>
+              <icon class='blue_tri'></icon>
+            </view>
+
+            <view class='status-detail' wx:if="{{oitem.statusDetail.isShow}}">
+              <icon class='black_tri'></icon>
+              <view>
+                <text wx:for="{{oitem.statusDetail.info}}" wx:key="stakey" class="{{ item.key == '发货' ? 'blue' : '' }}">{{item.statusName+'：'+item.createTime}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class='goodsBox'>
+
+          <view class='goodsIt' wx:for="{{oitem.items}}" wx:key="vkey" wx:for-index="vind" wx:for-item="vitem">
+            <view class="imgwp">
+              <image src="{{baseImgUrl+vitem.icon}}" data-imgind="{{vind}}" data-oind="{{oind}}" binderror='onimgfail' mode='aspectFit'></image>
+            </view>
+            <view class='right-info'>
+              <text class='gdName textHide'>{{vitem.produceName}}</text>
+              <text class='gdDec'>{{vitem.property}}</text>
+              <text class='gdPrice'>￥{{vitem.price}}</text>
+              <text class='gdNum'>× {{vitem.count}}</text>
+            </view>
+          </view>
+
+        </view>
+        <view class='countBox'>
+          <block wx:if="{{ oitem.origPrice==oitem.discountedPrice }}">
+            总价：{{oitem.origPrice}}元
+          </block>
+          <block wx:else>
+            <text class='oriPrice'>原价{{oitem.origPrice}}元</text>
+            <text class='youhui'>实收<text class='cNum'>{{oitem.discountedPrice}}</text>元</text>
+          </block>
+
+        </view>
+      </view>
+  </view>
+
+  <view wx:if="{{!orders.length}}" class="no-data">暂无订单</view>
+
+</view> -->
 
 
-<view class='connkefu {{btnff}}' bindtap='connkf' data-cname='connkefuOn'  bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>
-    <icon></icon><text class='mainColor'>咨询客服</text>
-</view>
+<!-- <view class='connkefu {{btnff}}' bindtap='connkf' data-cname='connkefuOn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>
+  <icon></icon>
+  <text class='mainColor'>咨询客服</text>
+</view> -->

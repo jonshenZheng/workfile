@@ -47,7 +47,7 @@ Page({
     },
     onShareAppMessage: function () {
       return {
-        title: '这套 "' + this.data.packageName +'" 简直太棒了!',
+        title: '[有人@我] 这套 "' + this.data.packageName +'" 简直太棒了!',
         path: '/pages/package/package?id=' + packageId,
         success: function (res) {
           // 转发成功

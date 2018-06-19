@@ -3,7 +3,8 @@ let app = getApp(),
   rq = app.bzRequest,
   baseURL = app.globalData.svr,
   commJS = require("../common/common.js"),
-  prodID;
+  prodID,
+  testThat = this;
 
 Page({
   data: {
@@ -39,10 +40,35 @@ Page({
     isRangePrice : false,
     showMaxPrice:0,
     showMinPrice:0,
+
+    prodIdParm: '',
   },
 
-  onLoad: function (e) {
 
+  getSelectPropCOP : function(){
+      this.SelectPropCOP = this.selectComponent('#SelectProp');
+  }, 
+
+  onLoad: function (options) {
+    commJS.injectData(this, options);
+    this.options = options;//缓存住，以便onShow时候刷新
+  },
+  onShow: function () {
+    if (this.expired) {
+      this.requestGoodsInfo(this.options);
+      this.expired = false;
+    }
+
+    // 主动刷新购物车数量
+    this.getCartNUM();
+
+    // 更新视图角色
+    commJS.updateRoleView(this);
+  },
+  onDataInjected:function(options){
+    this.requestGoodsInfo(options);
+  },
+  requestGoodsInfo: function (options){
     wx.showLoading({
       title: '加载中',
     })
@@ -50,11 +76,16 @@ Page({
     let self = this,
       dataO;
 
-    prodID = e.prodId;
-    var skuId = e.skuId;
-    var url = baseURL + 'produce/detail/' + prodID;
+    prodID = options.prodId;
+
+    this.setData({
+        prodIdParm: prodID
+    });
+
+    var skuId = options.skuId;
+    var url = baseURL + 'produce/detail/'+this.data.shopOfView.shopId+'/' + prodID;
     if (skuId)
-      url = baseURL + 'produce/skudetail/' + prodID + '/' + skuId;
+      url = baseURL + 'produce/skudetail/' + this.data.shopOfView.shopId + '/'+ prodID + '/' + skuId;
     rq({
       url: url,
       header: { "with-selection": "true" },
@@ -116,10 +147,6 @@ Page({
       this.setData({
           qiuckNavigShow: !isShow
       });
-  },
-  onShow: function (e) {
-    // 主动刷新购物车数量
-    this.getCartNUM();
   },
   showCartNum : function(num){
     let self = this;
@@ -193,7 +220,7 @@ Page({
       let cbFn = cb || '',
           self = this;
       rq({
-          url: baseURL + 'shopcart/count',
+          url: baseURL + 'shopcart/count/'+self.data.shopOfView.shopId,
           withoutToken: false,
           success: function (r) {
               self.setData({
@@ -219,16 +246,26 @@ Page({
   /**
    * 添加到购物车
    */
-  addToShopCart: function () {
+  addToShopCart: function (e) {
 
     let that = this;
-    let res = this.checkSelection();
-    let canSubmit = res.skuId;
+    // let res = this.checkSelection();
+    // let canSubmit = res.skuId;
+    let canSubmit = e.detail.skuid;
+    let purchaseQuantity = e.detail.num;
+    if (this.isDistributorVisitorOtherDistributor()) {
+      wx.showToast({
+        title: '您正在浏览他人店铺',
+        icon: 'none'
+      })
+      return;
+    }
     if (canSubmit) {
       rq({
         method: 'post',
         withoutToken: false,
-        url: baseURL + 'shopcart/' + prodID + '/' + this.data.goodsDetail.basicInfo.id + '/' + this.data.purchaseQuantity,
+        // url: baseURL + 'shopcart/' + this.data.shopOfView.shopId +'/'+ prodID + '/' + this.data.goodsDetail.basicInfo.id + '/' + this.data.purchaseQuantity,
+        url: baseURL + 'shopcart/' + this.data.shopOfView.shopId + '/' + prodID + '/' + canSubmit + '/' + purchaseQuantity,
         success: function (r) {
 
             wx.showToast({
@@ -236,6 +273,7 @@ Page({
               icon: 'success',
               duration: 1500
             });
+
             that.hideSelectView();
             
             that.getCartNUM(function(){
@@ -245,7 +283,8 @@ Page({
         }
       })
     } else {
-      if (this.data.bHideSelectView)
+      //if (this.data.bHideSelectView)
+        if (!this.data.isShowPop)
         this.popupSelectView();
       else
         wx.showModal({
@@ -253,6 +292,41 @@ Page({
           content: '请选择商品规格',
           showCancel: false,
         })
+    }
+  },
+  isDistributorVisitorOtherDistributor:function(){
+    return this.data.role == this.data.ROLE_DISTRIBUTOR 
+      && this.data.shop.shopId != this.data.shopOfView.shopId;
+  },
+  onTapInstantPurchaseBtn:function(){
+    let that = this;
+    let res = this.checkSelection();
+    let canSubmit = res.skuId;
+    if (canSubmit) {
+      if (this.isDistributorVisitorOtherDistributor()){
+        wx.showToast({
+          title: '您正在浏览他人店铺',
+          icon:'none'
+        })
+        return;
+      }
+
+      let basicInfo = that.data.goodsDetail.basicInfo;
+      app.tmpData.orderProducts = [
+        {
+          prodId: prodID,
+          skuId: basicInfo.id,
+          property: res.selectedPropertyStr,
+          count: that.data.purchaseQuantity,
+          produceName: basicInfo.name,
+          price: basicInfo.price,
+          factoryPrice: basicInfo.factoryPrice,
+          imgUrl: basicInfo.icon
+        }
+      ]
+      wx.navigateTo({
+        url: '../confirmOrder/confirmOrder?instantPurchase=true',
+      })
     }
   },
 
@@ -303,10 +377,14 @@ Page({
    * 规格选择弹出框
    */
   popupSelectView: function () {
-    this.setData({
-      isShowPop : true,  
-      bHideSelectView: false
-    })
+
+        this.getSelectPropCOP();
+        this.SelectPropCOP.showSelectView();
+
+        this.setData({
+            isShowPop : true,  
+            //bHideSelectView: false
+        })
   },
 
   /**
@@ -315,9 +393,18 @@ Page({
   hideSelectView: function () {
     this.setData({
       isShowPop : false,  
-      bHideSelectView: true
+      //bHideSelectView: true
     })
+    this.SelectPropCOP.hideSelectView();
   },
+
+//   组件关闭规格弹窗
+
+  closeproperty : function(){
+       this.setData({
+           isShowPop: false,
+       })
+   }, 
   
   /**
    * 增加购买数目
@@ -497,7 +584,7 @@ Page({
     // 更新商品详情
     var skuId = checkRes.skuId;
     if (skuId) {
-      var url = baseURL + 'produce/skudetail/' + prodID + '/' + skuId;
+      var url = baseURL + 'produce/skudetail/' + this.data.shopOfView.shopId + '/'+ prodID + '/' + skuId;
 
       wx.showLoading()
       rq({
@@ -584,9 +671,12 @@ Page({
   },
 
   onShareAppMessage: function () {
+    let path = '/pages/details/details?prodId=' + prodID + '&skuId=' + this.data.goodsDetail.basicInfo.id;
+    path = commJS.suffixUriWithShopId(this, path);
     return {
-      title: '我觉得你的办公室就缺这款 "'+this.data.goodsDetail.basicInfo.name+'"',
-      path: '/pages/details/details?prodId=' + prodID + '&skuId=' + this.data.goodsDetail.basicInfo.id,
+      title: '[有人@我] 我觉得你的办公室就缺这款 "'+this.data.goodsDetail.basicInfo.name+'"',
+      path: path,
+      imageUrl: this.data.goodsDetail.pics[0],
       success: function (res) {
         // 转发成功
       },
@@ -604,5 +694,26 @@ Page({
       });
   },
   
+  onTapModifyPriceBtn:function(){
+    this.expired = true;//设置页面已经过期
+    wx.navigateTo({
+      url: '../profitsetting/profitsetting?categoryCode=' + this.data.goodsDetail.basicInfo.prodTypeCode,
+    })
+  },
+  onTapShareBtn:function(){
+    if (this.data.distributorInfo.level == this.data.DIST_LV_ON_TRAIL)
+      wx.showModal({
+        title: '正式分销商才能分享商品',
+        confirmText: '注册',
+        cancelText: '取消',
+        success: function (res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '../registerStore/registerStore',
+            })
+          }
+        }
+      })
+  }
 })
 

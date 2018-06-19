@@ -10,7 +10,6 @@ page{
     padding: 20rpx 0 20rpx 0;
     position: relative;
     min-height: 100rpx;
-    border-bottom: 2rpx solid #ccc;
     overflow: hidden;
 }
 

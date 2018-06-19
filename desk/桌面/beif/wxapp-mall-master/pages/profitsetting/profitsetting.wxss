@@ -1,0 +1,138 @@
+/* pages/profitsetting/profitsetting.wxss */
+
+page{
+    background-color: #fff !important;
+    margin: 78rpx 0 88rpx;
+    height: auto;
+
+}
+
+.scrollBtnwp{
+    padding: 20rpx 20rpx 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: #fff;
+    width: 100%;
+}
+ .scrollBtnBox{
+    white-space: nowrap; 
+    display: flex;
+    width: 690rpx;
+} 
+
+.scrollBtnIt{
+    height: 30rpx;
+    line-height: 30rpx;
+    padding: 0 25rpx;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 20rpx;
+}
+
+.scrollBtnName{
+    font-size: 28rpx;
+}
+
+
+.saveBtn{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    border-radius: 0;
+    z-index: 2;
+}
+
+
+
+.topBox{
+    padding: 34rpx 40rpx 30rpx;
+}
+
+.topBox .text-til{
+    font-size: 32rpx;
+    padding-bottom: 30rpx
+}
+
+.ico-money{
+    display: inline-block;
+    width: 32rpx;
+    height: 32rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-money.png);
+    background-size: 100% 100%;
+    position: relative;
+    margin-right: 10rpx;
+    top: 6rpx;
+}
+
+.topBox .tips{
+    font-size: 26rpx;
+    padding-bottom: 14rpx;
+}
+
+.topBox .tips2{
+    font-size: 24rpx;
+    line-height: 30rpx;
+}
+
+.Pane-it{
+    margin-left: 30rpx;
+    padding-right: 70rpx;
+    position: relative;
+}
+
+
+.Pane:last-child .Pane-it,.Pane:last-child .Pane-it::after{
+    border: 0 !important;
+}
+
+.Pane-it .i-name{
+    float: left;
+    height: 88rpx;
+    line-height: 88rpx;
+    max-width: 380rpx;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.Pane-it .i-val{
+    float: right;
+    height: 88rpx;
+    line-height: 88rpx;
+    width: 200rpx;
+    text-align: right;
+    padding-right: 40rpx;
+    margin-right: -40rpx;
+}
+
+.Pane-it .unit{
+    position: absolute;
+    right: 30rpx;
+    top: 0;
+    height: 88rpx;
+    line-height: 88rpx;
+}
+
+
+.botBox{
+    border-top: 1px solid #f7f7f7;
+    border-bottom: 1px solid #f7f7f7;
+}
+
+
+.btn-border{
+    position: absolute;
+    left: 0;
+    bottom: 0rpx;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+}
+
+
+@import '../common/common.wxss';

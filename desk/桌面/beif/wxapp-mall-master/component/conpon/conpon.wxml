@@ -1,0 +1,54 @@
+<view class='couponPopWpBg {{showCoupon?"active":""}}' bindtap='hideCouponPop'>
+</view>
+<view class='couponPop {{showCoupon?"active":""}}'>
+  <view class='til'>优惠券</view>
+  <view class='list'>
+    <view class='ticketWp'>
+      <block wx:if='{{coupons.length>0}}'>
+        <view class='it border-4' wx:for="{{coupons}}" wx:key="unique" bindtap='selectFn' data-ind='{{index}}'>
+          <view class='moneyBox flex_cen {{item.available?"mianBtn":"disableBtn"}}'>
+            <view class='number'>
+              <text class='unit'>¥</text>
+              <text class='num'>{{item.value}}</text>
+            </view>
+            <text class='wdd mianSize'>{{item.title}}</text>
+          </view>
+          <view class='info'>
+            <block wx:for="{{item.limits}}" wx:key="unique" wx:for-index="index" wx:for-item="limit">
+              <view class='wd {{coupon.status == COUPON_STATUS_HAVE?"color000":"color999"}}'>
+                <icon class='point {{coupon.status == COUPON_STATUS_HAVE?"bgColor000":"bgColor999"}}'></icon>{{limit}}</view>
+            </block>
+            <view class='wd {{coupon.status == COUPON_STATUS_HAVE?"color000":"color999"}}'>
+              <icon class='point {{coupon.status == COUPON_STATUS_HAVE?"bgColor000":"bgColor999"}}'></icon>有效期：{{item.validPeriod.from}}-{{item.validPeriod.to}}</view>
+
+          </view>
+
+            <block wx:if="{{item.available}}">
+                <icon class='ico-select {{item.isSelect?"active":""}}' wx:if='{{item.available}}'></icon>
+            </block>
+            <block wx:else>
+
+                <block wx:if="{{item.status == COUPON_STATUS_USED}}">
+                    <icon class='ico-use'></icon>
+                </block>
+                <block wx:elif="{{item.status == COUPON_STATUS_EXPIRED}}">
+                    <icon class='ico-expired'></icon>
+                </block>
+
+            </block>
+
+        </view>
+      </block>
+      <text wx:else>空空如也~ </text>
+    </view>
+  </view>
+
+  <!-- <view class='btnBox'>
+        <text class='qd mianBtn' wx:for="{{btnObj}}" wx:key="unique" bindtap='runFn' data-ind='{{index}}' >{{item.name}}</text>
+    </view> -->
+  <view class='btnBox'>
+    <text class='qd mianBtn' bindtap='hideCouponPop'>关闭</text>
+  </view>
+</view>
+
+<slot></slot>

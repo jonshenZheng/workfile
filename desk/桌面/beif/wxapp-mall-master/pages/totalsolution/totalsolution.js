@@ -45,14 +45,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+    // common.injectData(this, options)
   },
 
   /**
@@ -93,11 +86,29 @@ Page({
 
 
           app.globalData.tempdata.refresh = false;
-      }
-
-      
-
+      }    
   },
+
+  // /**
+  //  * 用户点击右上角分享
+  //  */
+  // onShareAppMessage: function () {
+  //   let data = getCurrentPages()[0].data;
+  //   let path = '/pages/totalsolution/totalsolution';
+  //   path = common.suffixUriWithShopId(this, path);
+  //   console.log(path)
+  //   return {
+  //     title: '[有人@我] 这里有十万款办公家具产品，简直太牛了',
+  //     path: path,
+  //     imageUrl: "https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/share-myshop.png",
+  //     success: (res) => {
+  //       console.log("转发成功", res);
+  //     },
+  //     fail: (res) => {
+  //       console.log("转发失败", res);
+  //     }
+  //   }
+  // },
   //删除选中的图片
   delImgFn : function(e){
       var ind = e.currentTarget.dataset.ind,
@@ -294,40 +305,5 @@ Page({
     });
     upFn();
 
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

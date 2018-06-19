@@ -1,0 +1,383 @@
+@import '../../common/common.wxss';
+
+page{
+    height: auto;
+    padding-bottom: 110rpx;
+}
+.order-box{
+    margin: 30rpx 20rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    padding: 20rpx 0;
+    border: 2rpx solid #e4e4e4;
+}
+
+.order-box .tilbox{
+    position: relative;
+    padding: 8rpx 20rpx 20rpx;
+    border-bottom: 2rpx solid #e4e4e4;
+}
+
+.order-box .til{
+    color: #666;
+    font-size:30rpx;
+    display:block;
+    margin-right:240rpx;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+
+}
+
+.order-box .tilbox .status{
+    /*border:2rpx solid #999;*/
+    color:#999;
+    font-size:26rpx;
+    position:absolute;
+    z-index: 1;
+    right:22rpx;
+    top:0rpx;
+    /*border-radius:6rpx;*/
+    padding:4rpx 10rpx;
+}
+
+.order-box .goodsBox{
+    padding: 20rpx 20rpx 0;
+    border-bottom: 2rpx solid #ccc; 
+}
+
+.order-box .goodsBox .goodsIt{
+    margin-bottom: 20rpx;
+    position: relative;
+    min-height: 100rpx;
+
+}
+
+.order-box .goodsBox .imgwp{
+    position: absolute;
+    left : 0;
+    top : 0;
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.order-box .goodsBox image{
+    max-width: 100rpx;
+    max-height: 100rpx;
+    display: block;
+}
+
+.order-box .right-info{
+    margin-left: 116rpx;
+    position: relative;
+    min-height: 100rpx;
+}
+
+.order-box .goodsBox .gdName{
+    font-size: 30rpx;
+    color: #666;
+    display: block;margin-right: 100rpx;
+}
+
+.order-box .goodsBox .gdDec{
+    font-size: 28rpx;
+    color: #666;
+    min-height: 20rpx;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 120rpx
+}
+
+.order-box .goodsBox .gdPrice{
+    font-size: 26rpx;
+    color: #ccc;
+}
+
+.order-box .goodsBox .gdNum{
+    font-size: 38rpx;
+    color: #666;
+    position:absolute;
+    right:0;
+    top:50%;
+    margin-top:-26rpx;
+
+}
+.textHide{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-box .countBox{
+    text-align: right;
+    padding-right: 20rpx;
+    padding-top: 20rpx;
+    font-size: 30rpx;
+    color: #999;
+}
+
+.order-box .countBox .cNum{
+    font-size: 40rpx;
+    color: #f99;
+    padding: 0 10rpx;
+    vertical-align:middle;
+    display:inline-block;
+    margin-top:-8rpx;
+}
+
+
+.order-box .oriPrice{
+    font-size:30rpx;
+    text-decoration:line-through;
+    padding-right:20rpx;
+    color:#ccc;
+}
+
+.order-box .status_name,.order-box .blue_tri{
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.order-box .status_name{
+    font-size:30rpx;
+}
+
+.order-box .blue_tri{
+    width: 18rpx;
+    height: 10rpx;
+    margin-left: 16rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/order-tri-down.png);
+    background-size: 100% 100%;
+}
+
+.order-box .status-detail{
+    position: absolute;
+    right: -30rpx;
+    top:60rpx;
+    width: 364rpx;
+    padding: 20rpx;
+    border-radius: 12rpx;
+    background-color: #333;
+}
+
+.order-box .status-detail text{
+    display: block;
+    color: #999;
+}
+
+.order-box .status-detail .blue{
+    color: #199ED8;
+}
+
+.order-box .status-detail .black_tri{
+    position:absolute;
+    width:0;
+    height:0;
+    border-style:solid;
+    border-color:transparent transparent #333 transparent;
+    border-width:12rpx 14rpx 12rpx 14rpx;
+    top:-20rpx;
+    right:90rpx;
+}
+
+.no-data{
+    padding:40rpx 0;
+    color: #999;
+    text-align: center;
+}
+
+.connkefu{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    background-color: #fff;
+    width: 100%;
+    box-shadow:0 0 8rpx 0;
+    z-index: 11;
+}
+
+.connkefuOn{
+    background-color: #f1f1f1;
+    /*background-color: #fbfbfb;*/
+}
+
+.connkefu text{
+    font-size: 28rpx;
+}
+
+.connkefu icon{
+    display: inline-block;
+    width: 36rpx;
+    height: 30rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-kf_blue.png);
+    background-size: 100% 100%;
+    margin-right: 10rpx;
+    vertical-align: middle;
+    margin-top: -4rpx;
+}
+
+.main{
+    margin-bottom: 120rpx;
+}
+
+
+.order-lt{
+    margin-top: 16rpx;
+    background-color: #fff;
+}
+
+.order-lt .statusBox{
+    padding: 22rpx 30rpx;
+}
+
+.order-lt .point,.order-lt .label,.order-lt .linkMan{
+    float: left;
+}
+.order-lt .status{
+    float: right;
+}
+
+.order-lt .point{
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: 50%;
+    margin-top: 10rpx;
+}
+
+.order-lt .label,.order-lt .linkMan,.order-lt .status{
+    font-size: 28rpx;
+}
+
+.order-lt .label{
+    height: 38rpx;
+    line-height:38rpx;
+    padding: 0 10rpx;
+    text-align: center;
+    border-radius: 18rpx; 
+}
+
+.order-lt .label,.order-lt .point{
+    margin-right: 12rpx;
+}
+
+.order-lt .o-imgBox{
+    width: 100rpx;
+    height: 100rpx;
+    float: left;
+}
+.order-lt .o-imgBox image{
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+
+.order-lt .o-info{
+    width: 576rpx;
+    float: right;
+}
+
+.order-lt .order-pdIt{
+    padding: 12rpx 30rpx;
+    margin-top: 8rpx;
+}
+
+.order-lt .order-pdIt:first-child{
+    margin-top: 0;
+}
+
+.order-lt .decBox{
+    padding-right: 180rpx;
+    position: relative;
+    min-height: 72rpx;
+}
+
+.order-lt .dec{
+    font-size: 26rpx;
+    line-height: 32rpx;
+}
+
+.order-lt .numBox{
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: right;
+}
+
+.order-lt .countInfo{
+    padding-left:30rpx; 
+}
+
+.order-lt .countInfo .it{
+    padding: 22rpx 30rpx 22rpx 0;
+}
+
+.order-lt .countInfo .it:last-child,.order-lt .countInfo .it:last-child::after{
+    border:0; 
+}
+
+.order-lt .addr{
+    position: relative;
+}
+
+.order-lt .addr .fl{
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items : center;
+    height: 100%;
+}
+
+.order-lt .addr .fr{
+    width: 500rpx;
+    word-spacing: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: justify;
+}
+
+.order-lt .tipBox{
+    padding-left: 30rpx;
+    height: 66rpx;
+    line-height: 66rpx;
+    background-color: #f2f8ff;
+}
+
+.order-lt .ico-tri{
+    display: inline-block;
+    width: 14rpx;
+    height: 24rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/orderDetail-tri.png);
+    background-size: 100% 100%;
+    margin-bottom: -2rpx;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 99rpx;
+    background-color: #f2f8ff;
+    width: 100%;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+}
+
+.footer .btnB{
+    float: right;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding: 0 10rpx;
+    margin-left: 48rpx;
+    margin-top: 16rpx;
+}
+
+
+
+

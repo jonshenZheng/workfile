@@ -1,19 +1,211 @@
-<view class="main">
-    <view class='imageBox'>
-        <image class="bgimg" src="../../image/userHeadBg.png" mode='widthFix'></image>
-        <view class="headbox flex_cen">
-            <view class='userInfoWp'>
-                <image src="{{thumb}}" class="thumb"></image>
-                <text class="nickname">{{nickname}}</text>
+<component-goBackMyStore wx:if='{{role==ROLE_DISTRIBUTOR&&shop.shopId!=shopOfView.shopId}}'></component-goBackMyStore>
+<view class="main mianSize" wx:if='{{isDataInjected}}'>
+
+    <block wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}'>
+        <block wx-if='{{distributorInfo.level==DIST_LV_ON_TRAIL}}'>
+            <view class='headVipWp' wx-if='{{distributorInfo.expiryCountdown&&!distributorInfo.expiryCountdown.isOver}}' >
+                <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-try.png' mode='widthFix' ></image>
+                <view class='vipBtnBox clearfix'>
+                    <text class='timeTips'>剩余时间仅有：</text>
+                    <view class='timeBox'>
+                        <view class='tBox'>{{distributorInfo.expiryCountdown.days}}</view>
+                        <view class='unit'>天</view>
+                        <view class='tBox'>{{distributorInfo.expiryCountdown.hours}}</view>
+                        <view class='unit'>时</view>
+                        <view class='tBox'>{{distributorInfo.expiryCountdown.minutes}}</view>
+                        <view class='unit'>分</view>
+                        <view class='tBox'>{{distributorInfo.expiryCountdown.seconds}}</view>
+                        <view class='unit'>秒</view>
+                    </view>
+                    <navigator class='btnV' url='../registerStore/registerStore?type=regist' open-type="navigate" >
+                        <icon class='btnB'></icon>
+                        <text>成为正式分销商</text>
+                    </navigator>
+                </view>
             </view>
+
+            <view class='headVipWp exprired' wx:else>
+                <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-expired.png' mode='widthFix'></image>
+                <view class='expriredBox clearfix'>
+                    <navigator class='btnV' url='../registerStore/registerStore?type=regist' open-type="navigate" >
+                        <icon class='btnB'></icon>
+                        <text>成为正式分销商</text>
+                    </navigator>
+                </view>
+            </view>
+        </block>
+        <block wx:else>
+            <view class='headVipWp'>
+                <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg.png' mode='widthFix'></image>
+                <view class='countBox'>
+                    <icon class='ico-countMoney'></icon>
+                    <text class='color000 mianSize'>累计销售额：{{distributorInfo.salesAmountLocaleStr}}</text>
+                </view>
+            </view>   
+        </block>
+    </block>
+
+    <block wx-if='{{isDataInjected && role==ROLE_VISITOR &&distributorInfo}}'>
+        <view class='headVipWp exprired'>
+            <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-expired.png' mode='widthFix'></image>
+            <view class='expriredBox clearfix'>
+                <navigator class='btnV' url='../registerStore/registerStore?type=regist' open-type="navigate" >
+                    <icon class='btnB'></icon>
+                    <text>成为正式分销商</text>
+                </navigator>
+            </view>
+        </view>
+ 
+    </block>
+
+
+    <view class='headerbox' wx:if="{{!thumb}}">
+        <button  class='getUserInfo' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录</button>
+    </view>
+
+    <view class='headerbox' wx:else>
+        <view class='thumbWp clearfix'>   
+            <image src="{{thumb}}" class="thumb"></image>
+            <view class='thumbInfo'>
+                <view class="nickname mianSize">{{nickname}} 
+                    <text class='vip-logo color000' wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}' >{{distributorInfo.level==DIST_LV_ON_TRAIL ? (distributorInfo.expiryCountdown.isOver?'试用期失效':'试用分销商'):'正式分销商'   }}</text>
+                </view>
+                <view class='phoneN' wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}' >{{distributorInfo.servicePhone}}</view>
+            </view>
+        </view>
+        <!-- <icon class='user-ico-tri'></icon> -->
+    </view>
+     
+    <view class='panel settingPane margin-b-16' wx-if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+        <view class='itm' bindtap="onTapSetProfitBtn">
+            <view class='iconBox'>
+                <icon class='setting'></icon>
+            </view>
+            <text class='mianSize'>价格设置</text>
+        </view>
+        <block wx:if='{{distributorInfo.level!=DIST_LV_ON_TRAIL}}'>
+          <button open-type="share" class='itm shareStore'>
+              <view class='iconBox'>
+                  <icon class='share'></icon>
+              </view>
+              <text class='mianSize color000 shareStoreText'>分享店铺</text>
+          </button>
+        </block>
+        <block wx:else>
+          <button class='itm shareStore' bindtap='onTapShareShopBtn'>
+              <view class='iconBox'>
+                  <icon class='share'></icon>
+              </view>
+              <text class='mianSize color000 shareStoreText'>分享店铺</text>
+          </button>
+        </block>
+        
+        <view class='itm' bindtap="onTapShowQRCodeBtn">
+            <view class='iconBox'>
+                <icon class='eqr'></icon>
+            </view>
+            <text class='mianSize'>店铺二维码</text>
         </view>
     </view>
 
-    <view class='listbox'>
+    <view class='listPane margin-b-16 border-b'>
+         
+        <view class='item border-b' wx-if='{{isDataInjected&&role==ROLE_DISTRIBUTOR&&!distributorInfo.expiryCountdown.isOver}}'>
+            <view class='clearfix'>
+                <view class='icoBox'>
+                    <icon class='ico ico-store'></icon>
+                </view>
+                <text class='lab-til color000 mianSize'>隐藏成本价</text>
+                <view class='location mianColor'>
+                    <!-- <switch class='wx-switch-input' checked='{{forceVisitorView}}' bindchange="onProfitHideSwitchChange"/> -->
+                    <view class="btn-on-off {{forceVisitorView?'active':''}}" bindtap='changeStoreView' >
+                        <icon></icon>
+                    </view>            
+                </view>
+            </view>
+        </view>
+        <navigator url='../orders/orders'>
+            <view class='item border-b'>
+                <view class='clearfix'>
+                    <view class='icoBox'>
+                        <icon class='ico ico-order'></icon>
+                    </view>
+                    <text class='lab-til color000 mianSize'>我的订单</text>
+                    <view class='location mianColor'>
+                        <text wx:if='{{unbrowsedOrderCount>0}}' class='order-num'>{{unbrowsedOrderCount}}</text><icon class='ico-tri'></icon>                    
+                    </view>
+                </view>
+            </view>
+        </navigator>
+        <navigator url='../coupon/coupon'>
+          <view class='item border-b' wx-if='{{isDataInjected&&role==ROLE_DISTRIBUTOR && distributorInfo.level!=DIST_LV_ON_TRAIL}}'>
+              <view class='clearfix'>
+                  <view class='icoBox'>
+                      <icon class='ico ico-ticket'></icon>
+                  </view>
+                  <text class='lab-til color000 mianSize'>我的优惠券</text>
+                  <view class='location mianColor'>
+                      <icon class='ico-tri'></icon>                    
+                  </view>
+              </view>
+          </view>
+        </navigator>
+        <navigator url='../collection/collection'>
+            <view class='item'>
+                <view class='clearfix'>
+                    <view class='icoBox'>
+                        <icon class='ico ico-collect'></icon>
+                    </view>
+                    <text class='lab-til color000 mianSize'>我的收藏</text>
+                    <view class='location mianColor'>
+                        <icon class='ico-tri'></icon>                    
+                    </view>
+                </view>
+            </view>
+       </navigator>
+    </view>
+
+    <view class='listPane border-tb ' style='margin-bottom:16rpx' >
+        <view class='item border-b' wx:if="{{isDataInjected && (role==ROLE_DISTRIBUTOR||shopOfView.shopId=='bzshop')}}" >
+            <button open-type="contact" session-from="weapp" class='list' style="display:block;"> 
+                <view class='clearfix'>
+                    <view class='icoBox'>
+                        <icon class='ico ico-kefu'></icon>
+                    </view>
+                    <text class='lab-til color000 mianSize' style='padding:0'>在线客服</text>
+                    <view class='location mianColor' style='top:-2rpx;right:0'>
+                        <icon class='ico-tri'></icon>                    
+                    </view>
+                </view>
+            </button>
+        </view>
+        <view class='item' bindtap='callkf'>
+            <view class='clearfix'>
+                <view class='icoBox'>
+                    <icon class='ico ico-tel'></icon>
+                </view>
+                <text class='lab-til color000 mianSize'>客服热线</text>
+                <view class='location mianColor'>
+                    <icon class='ico-tri'></icon>                    
+                </view>
+            </view>
+        </view>
+       
+    </view>
+
+
+    
+
+    <!-- <view class='listbox'>
     
         <view class='list'>
             <navigator url='../orders/orders'>
                 <view class="icowp"><icon class='ico1'></icon></view><text>我的订单</text><icon class='tri_rig'></icon>    
+            </navigator>
+        </view>
+        <view class='list'>
+            <navigator url='../orders/orders?source=shop'>
+                <view class="icowp"><icon class='ico1'></icon></view><text>店铺订单</text><icon class='tri_rig'></icon>    
             </navigator>
         </view>
         <view class='list'>
@@ -28,8 +220,15 @@
         <button open-type="contact" session-from="weapp" class='list' style="display:block;"> 
             <view class="icowp"><icon class='ico3'></icon></view><text>在线客服</text><icon class='tri_rig'></icon>
         </button>
-        <view class='list' bindtap='callkf'><view class="icowp"><icon class='ico4'></icon></view><text>客服热线</text><icon class='tri_rig'></icon></view>
+         <block wx:if="{{roleOfView==ROLE_DISTRIBUTOR}}"> 
+          <view class='list' bindtap='callkf'><view class="icowp"><icon class='ico4'></icon></view><text>客服热线</text><icon class='tri_rig'></icon></view>
+         </block> 
 
     </view>
    
+    <text>隐藏收益</text>
+    <switch checked='{{forceVisitorView}}' bindchange="onProfitHideSwitchChange" wx:if='{{role==ROLE_DISTRIBUTOR}}'/>
+    <button bindtap="onTapShowMyShopBtn" wx:if='{{role==ROLE_DISTRIBUTOR&&shop.shopId!=shopOfView.shopId}}'>我的店铺</button> -->
+     
+
 </view>

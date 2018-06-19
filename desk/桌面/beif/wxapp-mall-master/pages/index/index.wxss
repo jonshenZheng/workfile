@@ -1,4 +1,13 @@
-@import '../common/common.wxss';
+.testDiv{
+    height: 50rpx;
+    text-align: center;
+    font-size: 30rpx;
+    margin-bottom: 20rpx;
+    background-color: #fff;
+}
+
+
+ @import '../common/common.wxss';
 .layout{padding: 0 20rpx;}
 swiper {
     /*height: 421.5rpx;*/
@@ -8,17 +17,20 @@ swiper-item image {
     height: 100%;
 }
 
+.newest{
+    background-color: #fff;
+    padding-bottom: 2rpx;
+}
+
 .newest-title{
     font-size: 30rpx;
-    padding:30rpx 20rpx 10rpx;
+    padding:16rpx 0 6rpx;
     height: 40rpx;
     color: #999;
-    padding-botom: 6rpx;
-    border-bottom: 2rpx solid #ccc; 
 }
 
 .newest-title .morePD{
-    padding-top: 2rpx;
+    /* padding-top: 2rpx; */
     float: right;
     font-size: 26rpx;
     height: 60rpx;
@@ -304,16 +316,14 @@ swiper-item image {
 }
 
 .baokuang{
-    background-color: #333;
     height:60rpx;
     line-height:60rpx;
-    padding: 0 20rpx;
     color: #fff;
     border:0;
 }
 
 .baokuanImgBox{
-    padding: 10rpx 20rpx;
+    padding: 10rpx 0;
 }
 
 .baokuanImgBox .newest-list{
@@ -334,7 +344,7 @@ swiper-item image {
     width: 10%;
     margin-left: -5%;
     padding-top: 5.56%;
-    background: url(http://localhost/image/showMorePage.png);
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/showMorePage.png);
     background-size: 100% 100%;
     animation: slideUp 1.6s infinite;
 }
@@ -395,6 +405,9 @@ swiper-item image {
     border-radius: 50%;
 }
 
+.newest-til{
+    font-size: 34rpx;
+}
 
 .indexPop .cent{
     position:absolute;
@@ -445,10 +458,256 @@ swiper-item image {
     width: 100%;
 }
 
+.headimgWp{
+    position: relative;
+}
+
+.headimgWp image{
+    display: block;
+    width: 100%;
+}
 
 
+.headSereach{
+    position: absolute;
+    top: 17rpx;
+    left: 0;
+    width: 100%;
+}
+
+.headSereach .wp{
+    margin: 0 40rpx;
+    position: relative;
+}
+
+.headSereach input{
+    display: block;
+    padding:0 158rpx 0 68rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    border-radius: 10rpx;
+    background-color: #fff;
+    font-size: 26rpx;
+}
+
+.headSereach input.hide{
+    visibility: hidden;
+}
+
+.headSereach icon,.headSereach button{
+    position: absolute;
+    border: 0;
+}
+.headSereach button::after{
+    display: none;
+} 
+
+.headSereach .sereachIco{
+    left: 16rpx;
+    top: 50%;
+    height: 30rpx;
+    margin: -15rpx 0 0;
+    padding: 0;
+    width: 31rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-sereach.png);
+    background-size: 100% 100%;
+    box-sizing: content-box;
+}
+
+.headSereach .sereachImgIco{
+    right: 16rpx;
+    top: 50%;
+    margin-top: -17rpx;
+    height: 35rpx;
+    width: 37rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-sereachIMG.png);
+    background-size: 100% 100%;
+}
+
+.headimgWp .chuishui{
+    position: absolute;
+    left: 0;
+    top: 44%;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    letter-spacing:2rpx;
+}
+
+.headimgWp .headbtnBox{
+    position: absolute;
+    left: 0;
+    top: 70%;
+    width: 100%;
+}
+
+.headimgWp .headbtnBox .bt{
+    text-align: center;
+    font-size: 26rpx;
+    color: #fff;
+    display:block;
+    margin:0 auto;
+    width:200rpx;
+    height:60rpx;
+    line-height: 60rpx;
+    background:url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-head-btn-bg.png);
+    background-size:100% 100%;
+}
+
+.muneBox{
+    padding: 14rpx 30rpx;
+    background-color: #fff;
+}
+
+.muneBox .hideBox{
+    overflow: hidden;
+}
+
+.muneBox .wp{
+    width: 108.9852%;
+}
+
+.muneBox .wp .it{
+    float: left;
+    width: 25%;
+    padding: 16rpx 0;
+}
+
+.muneBox .wp .ico{
+    display: block;
+    width: 65.9574%;
+    padding-top: 65.9574%;
+}
 
 
+.muneBox .ico-ztl{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-ztl.png);
+    background-size: 100% 100%;
+}
 
+.muneBox .ico-gzw{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-gzw.png);
+    background-size: 100% 100%;
+}
+
+.muneBox .ico-yl{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-yl.png);
+    background-size: 100% 100%;
+}
+
+.muneBox .ico-gl{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-gl.png);
+    background-size: 100% 100%;
+}
+
+.muneBox .ico-sfl{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-sfl.png);
+    background-size: 100% 100%;
+}
+
+.muneBox .ico-cjl{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-cjl.png);
+    background-size: 100% 100%;
+}
+
+.muneBox .ico-pj{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-pj.png);
+    background-size: 100% 100%;
+}
+
+.muneBox .ico-qb{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-btn-qb.png);
+    background-size: 100% 100%;
+}
+
+.prodList{
+    background-color: #fff;
+    border-radius: 20rpx;
+    height: 220rpx;
+}
+
+.prodList .imgBox{
+    width: 220rpx;
+    height: 220rpx;
+    background-color: #f5f5f5;
+    float: left;
+    border-top-left-radius: 10rpx;
+    border-bottom-left-radius: 10rpx;
+    overflow: hidden;
+}
+
+.prodList .imgBox image{
+    max-height: 220rpx;
+    max-width: 220rpx;
+}
+
+.prodList .infoBox{
+    float: right;
+    width: 440rpx;
+}
+
+.prodList .pdName{
+    padding: 26rpx 0 4rpx;
+}
+
+.prodList .leibie{
+    font-size: 26rpx;
+    padding-bottom: 4rpx;
+}
+
+
+.prodList .price1,.prodList .price2{
+    float: left;
+}
+
+.prodList .price1{
+    padding-right:10rpx; 
+}
+
+.prodList .price1 .pr1{
+    padding: 0 6rpx;
+    font-size: 26rpx;
+    height: 34rpx;
+    line-height: 34rpx;
+    vertical-align: bottom;
+    border-radius: 5rpx;
+}
+
+.prodList pr1,.prodList .pr2{
+    display: block;
+}
+
+.prodList .price2 .pr1,.prodList .price2 .pr2{
+    font-size: 22rpx;
+}
+
+.prodList .price2 .pr2{
+    margin-top: 6rpx;
+}
+
+.baokuanImg{
+    padding-bottom: 10rpx;
+}
+
+
+page .testD{
+    width: 400rpx;
+    height: 100rpx;
+    text-align: center;
+    margin: 20rpx auto;
+}
+
+page .testD.border::after{
+    border: 1px solid #000;
+}
+
+
+.fffd{
+    background: #fff;
+    padding: 10rpx;
+}
+
+
+@import '../common/common.wxss';
 
 

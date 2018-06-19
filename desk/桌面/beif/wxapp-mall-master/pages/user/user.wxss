@@ -1,7 +1,7 @@
 @import '../common/common.wxss';
 
 page{
-    background-color: #f0f2f5;
+    background-color: #f5f5f5;
 }
 .imageBox{
     position: relative;
@@ -53,6 +53,13 @@ page{
     line-height: 90rpx;
     border-top:2rpx solid #ccc;
     padding: 0 20rpx;
+    position: relative;
+}
+
+.item .list{
+    height: 64rpx;
+    line-height: 64rpx;
+    padding: 0;
     position: relative;
 }
 
@@ -132,23 +139,447 @@ page{
     background-size: 100% 100%;
 }
 
-.listbox button{
+.listbox button,.item button{
     text-align: left;
     background-color: #fff !important;
 }
 
 
-.listbox button::after{
+.listbox button::after,.item button::after{
     display: none;
 } 
 
 
+.headerbox{
+    background-color: #fff;
+    margin: 20rpx 0;
+    min-height: 150rpx;
+    display: flex;
+    align-items : center;
+    position: relative;
+}
+
+.headerbox .getUserInfo{
+    width: 200rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    margin: 0 atuo;
+    font-size: 32rpx;
+    background-color: #fff;
+}
+
+.headerbox .vip-logo{
+    display: inline-block;
+    border-radius: 20px;
+    height: 42rpx;
+    padding: 0 16rpx;
+    font-size: 24rpx;
+    line-height: 42rpx;
+    margin-left: 10rpx;
+    background-color: #c9e2ff;
+    position: relative;
+    top: -4rpx;
+}
+
+.headerbox .thumbWp{
+    margin: 0 30rpx;
+    position: relative;
+}
+
+.headerbox .thumb{
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    float: left;
+    margin-right: 20rpx;
+}
+
+.headerbox .thumbInfo{
+    float: left;
+    padding-top:12rpx;
+
+}
+
+.headerbox .phoneN{
+    font-size: 26rpx;
+    color: #999;
+}
+
+.vipBox{
+    margin: 22rpx 17px;
+    border: 1px solid #d6c5c7;
+    padding: 26rpx 0 16rpx 0;
+    background-color: #fbf3ea;
+    min-height: 150rpx;
+    position: relative;
+    border-radius:6px;
+}
+
+.vipBox .medal{
+    position: absolute;
+    left: 20rpx;
+    top: 0;
+    height: 180rpx;
+    width: 122rpx;
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-medal.png');
+    background-size: 100% 100%;
+}
+
+.vipBox .medal.shiyong{
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-medal-shiyong.png');
+    background-size: 100% 100%;
+}
+
+.vipBox .til{
+    font-size: 34rpx;
+    font-weight: bold;
+    padding-bottom: 26rpx;
+}
+.vipBox .dec{
+    font-size: 26rpx;
+    text-align: justify;
+    line-height: 32rpx;
+    padding-right: 32rpx;
+}
+
+.vipBox .til,.vipBox .dec{
+    padding-left: 156rpx;
+}
+
+.vipBtnBox{
+    padding: 40rpx 16rpx 0 16rpx;
+    position: relative;
+}
+
+.headVipWp .vipBtnBox{
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+}
+
+.vipBtnBox .timeTips{
+    position: absolute;
+    left: 16rpx;
+    top: 0rpx;
+    color: #e96e71;
+    font-size: 18rpx;
+}
+
+.vipBtnBox .timeBox{
+    float: left;
+}
+
+.vipBtnBox .timeBox .tBox,.vipBtnBox .timeBox .unit{
+    float: left;
+}
+
+.vipBtnBox .timeBox .tBox{
+    font-size: 32rpx;
+    color: #000;
+    border-radius: 5px;
+    border: 1px solid #cfad7e;
+    width: 50rpx;
+    text-align: center;
+    height: 60rpx;
+    line-height: 60rpx;
+}
+
+.vipBtnBox .timeBox .unit{
+    padding: 28rpx 12rpx 0 8rpx;
+    box-sizing: content-box;
+    font-size: 22rpx;
+}
+
+.vipBtnBox .btnV,.headVipWp .btnV{
+    float: right;
+    width: 260rpx;
+    height: 60rpx;
+    text-align: center;
+    line-height: 60rpx;
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-regist-bg.png');
+    background-size: 100% 100%;
+    font-size: 26rpx;
+    color: #fff;
+}
+
+.vipBtnBox .btnB,.headVipWp .btnB{
+    display: inline-block;
+    width: 26rpx;
+    height: 30rpx;
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-wallet.png');
+    background-size: 100% 100%;
+    margin-top: 10rpx;
+    position: relative;
+    top: 4rpx;
+    margin-right: 6rpx;
+}
+
+.vipBox.timeOver .timeTips,.vipBox.timeOver .timeBox{
+    display: none;
+}
+
+.vipBox.timeOver .btnV{
+    float: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.vipBox.realVip .vipBtnBox{
+    display: none;
+}
 
 
+.user-ico-tri{
+    position: absolute;
+    right: 30rpx;
+    top: 50%;
+    margin-top: -16rpx;
+    width: 19rpx;
+    height: 32rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-tri.png);
+    background-size: 100% 100%;
+    
+}
+
+.panel{
+    background-color:#fff;
+    padding: 26rpx 0; 
+}
+
+.settingPane{
+    display: flex;
+}
+
+.settingPane .itm{
+    flex-grow:1;
+    text-align: center;
+}
+
+.settingPane .iconBox{
+    height: 60rpx;
+}
+
+.settingPane icon{
+    display: block;
+    margin: 0 auto;
+}
+
+.settingPane .setting{
+    width: 41rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-setting.png);
+    background-size: 100% 100%;
+}
+
+.settingPane .share{
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-share.png);
+    background-size: 100% 100%;
+}
+
+.settingPane .eqr{
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-eqr.png);
+    background-size: 100% 100%;
+}
 
 
+.item{
+    padding: 14rpx 30rpx 14rpx 0;
+    position: relative;
+}
+
+.item .getCode{
+    position: absolute;
+    right: 30rpx;
+    top: 24rpx;
+}
+
+.item .getCode::after{
+    display: none;
+}
 
 
+.item .lab-inp{
+    float: left;
+    height:20rpx;
+    padding:6rpx 0;
+    width: 80%;
+}
 
+.lab-til{
+    float: left;
+    padding: 12rpx 0;
+}
+
+.item .location{
+    position: absolute;
+    right: 30rpx;
+    top: 24rpx;
+    z-index: 2;
+}
+
+.item .location .ico-tri{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-tri.png);
+    background-size: 100% 100%;
+    width: 14rpx;
+    height: 24rpx;
+    display: inline-block;
+    margin-left: 6rpx;
+    margin-top: 10rpx;
+}
+
+.listPane{
+    padding:2rpx 0 2rpx 30rpx;
+    background-color: #fff;
+}
+
+.icoBox{
+    float: left;
+    width: 80rpx;
+    margin-top: 12rpx
+}
+
+.ico{
+    display: block;
+    height: 40rpx;
+    width: 40rpx;
+}
+
+.ico-store{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-store.png);
+    background-size: 100% 100%;
+}
+
+.ico-order{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-order.png);
+    background-size: 100% 100%;
+}
+
+.ico-ticket{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-ticket.png);
+    background-size: 100% 100%;
+}
+
+.ico-collect{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-collect.png);
+    background-size: 100% 100%;
+}
+
+.ico-kefu{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-kefu.png);
+    background-size: 100% 100%;
+}
+
+.ico-tel{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-tel.png);
+    background-size: 100% 100%;
+}
+
+.listPane .order-num{
+    display: inline-block;
+    height: 32rpx;
+    line-height: 32rpx;
+    min-width: 32rpx;
+    box-sizing:border-box; 
+    text-align: center;
+    padding: 0 8rpx;
+    font-size: 24rpx;
+    color: #fff;
+    background-color: #f00;
+    border-radius: 10px;
+    position: relative;
+    top: -2rpx;
+}
+
+.btn-on-off{
+    width: 74rpx;
+    height: 44rpx;
+    border-radius: 25px;
+    background-color: #ccc;
+    position: relative;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.btn-on-off icon{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 50%;
+    box-shadow: 0 0 4rpx rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.btn-on-off.active{
+    background-color: #4BD865;
+}
+
+.btn-on-off.active icon{
+    transform: translateX(30rpx);
+    -webkit-transform: translateX(30rpx);
+}
+
+.shareStore{
+    background-color:#fff !important;
+    height: 100rpx;
+    line-height: normal;
+}
+
+.shareStore::after{
+    display: none;
+} 
+
+.shareStoreText{
+    position: relative;
+    top: -6rpx;
+}
+
+
+.headVipWp{
+    margin: 22rpx 17px;
+    min-height: 150rpx;
+    position: relative;
+}
+
+.headVipWp image{
+    width: 100%;
+    display: block;
+}
+
+.headVipWp .expriredBox{
+    position: absolute;
+    width: 40%;
+    height: 24%;
+    left: 30%;
+    bottom: 7%;
+    text-align: center;
+}
+
+.headVipWp .countBox{
+    position: absolute;
+    padding-left: 44rpx;
+    left: 31.4%;
+    top: 50%;
+}
+
+.headVipWp .ico-countMoney{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -18rpx;
+    width: 36rpx;
+    height: 36rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-countMoney.png);
+    background-size: 100% 100%;
+}
 
 

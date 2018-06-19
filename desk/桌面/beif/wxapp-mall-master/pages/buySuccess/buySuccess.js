@@ -4,20 +4,22 @@ Page({
 
     data: {
         Pagetype: '下订单',
-        phoneNum: getApp().globalData.phoneNumKf
     },
-    onLoad : function(d){
+    onLoad: function (options){
+      this.setData({
+        servicePhone: options.servicePhone || getApp().globalData.phoneNumKf
+      });
 
-        if(d.pageType){
+      if (options.pageType){
             this.setData({
-                Pagetype : d.pageType
+              Pagetype: options.pageType
             });
             app.globalData.tempdata.refresh = true;
         }
     },
     connectUs : function(){
         wx.makePhoneCall({
-            phoneNumber: this.data.phoneNum,
+            phoneNumber: this.data.servicePhone,
         })
     }
   

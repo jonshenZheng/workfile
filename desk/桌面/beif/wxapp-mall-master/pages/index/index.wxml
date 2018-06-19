@@ -1,7 +1,100 @@
-<view class='first-page {{windowSize}}'>
-    <image src='{{firstImgSrc}}' mode='widthFix'></image>
-    <!-- <icon class="showAnimate"></icon> -->
+<component-goBackMyStore  wx:if='{{role==ROLE_DISTRIBUTOR&&shop.shopId!=shopOfView.shopId}}'></component-goBackMyStore>
+
+<!-- <view>real-> {{shop.shopName}}{{" "+role}}{{role==DISTRIBUTOR}}{{shop.shopId!=shopOfView.shopId}}</view>
+<view>view-> {{shopOfView.shopName}}{{" "+roleOfView}}</view>  -->
+
+<view class='mian'>
+  <view class='headimgWp'>
+    <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-headImg.png' mode="widthFix"></image>
+
+    <view class='headSereach'>
+      <view class='wp'>
+        <form bindsubmit="search">
+          <button form-type='submit' class='sereachIco'></button>
+          <input class="{{hidesereachClass}}" placeholder='请输入你想要搜索的商品' bindconfirm="search" confirm-type="search" name="sereachText" />
+          <icon class='sereachImgIco' bindtap='onTapSearchImageButton' />
+        </form>
+      </view>
+    </view>
+    <view class='chuishui mianSize'>您身边的最佳办公环境解决方案提供商</view>
+    <view class='headbtnBox'>
+      <navigator class='bt' url='../totalsolution/totalsolution' open-type='switchTab'>获取报价</navigator>
+    </view>
+  </view>
+
+  <view class="muneBox margin-b-16">
+    <view class='hideBox'>
+      <view class='wp clearfix'>
+        <view class='it'>
+          <icon class='ico ico-ztl' data-ind='1' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-gzw' data-ind='2' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-yl' data-ind='3' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-gl' data-ind='4' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-sfl' data-ind='5' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-cjl' data-ind='6' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-pj' data-ind='20' bindtap='gotoFenlei'></icon>
+        </view>
+        <view class='it'>
+          <icon class='ico ico-qb' data-ind='1' bindtap='gotoFenlei'></icon>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
+
+<view class="newest padding-lr-30">
+  <view class="newest-title baokuang">
+    <text class='color000 newest-til'>单品推荐</text>
+    <navigator class="morePD color000" url='../category/category' open-type='switchTab'>更多></navigator>
+  </view>
+  <view class='baokuanImg' wx:for="{{recommend}}" wx:key="recKey" wx:for-item="recItem">
+    <navigator class="prodList border borderRad-10" url="{{'../details/details?prodId='+recItem.prodId+'&skuId='+recItem.skuId}}">
+      <view class='imgBox flex_cen border-r'>
+        <image mode='aspectFit' src="{{recItem.pic}}"></image>
+      </view>
+      <view class='infoBox'>
+        <view class="pdName color000 mianSize">{{recItem.prodName}}</view>
+        <view class="leibie color999">{{recItem.prodTypeName}}</view>
+        <view class='clearfix'>
+          <view class="price1">
+            <text class='pr1 mianBtn' wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>赚￥{{recItem.profit}}</text>
+            <text class='pr2 mianColor mianSize'>￥{{recItem.sellPrice}}</text>
+          </view>
+          <view class="price2">
+            <text class='pr1 color999' wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>成本价￥{{recItem.factoryPrice}}</text>
+            <text class='pr2 color999' wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>面价￥{{recItem.marketPrice}}</text>
+          </view>
+        </view>
+
+      </view>
+    </navigator>
+  </view>
+</view>
+
+
+
+
+
+<!-- <view>real-> {{shop.shopName}}{{" "+role}}</view>
+<view>view-> {{shopOfView.shopName}}{{" "+roleOfView}}</view>
+<block wx:if="{{roleOfView == ROLE_VISITOR}}">
+  <view class='first-page {{windowSize}}' wx:if="{{windowSize}}">
+      <image src='{{firstImgSrc}}' mode='widthFix'></image> -->
+<!-- 注释掉的 <icon class="showAnimate"></icon> -->
+<!-- </view>
+</block>
 <view class="main">
     <view class='homeSereach'>
         <view class='wp'>
@@ -19,9 +112,8 @@
             </swiper-item>
         </block>
     </swiper>
-    <view class='imgcss'></view>
-    <!-- <navigator url='../register/register'>注册</navigator>-->
-    <!--<view class="sereachBox">
+    <view class='imgcss'></view> -->
+<!-- 注释掉的 <view class="sereachBox">
         <view class='sereach'>
             <input  bindinput="bindKeySearchInput" placeholder="" maxlength="24" confirm-type="search"/>
             <image class='imgSereach' src="../../image/camera.png" bindtap='onTapSearchImageButton'></image>  
@@ -29,7 +121,7 @@
         </view>
       
     </view>-->
-    <!--<view class='layout hotKey'>
+<!-- 注释掉的 <view class='layout hotKey'>
         <text class='til'>热门搜索</text>
         <view class='hkbox'>
             <text>大班椅</text>
@@ -52,12 +144,12 @@
     
     </view>-->
 
-    <view class="newest">
+<!-- <view class="newest">
         <view class="newest-title baokuang">
             <text>爆款推荐</text>
             <text class="morePD" bindtap='intocateg'>更多产品></text>
-        </view>
-        <!--<view class="newest-box">
+        </view> -->
+<!-- 注释掉的<view class="newest-box">
             <view class="newest-list" wx:for="{{recommend}}" wx:key="recKey" wx:for-item="recItem">  
                 <navigator url="../details/details?prodId={{recItem.prodId}}&skuId={{recItem.skuId}}">
                     <image src="{{recItem.pic}}"  data-imgind="{{index}}" binderror='onimgfail' data-objName='recommend'></image>
@@ -67,7 +159,7 @@
             </view>
             
         </view>-->
-        <view class='baokuanImgBox'>
+<!-- <view class='baokuanImgBox'>
             <view class="newest-list" wx:for="{{recommend}}" wx:key="recKey" wx:for-item="recItem">  
                 <navigator url="../details/details?prodId={{recItem.prodId}}&skuId={{recItem.skuId}}">
                     <image mode='widthFix' src="{{recItem.pic}}"  data-imgind="{{index}}" binderror='onimgfail' data-objName='recommend'></image>
@@ -89,8 +181,8 @@
             <image src='{{PopImgSrc_big}}' mode='widthFix' data-uri="{{homePopUri}}" bindtap='onTapCtrlProtoUri' ></image>
         </view>
     </view>
-</view>
+</view> -->
 
-<!--<view class='useImgToFind {{btnff}}' bindtap='onTapSearchImageButton' data-cname='useImgToFindOn' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn' >
+<!-- 注释掉的 <view class='useImgToFind {{btnff}}' bindtap='onTapSearchImageButton' data-cname='useImgToFindOn' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn' >
     <text>以图搜产品</text>
 </view>-->

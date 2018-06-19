@@ -1,0 +1,250 @@
+@import '../../pages/common/common.wxss';
+
+.show-popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  z-index: 4;
+}
+.popup-mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+.popup-contents{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width:100%;
+  background-color: #fff;
+  z-index: 6;
+  /*overflow-y:auto;
+    overflow-x:hidden;
+    max-height:80%;*/
+
+}
+.pop-goods-info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 30rpx;
+  padding: 30rpx 0;
+  border-bottom: 1px solid #eee;
+}
+.pop-img-box{
+  width: 120rpx;
+  height: 120rpx;
+  overflow: hidden;
+  margin-right: 26rpx;
+}
+.pop-img-box .goods-thumbnail{
+  width: 120rpx;
+  height: 120rpx;
+}
+.pop-goods-title{
+  width: 484rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size:26rpx;
+  color:#000000;
+}
+.pop-goods-price{
+  font-size:28rpx;
+  margin-top:20rpx; 
+}
+.pop-goods-close{
+  width: 36rpx;
+  height: 36rpx;
+  flex: 1;
+  background:url("https://cdn.it120.cc/images/weappshop/popup-close.png") no-repeat center center;
+  background-size: 36rpx auto;
+  align-self: flex-start;
+  margin-top: -10rpx;
+}
+.size-label-box  .label{
+  font-size:26rpx;
+  color:#000;
+  padding-left: 30rpx;
+  padding: 30rpx 0 20rpx 30rpx;
+}
+.size-label-box .label-item-box{
+  display: flex;
+  margin-left: 30rpx;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+.size-label-box .label-item{
+  font-size:26rpx;
+  color:#000;
+  padding: 14rpx 20rpx;
+  border: 1px solid #ddd;
+  border-radius: 6rpx;
+  margin: 0 20rpx 20rpx 0;
+}
+.size-label-box .label-item.selected{
+  /* color: #e64340;
+  border: 1px solid #e64340; */
+  color: #489af7;
+  border: 1px solid #489af7;
+}
+.size-label-box .label-item.disabled{
+  /* border: 1px dashed #e64340; */
+   border: 1px solid #f7f7f7;
+  color:#ddd;
+  background-color: #f7f7f7;
+}
+.buy-num-box{
+   display: flex;
+   justify-content: space-between;
+   padding: 30rpx 30rpx 48rpx 0;
+   margin-left: 30rpx; 
+   border-top: 1px solid #eee;
+   margin-top: 30rpx;
+   align-items: center;
+}
+.num-label{
+  font-size:26rpx;
+  color:#000000;
+}
+.buy-num-box .num-box{
+     display: flex;
+}
+.buy-num-box .num-box .num-jian,
+.buy-num-box .num-box .num-input,
+.buy-num-box .num-box .num-jia{
+  width: 80rpx;
+  height: 64rpx;
+  line-height: 62rpx;
+  text-align: center;
+  border: 1px solid #eee;
+}
+.buy-num-box .num-box .num-input{
+  font-size: 28rpx;
+}
+.buy-num-box .num-box .num-input input{
+  height: 100%;
+}
+.popup-join-btn{
+  width: 100%;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+  font-size:34rpx;
+  color:#ffffff;
+  background-color: #e64340;
+}
+
+.popup-join-btn-on{
+    background-color: #fd504d;
+}
+ 
+.buy-num-box .num-box .hui{
+  background-color: #f5f5f9;
+}
+
+.scrollBox{
+    max-height: 600rpx;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.footer-box .cartNum{
+    position: absolute;
+    right: 20rpx;
+    top: 6rpx;
+    font-size: 24rpx;
+    padding:2rpx 10rpx;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #e73c39;
+    line-height: normal;
+}
+
+.footer-box .showAnimate{
+    position: absolute;
+    right: 8rpx;
+    top: -24rpx;
+    font-weight: bold;
+    font-size: 26rpx;
+    color: #e73c39;
+    line-height: normal;
+    visibility: hidden;
+}
+
+.footer-box .showAnimate.on{
+    animation: showcartNum 1s forwards; 
+    -webkit-animation :showcartNum 1s forwards; 
+}
+
+@-webkit-keyframes showcartNum{
+    0%{
+        visibility: visible;
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80%{
+        transform: translateY(-40rpx);
+        opacity: 9;
+    }
+    100%{
+        transform: translateY(-40rpx);
+        opacity: 0;
+    }
+}
+
+@keyframes showcartNum{
+    0%{
+        visibility: visible;
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80%{
+        transform: translateY(-40rpx);
+        opacity: 9;
+    }
+    100%{
+        transform: translateY(-40rpx);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+.textJusty{
+    text-align: justify;
+}
+
+
+.qiuckNavigMask{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .1;
+    display: none;
+}
+
+.showPopAddBox2{
+    display: flex;
+}
+
+
+.showPopAddBox2 .btnV{
+    float: left;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    flex: 1;
+}
+
+
+

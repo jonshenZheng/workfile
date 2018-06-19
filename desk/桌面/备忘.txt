@@ -7,6 +7,10 @@ http://shenqi.baizeai.com/BGManage/home 或 http://shenqi.baizeai.com
 wxapp1@baizeai.com
 Comicer123
 
+小程序 
+   role==ROLE_DISTRIBUTOR ：分销商角色（过期、试用期、正式分销商）
+   distributorInfo.level==DIST_LV_ON_TRAIL 表示为非正式经销商
+
 
 
 100测试地址：

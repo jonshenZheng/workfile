@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "我的"
+    "usingComponents": {
+        "component-goBackMyStore": "../../component/goBackMyStore/goBackMyStore"
+    },
+    "navigationBarTitleText": "我的"  
 }

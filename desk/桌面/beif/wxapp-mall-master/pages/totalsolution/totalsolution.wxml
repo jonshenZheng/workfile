@@ -2,13 +2,13 @@
 
 <!--<view class="warmTips">全套方案设计服务暂未开启，敬请期待！</view>-->
 
-<view class='videoBox'>
+<!-- <view class='videoBox'>
     <view class='video'>
         <view class="section tc">
             <video src="{{vedioSrc}}"   controls ></video>
         </view>
     </view>
-</view>
+</view> -->
 <view class='layout'>
     <view class='MainTilBox'>申请试用，体验一站式解决方案的魅力</view>
 
@@ -22,52 +22,43 @@
             <view class='box addImgBtn {{isHedeAddImgBtn ? "hide" : ""}}' bindtap='selectImgFn'></view>
         </view>
         <view class='formTil'><text class="red">*</text>2.联系方式</view>
-        <input type='number' class='phoneInp' name="phoneNum" value='{{nullVal}}' placeholder='请留下你的手机号码，方便我们联系您...'></input>
+        <view class='inpBox border borderRad-10'>
+            <input type='number' class='phoneInp' style='margin-right:200rpx' name="phoneNum" value='{{nullVal}}' placeholder='请留下你的手机号码，方便我们联系您'></input>
+            <!-- <text class='getCode mianColor'>获取验证码</text> -->
+        </view>
+        <!-- <view class='inpBox border-4'>
+            <input type='text' class='phoneInp' name="code" value='{{nullVal}}' placeholder='短信验证码'></input>
+        </view> -->
+        
         <view class='formTil mg-t'>3.客户需求（选填，可多选）</view>
         <view class='multOptBox'>
             
             <view>
                 <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds"  data-ind='{{idx}}' wx-if="{{idx < 3}}">{{itemName.name}}</view>
+                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds"  data-ind='{{idx}}' wx-if="{{idx < 3}}">{{itemName.name}}</view>
                 </block>
-                <!--<text class='opt' wx-for="{{needsList}}">价格实惠</text>
-                <text class='opt'>性价比高</text>
-                <text class='opt'>国际品牌</text>-->
+
             </view>
             <view>
                 <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 6 && idx > 2 }}">{{itemName.name}}</view>
+                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 6 && idx > 2 }}">{{itemName.name}}</view>
                 </block>
-                <!-- <text class='opt'>现货为主</text>
-                <text class='opt'>10天到位</text>
-                <text class='opt'>正常工期</text> -->
+
             </view>
             <view>
                 <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 12 && idx > 5 }}">{{itemName.name}}</view>
+                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 12 && idx > 5 }}">{{itemName.name}}</view>
                 </block>
-                <!-- <text class='opt'>商务</text>
-                <text class='opt'>休闲</text>
-                <text class='opt'>工业</text>
-                <text class='opt'>中式</text>
-                <text class='opt'>现代</text>
-                <text class='opt'>简约</text> -->
+ 
             </view>
             <view>
                 <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{ idx > 11 }}">{{itemName.name}}</view>
+                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{ idx > 11 }}">{{itemName.name}}</view>
                 </block>
-                <!-- <text class='opt'>互联网</text>
-                <text class='opt'>消费品</text>
-                <text class='opt'>金融</text>
-                <text class='opt'>事业单位</text>
-                <text class='opt'>广告传媒</text>
-                <text class='opt'>餐饮</text>
-                <text class='opt'>旅游</text> -->
             </view>
 
         </view>
-        <button class='subFormBtn' form-type="submit">提交</button>
+        <button class='subFormBtn mianBtn' form-type="submit">提交</button>
     </form>
     <view class="bot-padding"></view>
 </view>

@@ -16,7 +16,6 @@ page{
     display: flex;
     height:74rpx;
     justify-content : center ;
-    border-bottom:2rpx solid #ccc;
     position: relative;
     z-index: 2;
     background-color: #fff;
@@ -31,9 +30,9 @@ page{
     line-height:76rpx;
     width:50%;
 }
-.sereachBox .tab-lb:nth-of-type(n+1){
+/* .sereachBox .tab-lb:nth-of-type(n+1){
     border-right: 2rpx solid #ccc;
-}
+} */
 
 .sereachBox .tab-lb.show{
     color: #333;
@@ -99,9 +98,6 @@ page{
     margin-top : -20rpx;
 }
 
-.sereachBox .inp-line:first-child{
-    border-bottom: 2rpx solid #ccc;
-}
 .sereachBox .inp-line{
     padding: 20rpx 10rpx;
     text-align: center;

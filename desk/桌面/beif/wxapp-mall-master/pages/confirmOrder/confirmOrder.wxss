@@ -1,0 +1,246 @@
+ 
+
+
+page .pane{
+    background-color: #fff;
+    margin-top: 16rpx;
+}
+
+.locationInfo{
+    padding: 20rpx 94rpx 20rpx 70rpx;
+    position: relative;
+}
+
+.locationInfo icon{
+    position: absolute;
+    top: 50%;
+}
+
+.locationInfo .name{
+    margin-bottom: 6rpx;
+}
+
+.locationInfo .addr{
+    line-height: 40rpx;
+}
+
+.locationInfo .ico-location{
+    left: 17rpx;
+    margin-top: -20rpx;
+    width: 33rpx;
+    height: 39rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/cOrder-location.png);
+    background-size: 100% 100%;
+}
+
+.locationInfo .ico-tri{
+    right: 30rpx;
+    margin-top: -12rpx;
+    width: 14rpx;
+    height: 24rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/cOrder-tri.png);
+    background-size: 100% 100%;
+}
+
+
+.prodList{
+    padding-left: 30rpx;
+}
+
+.prodList .it{
+    padding-right: 30rpx;
+    position: relative;
+    padding: 20rpx;
+    min-height: 60rpx;
+}
+
+.prodList .it:last-child,.prodList .it:last-child::after{
+    border: 0;
+}
+
+.prodList .imgBox{
+    width: 100rpx;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.prodList .imgBox image{
+    display: block;
+    width: 100%;
+}
+
+.prodList .info{
+    width: 558rpx;
+    float: right;
+}
+
+.prodList .info .price{
+    color: #010101;
+}
+
+.prodList .info .nameBox{
+    margin-bottom: 10rpx;
+}
+
+.prodList .info .name{
+    width: 380rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.prodList .info .guige{
+    padding-right: 94rpx;
+    word-break: break-all;
+    word-wrap: break-word;
+    line-height: 30rpx;
+    font-size: 26rpx;
+    position: relative;
+}
+
+.prodList .info .num{
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 28rpx;
+}
+
+
+.ticket{
+    padding: 19rpx 30rpx 21rpx;
+}
+
+.ticket .ico-tri{
+    display: inline-block;
+    vertical-align: middle;
+    width: 14rpx;
+    height: 24rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/cOrder-tri.png);
+    background-size: 100% 100%;
+    margin-left: 8rpx;
+    margin-top: 10rpx;
+}
+
+
+page{
+    height: auto;
+    margin-bottom: 100rpx;
+}
+
+.footer{
+    height: 100rpx;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f2f8ff;
+}
+
+.mian .footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100rpx;
+    background-color: #f2f8ff;
+    z-index: 2;
+}
+
+.mian .footer .selAllBtn{
+    position: absolute;
+    width: 130rpx;
+    text-align: center;
+    left: 0;
+    top:26rpx; 
+}
+
+.mian .footer .selAllBtn icon{
+    display: inline-block;
+    margin-right:12rpx;
+    width: 38rpx;
+    height: 38rpx;
+    border: 2rpx solid #797979;
+    border-radius:50%;
+    vertical-align: middle;
+}
+
+.mian .footer .selAllBtn icon.on,.mian .footer .selAllBtn icon.true{
+    border: 0;
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/cart-select.png);
+    background-size: 100% 100%;
+}
+
+.mian .footer .selAllBtn text{
+    font-size: 30rpx;
+    color: #999;
+}
+
+.mian .footer .selInfo{
+    font-size: 30rpx;
+    color: #999;
+}
+
+.mian .footer .addCartBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 230rpx;
+    text-align: center;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 38rpx;
+    color: #fff;
+    background-color:#999;
+    border-radius: 0;
+}
+
+.mian .footer .addCartBtn::after{
+    display: none;
+}
+
+.mian .footer .addCartBtn.on{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/cart-jiesuan.png);
+    background-size: 100% 100%;
+}
+
+.mian .footer .addCartBtn.on.button-hover,.mian .footer .addCartBtn.on.addCartBtnOn{
+    background-color:#f32845;
+}
+
+
+.mian .footer .selInfo{
+    margin: 0 240rpx 0 130rpx;
+    height: 100rpx;
+    text-align: right;
+    font-size: 30rpx;
+    color:#999; 
+    padding-top: 8rpx;
+}
+
+.mian .footer .cnum1{
+    font-size: 32rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.mian .footer .cnum2{
+    display: inline-block;
+}
+
+.mian .footer .r2{
+    font-size: 28rpx;
+}
+
+
+
+
+
+
+
+
+@import '../common/common.wxss';

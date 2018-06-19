@@ -1,0 +1,182 @@
+ @import '../common/common.wxss';
+
+/* comm style */
+
+
+
+/* comm style */
+
+.main{
+    background-color:#fff; 
+    margin-bottom: 100rpx;
+} 
+
+.layout-r{
+    padding-left: 30rpx;
+}
+
+.blueBg{
+    background-color: #f2f8ff;
+}
+
+.icoBox{
+    float: left;
+    width: 80rpx;
+    margin-top: 16rpx
+}
+
+.ico{
+    display: block;
+    height: 32rpx;
+}
+
+.ico-store{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-store.png);
+    background-size: 100% 100%;
+    width: 36rpx;
+}
+
+.ico-location{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-location.png);
+    background-size: 100% 100%;
+    width: 32rpx;
+}
+
+.ico-lock{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-lock.png);
+    background-size: 100% 100%;
+    width: 20rpx;
+}
+
+.ico-money{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-money.png);
+    background-size: 100% 100%;
+    width: 32rpx;
+}
+
+.ico-phone{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-phone.png);
+    background-size: 100% 100%;
+    width: 18rpx;
+}
+
+.ico-safe{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-safe.png);
+    background-size: 100% 100%;
+    width: 32rpx;
+}
+
+.ico-user{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-user.png);
+    background-size: 100% 100%;
+    width: 32rpx;
+}
+
+ 
+
+
+
+.title{
+    padding-left: 30rpx;
+    height: 66rpx;
+    line-height: 66rpx;
+}
+
+.item{
+    padding: 14rpx 30rpx 14rpx 0;
+    position: relative;
+}
+
+.item .getCode{
+    position: absolute;
+    right: 30rpx;
+    top: 24rpx;
+}
+
+.item .getCode::after{
+    display: none;
+}
+
+
+.item .lab-inp{
+    float: left;
+    height:20rpx;
+    padding:6rpx 0;
+    width: 80%;
+}
+
+.lab-til{
+    float: left;
+    padding: 12rpx 0;
+}
+
+.item .location{
+    position: absolute;
+    right: 30rpx;
+    top: 24rpx;
+    z-index: 2;
+}
+
+.item .location .ico-tri{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/regist-tri.png);
+    background-size: 100% 100%;
+    width: 14rpx;
+    height: 24rpx;
+    display: inline-block;
+    margin-left: 6rpx;
+    margin-top: 8rpx;
+}
+
+.benfix{
+    float: right;
+    width: 120rpx;
+    height: 20rpx;
+    padding: 6rpx 0;
+}
+
+.unit{
+    position: absolute;
+    right: 30rpx;
+    top:26rpx;
+}
+
+.footerBtn{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 98rpx;
+}
+
+.footerBtn .btn1{
+    width: 33.33333%;
+}
+
+.footerBtn .btn2{
+    width: 66.6666%;
+    color: #fff;
+}
+
+
+.footerBtn .btn1,.footerBtn .btn2{
+    height: 98rpx;
+    line-height: 98rpx;
+    text-align: center;
+    float: left;
+    border-radius: 0;
+    font-size: inherit;
+}
+
+.footerBtn .btn1::after,.footerBtn .btn2::after{
+    display: none;
+}
+
+.footerBtn.justRegist .btn1{
+    display: none;
+}
+
+.footerBtn.justRegist .btn2{
+    width: 100%
+}
+
+

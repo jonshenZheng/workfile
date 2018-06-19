@@ -1,0 +1,104 @@
+<view class="main mianSize">
+
+  <view class='title blueBg mianColor'>填写注册信息，开启店铺赚钱之旅！</view>
+  <view class='layout-r'>
+    <view class='item border-b'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-store'></icon>
+        </view>
+        <input type='text' class='lab-inp' name="store" maxlength='19' placeholder='给您的店铺取个名字，小于20字' bindinput='onInputShopName' value='{{registryData.shopName}}'></input>
+      </view>
+    </view>
+
+    <view class='item border-b'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-user'></icon>
+        </view>
+        <input type='text' class='lab-inp' name="user" placeholder='您的真实姓名' bindinput='onInputDistributorName' value='{{registryData.distributorName}}'></input>
+      </view>
+    </view>
+
+    <view class='item border-b'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-phone'></icon>
+        </view>
+        <input type='number' class='lab-inp' name="phone" placeholder='填写手机号码' style='width:60%' bindinput='onInputPhone' value='{{registryData.phone}}'></input>
+        <button wx:if="{{getCodeText == 0}}" bindtap='getCaptcha' class='getCode mianColor resetBtn' data-runfn='getCode'>获取验证码</button>
+        <text wx:else class='getCode mianColor'>{{getCodeText}}</text>
+      </view>
+    </view>
+
+    <view class='item border-b'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-safe'></icon>
+        </view>
+        <input type='text' class='lab-inp' name="code" placeholder='短信验证码' bindinput='onInputCaptcha' value='{{registryData.captcha}}'></input>
+      </view>
+    </view>
+
+    <view class='item'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-location'></icon>
+        </view>
+        <block wx:if='{{!registryData.province}}'>
+          <text type='text' class='lab-inp' name="location" style='width:60%;height:52rpx;line-height:52rpx;' >选择所在地</text>
+        </block>
+        <block wx:else>
+          <text type='text' class='lab-inp' name="location" style='width:60%' disabled="true">{{registryData.province}} {{registryData.city}} {{registryData.county}}</text>
+        </block>
+        <picker mode="region" bindchange="onRegionChange"  class='location mianColor'>
+          选择城市
+          <icon class='ico-tri'></icon>
+        </picker>
+      </view>
+    </view>
+
+  </view>
+  <view class='title blueBg mianColor'>设置店铺价格的初始值</view>
+  <view class='layout-r'>
+    <view class='item'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-money'></icon>
+        </view>
+        <text class='lab-til color000'>店铺价与成本价的比例：</text>
+        <input hidden='{{hideInp}}' type='number' name="profits" placeholder='100' class="benfix" bindinput='onInputRatio' value='{{registryData.ratio}}'></input>
+        <text class='unit color000'>%</text>
+      </view>
+    </view>
+  </view>
+  <view class='title blueBg mianColor'>您的密码将用于修改店铺价格、审核店铺订单等</view>
+  <view class='layout-r'>
+    <view class='item border-b'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-lock'></icon>
+        </view>
+        <input hidden='{{hideInp}}' password='true' name="password" class='lab-inp' maxlength="16" placeholder='6-16位密码' bindinput='onInputPassword' data-type='1'></input>
+      </view>
+    </view>
+    <view class='item'>
+      <view class='clearfix'>
+        <view class='icoBox'>
+          <icon class='ico ico-lock'></icon>
+        </view>
+        <input hidden='{{hideInp}}' password='true' name="rpassword" maxlength="16" class='lab-inp' placeholder='再次输入密码' bindinput='onInputPassword' data-type='2'></input>
+      </view>
+    </view>
+  </view>
+
+<block wx:if='{{isDataInjected}}'>
+  <view class='footerBtn clearfix' wx:if='{{role != ROLE_DISTRIBUTOR && !distributorInfo}}'>
+    <button bindtap='onTapOpenShopBtn' data-formal='0' class='btn1 viceBtn' data-runfn='hasATry'>店铺试用</button>
+    <button bindtap='onTapOpenShopBtn' data-formal='1' class='btn2 mianBtn' data-runfn='regist'>完成注册，成为分销商</button>
+  </view>
+  <view wx:else class='footerBtn clearfix justRegist'>
+    <button bindtap='onTapOpenShopBtn' data-formal='1' class='btn2 mianBtn' data-runfn='regist'>完成注册，成为正式分销商</button>
+  </view>
+</block>
+</view>

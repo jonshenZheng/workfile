@@ -1,0 +1,61 @@
+<view class='mian'>
+
+    <view hidden='{{!addAddr}}' class='addrEditAndAdd border-t'>
+        <view class='listBox'>
+            <view class='it border-b'>
+                <view class='lb'>姓名</view>
+                <input class='val' bindinput='onInputDistributorName' type='text' placeholder='姓名' value='{{AddrInfo.userName}}' ></input>
+            </view>
+            <view class='it border-b'>
+                <view class='lb'>联系方式</view>
+                <input class='val' bindinput='onInputPhone' type='number' placeholder='手机号码' value='{{AddrInfo.telNumber}}' ></input>
+            </view>
+            <view class='it border-b'>
+                <view class='lb'>选择地区</view>
+                <input class='val' disabled='disabled' style='width:400rpx' value='{{AddrInfo.provinceName}} {{AddrInfo.cityName}} {{AddrInfo.countyName}}' ></input>
+                <picker mode="region" bindchange="onRegionChange"  class='location mianColor'>选择城市</picker>
+            </view>
+            <view class='it border-b'>
+                <view class='lb'>详细地址</view>
+                <input class='val' bindinput='onInputDetailed_addr' type='text' placeholder='详细地址' value='{{AddrInfo.detailInfo}}' ></input>
+            </view>
+            <view class='it border-b'>
+                <view class='lb'>邮政编码</view>
+                <input class='val' bindinput='onInputpostalCode' type='number' maxlength='6' placeholder='邮政编码' value='{{AddrInfo.postalCode}}' ></input>
+            </view>
+        </view>
+
+        <view bindtap='submitFn' class='btn mianBtn'>确定</view>
+    
+    </view>
+
+
+    <view hidden='{{addAddr}}'>
+        <view class='addrListBox'>
+
+            <view class='listBox'>
+                <view class='it border-t' style='padding:36rpx 0' bindtap='addAddrFn'>
+                    <view class='info' >
+                        <icon class='ico-add'></icon>
+                        <view class='name mianSize'>新增收货地址</view>
+                    </view>
+                    <icon class='ico-tri'></icon>
+                </view>
+                <view class='it border-t {{item.isSelect?"active":""}}' wx:for="{{addrList}}" wx:key="unique">
+                    <view class='info' bindtap='selectAddr' data-ind='{{index}}'>
+                        <icon class='icon'></icon>
+                        <view class='name mianSize'>{{item.userName+' '+item.telNumber}}</view>
+                        <text class='addrText'>{{item.provinceName+item.cityName+item.countyName+item.detailInfo}}</text>
+                    </view>
+                    <text bindtap='editAddr'  data-ind='{{index}}' class='editBtn mianSize mianColor'>编辑</text>
+                </view>
+            
+            </view>
+
+            <!-- <view bindtap='addAddrFn' class='footer border-t mianSize mianColor'>新增收货地址</view>  -->
+        </view>
+    </view>
+    
+
+    
+</view>

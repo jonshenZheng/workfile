@@ -2,7 +2,7 @@
 
     <view class='colBox'>
 
-        <view class='cloIt' data-ind='{{colInd}}' bindtouchstart='tstart' bindtouchend='tend' wx:for="{{coloData}}" wx:key="unique" wx:for-index="colInd" wx:for-item="colItem" >
+        <view class='cloIt border-b' data-ind='{{colInd}}' bindtouchstart='tstart' bindtouchend='tend' wx:for="{{coloData}}" wx:key="unique" wx:for-index="colInd" wx:for-item="colItem" >
             <view class='scrollBox {{colItem.isShowDel}}'>
 
                 <view class='oriWid'>

@@ -1,0 +1,84 @@
+
+ 
+.ticketWp{
+    margin: 0 15rpx;
+}
+
+.ticketWp .it{
+    position: relative;
+    padding-left: 204rpx;
+    background-color: #fff;
+    margin-top: 16rpx;
+    border-radius: 20rpx;
+}
+
+.ticketWp .moneyBox{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    flex-direction : column;
+    width: 204rpx;
+    border-top-left-radius:20rpx; 
+    border-bottom-left-radius:20rpx; 
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-tiket2.jpg) repeat-y top right;
+    background-size: 9rpx auto;
+}   
+
+.ticketWp .moneyBox.disableBtn{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-tiket.jpg) repeat-y top right;
+    background-size: 9rpx auto;
+}
+
+
+
+.ticketWp .moneyBox .unit{
+    font-size: 36rpx;
+}
+
+.ticketWp .moneyBox .num{
+    font-size: 61rpx;
+}
+
+
+.ticketWp .info{
+    position: relative;
+    padding: 20rpx 25rpx 20rpx 30rpx;
+}
+
+.ticketWp .info .ico-use{
+    position: absolute;
+    right: 5rpx;
+    top: 7rpx;
+    width: 168rpx;
+    height: 115rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/setPrice-used.png);
+    background-size: 100% 100%;
+}
+
+.ticketWp .info .wd{
+    font-size: 26rpx;
+    line-height: 42rpx;
+    position: relative;
+}
+
+.ticketWp .info .point{
+    position: absolute;
+    left: -14rpx;
+    top: 18rpx;
+    width: 4rpx;
+    height: 4rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@import '../common/common.wxss';

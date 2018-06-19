@@ -1,0 +1,45 @@
+
+.zhanw{
+    height: 66rpx;
+}
+
+
+.ortherStoreTips{
+    padding: 0 30rpx;
+    height: 66rpx;
+    line-height: 66rpx;
+    background-color: #f2f8ff;
+    font-size: 26rpx;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    width: 100%;
+    z-index: 1;
+}
+
+.ortherStoreTips .btnT{
+    position: absolute;
+    right: 30rpx;
+    top: 50%;
+    height: 50rpx;
+    line-height: 50rpx;
+    width: 140rpx;
+    font-size: 26rpx;
+    margin-top: -25rpx;
+    color: #fff;
+    text-align: center;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/ortherStoreTips.png);
+    background-size: 100% 100%;
+}
+
+
+
+
+@import '../../pages/common/common.wxss';
+
+
+
+
+
+

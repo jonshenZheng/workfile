@@ -1,62 +1,77 @@
 {
   "pages": [
+
+
       "pages/category/category",
-      "pages/index/index",
-      "pages/register/register",
-      "pages/cart/cart",
-      "pages/cart2/cart2",
-      "pages/user/user",
-      "pages/address/address",
-      "pages/orders/orders",
-      "pages/details/details",
-      "pages/buySuccess/buySuccess",
-      "pages/search/search",
-      "pages/collection/collection",
-      "pages/webview/webview",
-      "pages/protocol/protocol",
-      "pages/package/package",
-      "pages/totalsolution/totalsolution"
+    "pages/index/index",
+    "pages/user/user",
+    "pages/orders/orders",
+    "pages/cart/cart",
+    "pages/profitsetting/profitsetting",
+    "pages/registerStore/guidePage/guidePage",
+    "pages/registerStore/registerStore",    
+    
+    "pages/register/register",
+    "pages/cart2/cart2",
+    "pages/address/address",
+    "pages/details/details",
+    "pages/buySuccess/buySuccess",
+    "pages/search/search",
+    "pages/collection/collection",
+    "pages/webview/webview",
+    "pages/protocol/protocol",
+    "pages/addrList/addrList",
+    "pages/package/package",
+    "pages/totalsolution/totalsolution",
+    "pages/orders/orderDetails/orderDetails",
+    "pages/orders/orderDetails/updateVisitorOrder/updateVisitorOrder",
+    "pages/confirmOrder/confirmOrder",
+    "pages/coupon/coupon"
   ],
   "window": {
-    "navigationBarTextStyle": "#ffffff",
+    "navigationBarTextStyle": "black",
     "navigationBarTitleText": "",
-    "navigationBarBackgroundColor": "#333",
+    "navigationBarBackgroundColor": "#fff",
     "backgroundColor": "#333",
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#333",
-    "selectedColor": "#489af7",
+    "color": "#999",
+    "selectedColor": "#000",
     "borderStyle": "#f5f5f5",
     "backgroundColor": "#f5f5f5",
-    "list": [{
-      "pagePath": "pages/index/index",
-      "iconPath": "image/home_off.png",
-      "selectedIconPath": "image/home_on.png",
-      "text": "主页"
-    }, {
-      "pagePath": "pages/category/category",
-      "iconPath": "image/category_off.png",
-      "selectedIconPath": "image/category_on.png",
-      "text": "分类"
-    }, 
-    {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/home_off.png",
+        "selectedIconPath": "image/home_on.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "image/category_off.png",
+        "selectedIconPath": "image/category_on.png",
+        "text": "分类"
+      },
+      {
         "pagePath": "pages/totalsolution/totalsolution",
         "iconPath": "image/totalsolution_off.png",
         "selectedIconPath": "image/totalsolution_on.png",
-        "text": "全套服务"
-    },
-    {
-      "pagePath": "pages/cart/cart",
-      "iconPath": "image/cart_off.png",
-      "selectedIconPath": "image/cart_on.png",
-      "text": "购物车"
-    }, {
-      "pagePath": "pages/user/user",
-      "iconPath": "image/user_off.png",
-      "selectedIconPath": "image/user_on.png",
-      "text": "我的"
-    }]
+        "text": "获取报价"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "image/cart_off.png",
+        "selectedIconPath": "image/cart_on.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "image/user_off.png",
+        "selectedIconPath": "image/user_on.png",
+        "text": "我的"
+      }
+    ]
   },
   "networkTimeout": {
     "request": 10000,

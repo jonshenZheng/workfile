@@ -1,0 +1,21 @@
+<view class='border-t border-b editBox'>
+
+<block wx:for="{{statusOptions}}"  wx:key="key" wx:for-index="index" wx:for-item="statusOption">
+  <view class='boxIt border-b' bindtap='onTapStatusOption' data-status='{{statusOption.value}}'>
+    <view class='color000 name'>{{statusOption.text}}</view>
+    <icon class="ico-select {{statusOption.value==status?'active':''}}"></icon>
+
+    <block wx:if="{{statusOption.text === '待收货'}}">
+
+        <view class='setBox' hidden='{{!statusOption.value==status}}' >
+            <view class='pr'><text class='color999 fontSiz-28'>店铺价合计{{originPrice}}元，实收：</text><input class='inp border-4' type='number' bindinput='onInputDiscountedPrice' value='{{discountedPrice}}'></input><text class='color999 fontSiz-28'>元</text></view>
+            <text class='fontSiz-28 color999'>实收金额将同步显示在客户订单的“实付”金额上</text>
+        </view>
+
+    </block>
+
+  </view>
+</block>
+</view>
+
+<!-- <button bindtap='onTapSubmitBtn'>提交</button> -->

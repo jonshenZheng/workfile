@@ -1,0 +1,7 @@
+<view class='zhanw'></view>
+<view class='ortherStoreTips mianColor'>
+    <text class='mianColor'>正在浏览他人店铺，“切换身份”回自己店铺</text>    
+    <text bindtap='onTapShowMyShopBtn'  class='btnT'>切换身份</text>
+</view>
+
+<slot></slot>

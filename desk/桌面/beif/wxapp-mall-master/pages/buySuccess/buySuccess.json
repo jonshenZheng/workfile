@@ -1,4 +1,6 @@
 {
+    "enablePullDownRefresh":false,
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "下单成功",
-    "enablePullDownRefresh":false
+    "navigationBarTextStyle": "black"
 }

@@ -33,7 +33,7 @@ Page({
     },
     dealwithGoodsList : function(arr){
         arr['hasMore'] = arr.prodIntros.length < pageSize ? false : true;
-        arr['startPage'] = 0;
+        //arr['startPage'] = 0;
     },
     onimgfail : function(e){
 
@@ -90,6 +90,7 @@ Page({
           goodsList: searchResult,
       });
 
+      commJs.injectData(this);
     },
     formSubmitFn2: function (e) {
         
@@ -205,7 +206,7 @@ Page({
             arr = this.data.goodsList,
             hasMore = arr.hasMore,
             oldProd,
-            sPage = sentdata.startPage,
+            sPage = sentdata.from,
             cbFn;
 
         if (!hasMore) {
@@ -225,7 +226,7 @@ Page({
             })
         }
 
-        sentdata['startPage'] = sPage + 1;
+        sentdata['from'] = this.data.goodsList.prodIntros.length;
 
         this.getProdData( arr, '', cbFn);
 
@@ -233,7 +234,8 @@ Page({
     getProdData: function (arr, arr_ind, cbFn) {
 
         let self = this;
-        debugger
+        sentdata.shopId = this.data.shopOfView.shopId;
+        
         rq({
             url: baseURL + 'keyword/search',
             data: sentdata,
@@ -251,7 +253,7 @@ Page({
 
             },
             success: function (pdimg) {
-                debugger
+                
                 if (!pdimg.data.data.prodIntros) {
                     arr.hasMore = false;
                     arr.prodIntros = [];

@@ -1,0 +1,4 @@
+<view class="inner" bindtap='togglePop'>{{innerText}}</view>
+<view hidden='{{ishide}}'>你是大撒币</view>
+
+<slot></slot>

@@ -1,0 +1,229 @@
+<view class='order-lt border-tb'>
+  <view class='statusBox clearfix'>
+    <block wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+      <text class='label mianBtn'>{{order.type}}</text>
+    </block>
+    <text class='linkMan color999'>联系人：{{order.linkman}}</text>
+    <block wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+      <text class='status mianColor'>{{order.orderStatusName}}</text>
+    </block>
+    <block wx:else>
+      <text class='status mianColor'>{{order.visitOrderStatusName}}</text>
+    </block>
+
+  </view>
+  <view class='order-prod'>
+    <view class='order-pdIt clearfix bgColorf7f7f7' wx:for="{{order.items}}" wx:key="vkey" wx:for-index="vind" wx:for-item="vitem">
+      <view class='o-imgBox'>
+        <image mode='aspectFit' src="{{baseImgUrl+vitem.icon}}" data-imgind="{{vind}}" data-oind="{{oind}}" binderror='onimgfail'></image>
+      </view>
+      <view class='o-info'>
+        <view class='clearfix'>
+          <text class='fl mianSize color000'>{{vitem.produceName}}</text>
+          <text class='fr mianSize color000'>￥{{vitem.price}}</text>
+        </view>
+        <view class='decBox'>
+          <text class='dec breakLine color999'>{{vitem.property}}</text>
+          <view class='numBox'>
+            <view class='fontSiz-22 color999' wx:if="{{role==ROLE_DISTRIBUTOR && order.orderType===ORDER_TYPE_VISITOR}}">(成本价￥{{vitem.factoryPrice}})</view>
+            <text class='fontSiz-28 color999'>×{{vitem.count}}</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+  <view class='countInfo border-t'>
+    <!-- <view class='it border-b clearfix'>
+            <text class='fl mianSize color000'>优惠券</text>
+            <text class='fr mianSize color000'>-2000</text>
+        </view>-->
+
+    <!--分销商-->
+    <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+      <!--游客订单 显示店铺合计跟成本合计-->
+      <block wx:if="{{order.orderType===ORDER_TYPE_VISITOR}}">
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>店铺价合计</text>
+                <!--是否打过折-->
+                <block wx:if="{{ order.origPrice==order.discountedPrice }}">
+                    <text class='fr mianSize color000'>{{order.origPrice}}元</text>
+                </block>
+                <block wx:else>
+                    <text class='fr mianSize color000'>{{order.discountedPrice}}元</text>
+                    <text class='fr mianSize color999 textDec-lt margin-r-10'>{{order.origPrice}}元</text>
+                </block>
+            </view>
+        </view>
+        <view class='it border-b' bindtap='onTapChooseCouponBtn' wx:if='{{role==ROLE_DISTRIBUTOR&&distributorInfo.level!=DIST_LV_ON_TRAIL}}'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>优惠券</text>
+                <text class='fr mianSize color000'>{{order.couponInfo}}</text>
+            </view>
+        </view>
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>成本合计</text>
+                <text class='fr mianSize color000'>{{order.finalFactoryPrice}}元</text>
+            </view>
+        </view>
+      </block>
+      <!--采购订单 直接显示成本-->
+      <block wx:else>
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>合计</text>
+                <text class='fr mianSize color000'>{{order.totalFactoryPrice}}元</text>
+            </view>
+        </view>
+      </block>
+    </block>
+    <!--游客-->
+    <block wx:else>
+        <view class='it border-b clearfix'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>合计</text>
+                <block wx:if="{{ order.origPrice==order.discountedPrice }}">
+                <text class='fr mianSize color000'>{{order.origPrice}}元</text>
+                </block>
+                <block wx:else>
+                <text class='fr mianSize color000'>{{order.discountedPrice}}元</text>
+                <text class='fr mianSize color999 textDec-lt margin-r-10'>{{order.origPrice}}元</text>
+                </block>
+            </view>
+        </view>
+    </block>
+  </view>
+</view>
+
+<view class='order-lt border-tb' wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR&&order.orderType===ORDER_TYPE_VISITOR}}'>
+  <block wx:if="{{ order.visitOrderStatus !==ORDER_STATUS_TO_BE_FINISHED}}">
+    <view class='tipBox fontSiz-28 mianColor'>若客户已支付款项，可修改客户订单状态为待收货</view>
+    <view class='countInfo' bindtap='onTapUpdateVisitorOrderStatusBtn'>
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl mianSize color000'>修改客户订单状态</text>
+                <view class='fr mianSize color999'>{{order.visitOrderStatusName}}
+                    <icon class='ico-tri'></icon>
+                </view>
+            </view>
+        </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class='countInfo'>
+      <view class='it border-b'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>客户订单状态</text>
+            <view class='fr mianSize color999'>{{order.visitOrderStatusName}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+
+<view class='order-lt border-tb'>
+  <view class='countInfo'>
+    <view class='it border-b'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>联系人</text>
+            <text class='fr mianSize color999'>{{order.linkman}}</text>
+        </view>    
+    </view>
+    <view class='it border-b'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>联系电话</text>
+            <text class='fr mianSize color999'>{{order.phone}}</text>
+        </view>
+    </view>
+    <view class='it border-b addr'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>送货地址</text>
+            <text class='fr mianSize textAli-r color999'>{{order.address}}</text>
+        </view>
+    </view>
+  </view>
+</view>
+
+<view class='order-lt border-tb'>
+  <view class='countInfo'>
+    <view class='it border-b'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>订单状态</text>
+            <text class='fr mianSize color999'>{{order.orderStatusName}}</text>
+        </view>
+    </view>
+    <view class='it border-b'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>订单编号</text>
+            <text class='fr fontSiz-28 color999'>{{order.orderCode}}</text>
+        </view>    
+    </view>
+    <view class='it border-b clearfix'>
+        <view class='clearfix'>
+            <text class='fl mianSize color000'>下单时间</text>
+            <text class='fr mianSize color999'>{{order.orderTime}}</text>
+        </view>
+    </view>
+  </view>
+</view>
+
+<block wx:if='{{role==ROLE_DISTRIBUTOR&&distributorInfo.level!=DIST_LV_ON_TRAIL}}'>
+  <block wx:if='{{availableCoupons.length > 0}}'>
+    <component-selectcoupon coupons="{{availableCoupons}}" bind:selectcoupon="onSelectCoupon" showCoupon='{{showCoupon}}' />
+  </block>
+  <block wx:else>
+    <component-selectcoupon coupons="{{unavailableCoupons}}" showCoupon='{{showCoupon}}' />
+  </block>
+</block>
+
+<view class='footer clearfix' wx:if='{{isDataInjected}}'>
+  <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+    <!--采购订单-->
+    <block wx:if='{{order.orderType==ORDER_TYPE_PURCHASE}}'>
+      <button bindtap='onTapContactKFBtn' class='reset-button btnB mianBtn mianSize'>联系客服</button>
+      <!-- 采购订单-待付款-->
+      <block wx:if='{{order.orderStatus==ORDER_STATUS_TO_BE_PAID}}'>
+        <button bindtap='onTapDeleteOrderBtn' class='reset-button btnB mianBtn mianSize'>取消订单</button>
+      </block>
+      <!-- 采购订单-待收货-->
+      <block wx:if='{{order.orderStatus==ORDER_STATUS_TO_BE_RECEIPT}}'>
+        <button bindtap='onTapConfirmReceiptBtn' class='reset-button btnB mianBtn mianSize'>确认收货</button>
+        <!-- <button bindtap='onViewLogisticsBtn' class='reset-button btnB mianBtn mianSize'>查看物流</button> -->
+      </block>
+    </block>
+    <!--游客订单-->
+    <block wx:if='{{order.orderType==ORDER_TYPE_VISITOR}}'>
+      <button bindtap='onTapContactClientBtn' class='reset-button btnB mianBtn mianSize'>联系买家</button>
+      <button bindtap='onTapContactKFBtn' class='reset-button btnB mianBtn mianSize'>联系客服</button>
+      <!-- 游客订单-待提交-->
+      <block wx:if='{{order.orderStatus==ORDER_STATUS_TO_BE_SUBMIT}}'>
+        <button bindtap='onTapSubmitOrder2BzBtn' class='reset-button btnB mianBtn mianSize'>提交订单</button>
+      </block>
+      <!-- 游客订单-待付款-->
+      <block wx:if='{{order.orderStatus==ORDER_STATUS_TO_BE_PAID}}'>
+      </block>
+      <!-- 游客订单-待收货-->
+      <block wx:if='{{order.orderStatus==ORDER_STATUS_TO_BE_RECEIPT}}'>
+        <button bindtap='onTapConfirmReceiptBtn' class='reset-button btnB mianBtn mianSize'>确认收货</button>
+        <!-- <button bindtap='onViewLogisticsBtn' class='reset-button btnB mianBtn mianSize'>查看物流</button> -->
+      </block>
+    </block>
+  </block>
+  <block wx:else>
+    <button bindtap='onTapContactKFBtn' class='reset-button btnB mianBtn mianSize'>联系客服</button>
+    <!-- 待付款-->
+    <block wx:if='{{order.visitOrderStatus==ORDER_STATUS_TO_BE_PAID}}'>
+      <button bindtap='onTapDeleteOrderBtn' class='reset-button btnB mianBtn mianSize'>取消订单</button>
+    </block>
+    <!-- 待收货-->
+    <block wx:if='{{order.visitOrderStatus==ORDER_STATUS_TO_BE_RECEIPT}}'>
+      <button bindtap='onTapConfirmReceiptBtn' class='reset-button btnB mianBtn mianSize'>确认收货</button>
+      <!-- <button bindtap='onTapViewLogisticsBtn' class='reset-button btnB mianBtn mianSize'>查看物流</button> -->
+    </block>
+  </block>
+
+</view>

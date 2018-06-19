@@ -1,0 +1,60 @@
+/* pages/orders/orderdetails/updateVisitorOrder/updateVisitorOrder.wxss */
+
+.editBox{
+    padding-left: 30rpx;
+    background-color: #fff;
+}
+
+.editBox .boxIt{
+    position: relative;
+}
+
+.editBox .boxIt .name{
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 28rpx;
+}
+
+.editBox .boxIt:last-child{
+    border: 0;
+}
+
+.editBox .ico-select{
+    position: absolute;
+    right: 30rpx;
+    top: 32rpx;
+    width: 26rpx;
+    height: 19rpx;
+
+}
+
+.editBox .ico-select.active{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/editOrderStutas-select.png);
+    background-size: 100% 100%;
+}
+
+.editBox .setBox{
+    padding-bottom: 30rpx;
+    margin-bottom: -18rpx
+}
+
+.editBox .setBox .pr{
+    padding-bottom: 20rpx
+}
+
+.editBox .inp{
+    width: 302rpx;
+    height: 60rpx;
+    padding-right: 10rpx; 
+    line-height: 60rpx;
+    font-size: 28rpx;
+    display: inline-block;
+    border-radius: 10rpx;
+    text-align: right;
+    margin-right: 10rpx;
+    margin-bottom: -18rpx;
+}
+
+
+
+@import '../../../common/common.wxss';

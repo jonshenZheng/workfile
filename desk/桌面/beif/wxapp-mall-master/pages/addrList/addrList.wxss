@@ -1,0 +1,156 @@
+
+.addrEditAndAdd{
+    
+}
+
+.addrEditAndAdd .it{
+    overflow: hidden;
+    position: relative;
+}
+
+.addrEditAndAdd .it:last-child{
+    border: 0;
+}
+
+.addrEditAndAdd .listBox{
+    padding-left: 30rpx;
+    background-color: #fff;
+}
+
+.addrEditAndAdd .listBox .location{
+    position: absolute;
+    right: 30rpx;
+    top: 0;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+
+.addrEditAndAdd .lb,.addrEditAndAdd .it input{
+    float: left;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+.addrEditAndAdd .lb{
+    width: 150rpx;
+    font-size: 30rpx;
+}
+
+.addrEditAndAdd .it input{
+    font-size: 28rpx;
+    width: 500rpx;
+}
+
+.addrEditAndAdd .btn{
+    height:90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    margin: 20rpx 30rpx 0;
+    border-radius: 10rpx;
+}
+
+
+
+.footer{
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+}
+
+.addrListBox{
+    margin-bottom: 100rpx;
+}
+
+.addrListBox .listBox{
+    padding: 0 0;
+    background-color: #fff;
+}
+
+.addrListBox .it{
+    position: relative;
+    padding: 20rpx 0;
+}
+
+.addrListBox .info{
+    padding-left: 90rpx;
+    margin-right: 120rpx;
+    position: relative;
+}
+
+.addrListBox .it.active .info .icon{
+    background:url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tikect-on.png);
+    background-size: 100% 100%;
+}
+
+.addrListBox .info .icon{
+    position: absolute;
+    left: 30rpx;
+    top: 50%;
+    margin-top: -22rpx;
+    width: 44rpx;
+    height: 44rpx;
+    background:url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tikect-off.png);
+    background-size: 100% 100%; 
+}
+
+.addrListBox .info .name{
+    font-weight: bold;
+}
+
+.addrListBox .info .addrText{
+    color: #5e5e5e;
+    font-size: 28rpx;
+    word-break: break-all;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+.addrListBox .editBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 90rpx;
+    padding-right: 30rpx;
+    display: flex;
+    justify-content:flex-end;
+    align-items : center;
+}
+
+.noAddrTips{
+    text-align: center;
+}
+
+
+.listBox .ico-add{
+    position: absolute;
+    left: 30rpx;
+    top: 50%;
+    margin-top: -22rpx;
+    width: 44rpx;
+    height: 44rpx;
+    background:url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/addrList-add.png);
+    background-size: 100% 100%; 
+}
+
+.listBox .ico-tri{
+    position: absolute;
+    right: 30rpx;
+    top: 50%;
+    margin-top: -15rpx;
+    width: 16rpx;
+    height: 30rpx;
+    background: url('https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/tri_right.png');
+    background-size: 100% 100%;
+}
+
+
+
+@import '../common/common.wxss';

@@ -1,0 +1,57 @@
+<view class='mian'>
+
+    <view class='ticketWp'>
+    
+        <view class='it'>
+            <view class='moneyBox flex_cen mianBtn'>
+                <view class='number'>
+                    <text class='unit'>¥</text>
+                    <text class='num'>2000</text>
+                </view>
+                <text class='wdd mianSize'>加盟费返还</text>
+            </view>
+            <view class='info'>
+                <view class='wd color000'><icon class='point bgColor000'></icon>累计订单金额满2万元，优惠券生效</view>
+                <view class='wd color000'><icon class='point bgColor000'></icon>单笔订单金额满2000元可使用</view>
+                <view class='wd color000'><icon class='point bgColor000'></icon>有效期：2018.05.31-2019.05.30</view>
+            </view>
+        </view>
+
+        <view class='it'>
+            <view class='moneyBox flex_cen disableBtn'>
+                <view class='number'>
+                    <text class='unit'>¥</text>
+                    <text class='num'>2000</text>
+                </view>
+                <text class='wdd mianSize'>加盟费返还</text>
+            </view>
+            <view class='info'>
+                <view class='wd color000'><icon class='point bgColor000'></icon>累计订单金额满2万元，优惠券生效</view>
+                <view class='wd color000'><icon class='point bgColor000'></icon>单笔订单金额满2000元可使用</view>
+                <view class='wd color000'><icon class='point bgColor000'></icon>有效期：2018.05.31-2019.05.30</view>
+            </view>
+        </view>
+
+        <view class='it'>
+            <view class='moneyBox flex_cen disableBtn'>
+                <view class='number'>
+                    <text class='unit'>¥</text>
+                    <text class='num'>2000</text>
+                </view>
+                <text class='wdd mianSize'>加盟费返还</text>
+            </view>
+            <view class='info'>
+                <view class='wd color999'><icon class='point bgColor999'></icon>累计订单金额满2万元，优惠券生效</view>
+                <view class='wd color999'><icon class='point bgColor999'></icon>单笔订单金额满2000元可使用</view>
+                <view class='wd color999'><icon class='point bgColor999'></icon>有效期：2018.05.31-2019.05.30</view>
+                <icon class='ico-use'></icon>
+            </view>
+        </view>
+
+
+
+    
+    </view>
+
+
+</view>

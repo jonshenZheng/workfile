@@ -1,115 +1,177 @@
-<!-- <import src="../../wxParse/wxParse.wxml" /> -->
-<view class="container {{ isShowPop ? 'popNoScroll' :'' }}">
-  <view class="swiper-container">
-    <swiper class="swiper_box" autoplay="{{autoplay}}" indicator-dots="true" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
-      <block wx:for="{{goodsDetail.pics}}" wx:key="id">
-        <swiper-item>
-          <image src="{{item}}" data-imgind="{{index}}" data-objName='pics' binderror='onimgfail' class="slide-image" width="355" height="150" mode="aspectFit" lazy-load="true" data-src='item' bindtap='prevImg' />
-        </swiper-item>
+<component-goBackMyStore wx:if='{{role==ROLE_DISTRIBUTOR&&shop.shopId!=shopOfView.shopId}}'></component-goBackMyStore>
+
+<!-- <view>real-> {{shop.shopName}}{{" "+role}}</view>
+<view>view-> {{shopOfView.shopName}}{{" "+roleOfView}}</view>  -->
+
+<block wx:if='{{goodsDetail.basicInfo}}'>
+  <view class="container {{ isShowPop ? 'popNoScroll' :'' }}">
+    <view class="swiper-container">
+      <swiper class="swiper_box" autoplay="{{autoplay}}" circular='true' indicator-dots="true" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+        <block wx:for="{{goodsDetail.pics}}" wx:key="id">
+          <swiper-item>
+            <image src="{{item}}" data-imgind="{{index}}" data-objName='pics' binderror='onimgfail' class="slide-image" mode="aspectFit" lazy-load="true" data-src='item' bindtap='prevImg' />
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="goods-info">
+      <view class="goods-title color000 mianSize">{{goodsDetail.basicInfo.name}}</view>
+      <view class="goods-text textJusty color999">{{goodsDetail.basicInfo.briefDesc ? goodsDetail.basicInfo.briefDesc : ''}}</view>
+      <view class="goods-price mianColor" style="padding-left:35rpx;">¥ {{goodsDetail.basicInfo.price}}
+        <view class="goods-text fr wid400 color999">（不包含运费、税费、安装等费用）</view>
+      </view>
+
+      <block wx:if='{{roleOfView==ROLE_DISTRIBUTOR&&shopOfView.shopId==shop.shopId}}'>
+        <view class='allpriceBox mianBorder borderRad-10'>
+            <view class='clearfix'>
+                <view class='box1'>
+                    <view class="prIt mianColor">成本价¥{{goodsDetail.basicInfo.factoryPrice}}</view>
+                    <view class="prIt mianColor">赚¥{{goodsDetail.basicInfo.profit}}</view>
+                    <view class="prIt mianColor">店铺价¥{{goodsDetail.basicInfo.price}}</view>
+                    <view class="prIt mianColor">面价¥{{goodsDetail.basicInfo.marketPrice}}</view>
+                </view>
+                <view class='setPriceBtn mianBorder-l'>
+                    <button class='setPriceBtn resest-button mianColor flex_cen-v' bindtap='onTapModifyPriceBtn'>
+                    <icon class='ico-pencil'></icon>
+                    一键改价
+                    </button>
+                </view>
+                <view class='shareBtn mianBorder-l'>
+                    <button class='shareBtn resest-button mianColor flex_cen-v' bindtap='onTapShareBtn' wx:if='{{distributorInfo.level==DIST_LV_ON_TRAIL}}'>
+                        <icon class='ico-export'></icon>
+                        分享赚钱
+                    </button>
+                    <button class='shareBtn resest-button mianColor flex_cen-v' open-type='share' wx:else>
+                        <icon class='ico-export'></icon>
+                        分享赚钱
+                    </button>
+                </view>
+            </view>    
+        </view>
       </block>
-    </swiper>
-  </view>
-  <view class="goods-info">
-    <view class="goods-title">{{goodsDetail.basicInfo.name}}</view>
-    <view class="goods-text textJusty">{{goodsDetail.basicInfo.briefDesc ? goodsDetail.basicInfo.briefDesc : ''}}</view>
-    <view class="goods-price mainTextColor" style="padding-left:35rpx;">¥ {{goodsDetail.basicInfo.price}} <view class="goods-text fr wid400">不包含运费、税费、安装等费用</view></view>
-  </view>
-  <view wx:if="{{hasMoreSelect}}" class="row-arrow" bindtap="popupSelectView">
-    选择： {{selectedPropertyStr}}
-  </view>
-  <view class="goods-des-info">
-    <view class="label-title">产品详情</view>
-    <view class='prod-incBox clearfix'>
-      <view class='lis' wx:for="{{goodsDetail.specification}}" wx:for-index="dtkey" wx:for-item="proty" wx:key="key">
-        {{proty.name+'：'}}
-        <block wx:for="{{proty.values}}" wx:for-index="proV_i" wx:key="key">{{proV_i>0?'、':''}}{{item.name}}</block>
+    </view>
+
+    
+     <view wx:if="{{hasMoreSelect}}" class="row-arrow color000" bindtap="popupSelectView">
+      选择：
+      <text class='selStr color999'>{{selectedPropertyStr}}</text>
+    </view> 
+    <view class="goods-des-info">
+      <view class="label-title">产品详情</view>
+      <view class='prod-incBox clearfix'>
+        <view class='lis' wx:for="{{goodsDetail.specification}}" wx:for-index="dtkey" wx:for-item="proty" wx:key="key">
+          {{proty.name+'：'}}
+          <block wx:for="{{proty.values}}" wx:for-index="proV_i" wx:key="key">{{proV_i>0?'、':''}}{{item.name}}</block>
+        </view>
       </view>
     </view>
-  </view>
-  <view class="footer-box">
-    <view class="contact">
-      <button style="opacity:0;position:absolute;left:0;top:0;width:100%;height:100%;" open-type="contact" session-from="{{sendkefuMsg}}" size="27" send-message-title="{{goodsDetail.basicInfo.name}}" send-message-img="{{baseimgURL+goodsDetail.pics[0]}}" ></button>
-      客服
-    </view>
-    <view class="shop-cart-btn" bindtap="goToShopCart">
-      购物车
-      <text wx:if="{{totalCartNum}}" class='cartNum'>{{totalCartNum}}</text>
-      <text class='showAnimate {{cartNumAnimate}}'>+{{addcartNum}}</text>
-    </view>
-    <view class="add-to-favorite" bindtap="addToCollection">
-      <e wx:if="{{collectionId}}"><icon class='star staron'></icon> <text>已收藏</text></e>
-      <e wx:else><icon class='star staroff'></icon> <text>收藏</text></e>
-    </view>
-    <view class="join-shop-cart mainBgColor {{btnff}}" bindtap="addToShopCart" data-cname='join-shop-cart-on' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>加入购物车</view>
-  </view>
-  <view class="show-popup" hidden="{{bHideSelectView}}">
-    <view class="popup-mask" bindtap="hideSelectView"></view>
-    <view class="popup-contents">
-      <view class="pop-goods-info">
-        <view class="pop-img-box">
-          <image wx:if="{{goodsDetail.basicInfo.icon}}" mode='aspectFit'  data-objName='icon' binderror='onimgfail'  src="{{goodsDetail.basicInfo.icon}}" class="goods-thumbnail" />
-        </view>
-        <view class="pop-goods-des">
-          <view class="pop-goods-title">{{goodsDetail.basicInfo.name}}</view>
-          <view hidden="{{isRangePrice}}" class="pop-goods-price mainTextColor">¥ {{goodsDetail.basicInfo.price}}</view>
-          <view hidden="{{!isRangePrice}}" class="pop-goods-price mainTextColor">¥ {{showMaxPrice === showMinPrice? showMaxPrice : showMinPrice + ' ~ ¥ '+ showMaxPrice }}</view>
-          <!--<view class="pop-goods-price">¥ {{selectSizePrice}}</view>-->
-        </view>
-        <view class="pop-goods-close" bindtap="hideSelectView"></view>
+    <view class="footer-box">
+        <navigator class="homeBtn" open-type='switchTab' url='../index/index' > 首页</navigator>
+      <!-- <view class="contact">
+        <button style="opacity:0;position:absolute;left:0;top:0;width:100%;height:100%;" open-type="contact" session-from="{{sendkefuMsg}}" size="27" send-message-title="{{goodsDetail.basicInfo.name}}" send-message-img="{{baseimgURL+goodsDetail.pics[0]}}"></button>
+        客服
+      </view> -->
+      <view class="shop-cart-btn" bindtap="goToShopCart">
+        购物车
+        <text wx:if="{{totalCartNum}}" class='cartNum {{totalCartNum<10?"circle":""}}'>{{totalCartNum}}</text>
+        <text class='showAnimate {{cartNumAnimate}}'>+{{addcartNum}}</text>
       </view>
+      <view class="add-to-favorite {{collectionId?'on':''}}" bindtap="addToCollection">
+        收藏
+      </view>
+      <view class="join-shop-cart viceBtn {{btnff}}" bindtap="addToShopCart" data-cname='join-shop-cart-on' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>加入购物车</view>
+      <view class="buy_now mianBtn" bindtap="onTapInstantPurchaseBtn">立即购买</view>
+    </view>
 
-      <view class='scrollBox'>
-
-        <view class="size-label-box">
-          <block wx:for="{{goodsSelection.properties}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
-            <view class="label">{{property.name}}</view>
-            <view class="label-item-box">
-              <view class="label-item {{item.disabled?'disabled':item.selected ? 'selected' : '' }}" wx:for="{{property.values}}" wx:key="id" bindtap="selectGoods" data-property-index="{{idx}}" data-property-id="{{property.id}}" data-property-name="{{property.name}}"
-                data-property-value-index="{{index}}" data-property-value="{{item.id}}" data-property-value-name="{{item.name}}" data-property-disabled="{{item.disabled}}">
-                {{item.name}}
+    <!-- 属性选择组件-->  
+    <component-selectProperty
+        style="position:relative;z-index:5" 
+        goods-selection="{{goodsSelection}}" 
+        goods-detail="{{goodsDetail}}" 
+        shopofview="{{shopOfView}}"  
+        prodid="{{prodIdParm}}"  
+        btnfirstname="加入购物车"
+        btnsecondname="立即购买"
+        bindfirstfn="addToShopCart"
+        bindsecondfn="onTapInstantPurchaseBtn"
+        bindcloseproperty="closeproperty"
+        id="SelectProp" >
+    </component-selectProperty>
+    <!-- 属性选择组件 end-->  
+    <view class="show-popup" hidden="{{bHideSelectView}}">
+      <view class="popup-mask" bindtap="hideSelectView"></view>
+      <view class="popup-contents">
+        <view class="pop-goods-info border-b">
+          <view class="pop-img-box">
+            <image wx:if="{{goodsDetail.basicInfo.icon}}" mode='aspectFit' data-objName='icon' binderror='onimgfail' src="{{goodsDetail.basicInfo.icon}}" class="goods-thumbnail" />
+          </view>
+          <view class="pop-goods-des">
+            <view class="pop-goods-title">{{goodsDetail.basicInfo.name}}</view>
+            <view hidden="{{isRangePrice}}" class="pop-goods-price mianColor">¥ {{goodsDetail.basicInfo.price}}</view>
+            <!-- <view hidden="{{isRangePrice}}" class="pop-goods-price mainTextColor">出厂价¥ {{goodsDetail.basicInfo.factoryPrice}}</view>
+                        <view hidden="{{isRangePrice}}" class="pop-goods-price mainTextColor">市面价¥ {{goodsDetail.basicInfo.marketPrice}}</view>
+                        <view hidden="{{isRangePrice}}" class="pop-goods-price mainTextColor">利润¥ {{goodsDetail.basicInfo.profit}}</view> -->
+            <view hidden="{{!isRangePrice}}" class="pop-goods-price mianColor">¥ {{showMaxPrice === showMinPrice? showMaxPrice : showMinPrice + ' ~ ¥ '+ showMaxPrice }}</view>
+          </view>
+          <view class="pop-goods-close" bindtap="hideSelectView"></view>
+        </view>
+        <view class='scrollBox'>
+          <view class="size-label-box">
+            <block wx:for="{{goodsSelection.properties}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
+              <view class="label">{{property.name}}</view>
+              <view class="label-item-box">
+                <view class="label-item {{item.disabled?'disabled':item.selected ? 'selected' : '' }}" wx:for="{{property.values}}" wx:key="id" bindtap="selectGoods" data-property-index="{{idx}}" data-property-id="{{property.id}}" data-property-name="{{property.name}}"
+                  data-property-value-index="{{index}}" data-property-value="{{item.id}}" data-property-value-name="{{item.name}}" data-property-disabled="{{item.disabled}}">
+                  {{item.name}}
+                </view>
               </view>
+            </block>
+          </view>
+          <view class="buy-num-box border-t">
+            <view class="num-label">购买数量</view>
+            <view class="num-box border">
+              <view class="num-jian {{purchaseQuantity == minPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="-1">-</view>
+              <view class="num-input border-lr">
+                <input type="number" value="{{purchaseQuantity}}" bindinput='onInputQuantity' />
+              </view>
+              <view class="num-jia {{purchaseQuantity== maxPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="1">+</view>
             </view>
-          </block>
-        </view>
-        <view class="buy-num-box">
-          <view class="num-label">购买数量</view>
-          <view class="num-box">
-            <view class="num-jian {{purchaseQuantity == minPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="-1">-</view>
-            <view class="num-input">
-              <input type="number" value="{{purchaseQuantity}}" bindinput='onInputQuantity'/>
-            </view>
-            <view class="num-jia {{purchaseQuantity== maxPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="1">+</view>
           </view>
         </view>
-
-      </view>
-
-      <view class="popup-join-btn {{ btnff}}"  data-cname='popup-join-btn-on'  bindtap="addToShopCart" bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>
+        <!-- 注释掉 <view class="popup-join-btn {{ btnff}}"  data-cname='popup-join-btn-on'  bindtap="addToShopCart" bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>
         加入购物车
+      </view> -->
+
+        <view class='showPopAddBox clearfix'>
+            <button class='reset-button btnV viceBtn' bindtap="addToShopCart" >加入购物车</button>
+            <button class='reset-button btnV mianBtn' bindtap="onTapInstantPurchaseBtn" >立即购买</button>
+        </view>
+
       </view>
     </view>
   </view>
-</view>
-<view class='qiuckNavigMask {{qiuckNavigShow ? "active" : "" }}' bindtap='showqiuckNavig'></view>
-<view class='qiuckNavig {{qiuckNavigShow ? "active" : "" }}'>
+  <!-- <view class='qiuckNavigMask {{qiuckNavigShow ? "active" : "" }}' bindtap='showqiuckNavig'></view>
+  <view class='qiuckNavig {{qiuckNavigShow ? "active" : "" }}'>
     <view class='iconBox'>
-        <view class='bg'></view>
-        <view class='centen' bindtap='showqiuckNavig'>
-            <icon class="qbtn {{qiuckNavigShow ? 'active' : '' }}"></icon><text class="{{qiuckNavigShow ? 'active' : '' }}">{{qiuckNavigShow ? "收起" : "快速导航" }}</text>
-        </view>
+      <view class='bg'></view>
+      <view class='centen' bindtap='showqiuckNavig'>
+        <icon class="qbtn {{qiuckNavigShow ? 'active' : '' }}"></icon>
+        <text class="{{qiuckNavigShow ? 'active' : '' }}">{{qiuckNavigShow ? "收起" : "快速导航" }}</text>
+      </view>
     </view>
     <view class='qBtnBox clearfix'>
-        <view class='lit'>
-            <navigator url="../index/index" open-type='switchTab'>
-                <icon class='honeIco'></icon>
-                <text>首页</text>
-            </navigator>
-        </view>
-        <view class='lit' >
-            <navigator url='../user/user' open-type='switchTab'>
-                <icon class='userIco'></icon>
-                <text>个人中心</text>
-            </navigator>
-        </view>
+      <view class='lit'>
+        <navigator url="../index/index" open-type='switchTab'>
+          <icon class='honeIco'></icon>
+          <text>首页</text>
+        </navigator>
+      </view>
+      <view class='lit'>
+        <navigator url='../user/user' open-type='switchTab'>
+          <icon class='userIco'></icon>
+          <text>个人中心</text>
+        </navigator>
+      </view>
     </view>
-</view>
+  </view> -->
+</block>

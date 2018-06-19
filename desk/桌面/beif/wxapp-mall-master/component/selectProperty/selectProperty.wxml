@@ -1,0 +1,59 @@
+<view class="show-popup" hidden="{{bHideSelectView}}">
+    <view class="popup-mask" bindtap="hideSelectView"></view>
+    <view class="popup-contents">
+        <view class="pop-goods-info">
+            <view class="pop-img-box">
+                <image wx:if="{{goodsDetail.basicInfo.icon}}" mode='aspectFit' data-objName='icon' binderror='onimgfail' src="{{goodsDetail.basicInfo.icon}}" class="goods-thumbnail" />
+            </view>
+            <view class="pop-goods-des">
+                <view class="pop-goods-title">{{goodsDetail.basicInfo.name}}</view>
+                <view hidden="{{isRangePrice}}" class="pop-goods-price mainTextColor">售价¥ {{goodsDetail.basicInfo.price}}</view>
+                <view hidden="{{!isRangePrice}}" class="pop-goods-price mainTextColor">¥ {{showMaxPrice === showMinPrice? showMaxPrice : showMinPrice + ' ~ ¥ '+ showMaxPrice }}</view>
+            </view>
+            <view class="pop-goods-close" bindtap="hideSelectView"></view>
+        </view>
+        <view class='scrollBox'>
+            <view class="size-label-box">
+                <block wx:for="{{goodsSelection.properties}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
+                    <view class="label">{{property.name}}</view>
+                    <view class="label-item-box">
+                        <view class="label-item {{item.disabled?'disabled':item.selected ? 'selected' : '' }}" wx:for="{{property.values}}" wx:key="id" bindtap="selectGoods" data-property-index="{{idx}}" data-property-id="{{property.id}}" data-property-name="{{property.name}}" data-property-value-index="{{index}}" data-property-value="{{item.id}}" data-property-value-name="{{item.name}}" data-property-disabled="{{item.disabled}}">
+                            {{item.name}}
+                        </view>
+                    </view>
+                </block>
+            </view>
+            <view class="buy-num-box">
+                <view class="num-label">购买数量</view>
+                <view class="num-box">
+                    <view class="num-jian {{purchaseQuantity == minPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="-1">-</view>
+                    <view class="num-input">
+                        <input type="number" value="{{purchaseQuantity}}" bindinput='onInputQuantity' />
+                    </view>
+                    <view class="num-jia {{purchaseQuantity== maxPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="1">+</view>
+                </view>
+            </view>
+        </view>
+
+        <view class='showPopAddBox2 clearfix'>
+            <button class='reset-button btnV viceBtn' bindtap="btn1Fn" >{{btnfirstname}}</button>
+            <button class='reset-button btnV mianBtn' bindtap="btn2Fn" >{{btnsecondname}}</button>
+        </view>
+
+
+    </view>
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<slot></slot>

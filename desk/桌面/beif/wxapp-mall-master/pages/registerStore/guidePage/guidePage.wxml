@@ -1,0 +1,26 @@
+<view class="main mianSize">
+
+    <!-- <view class="banner">
+        <image mode='aspectFill' src="https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/eee.png" alt=""></image>
+    </view>
+    
+    <view class="wp">
+        <view class='h4'>轻松开店创业，开启赚钱之旅</view>
+
+        <text class='desc'>成为分销商优势：\n 享受软件使用权和优惠价格体系</text>
+        <text class='desc'>成为分销商的途径：\n 注册费用： 2000-3000元加盟费（线上支付：微信支付）\n 返还方式：一年内销售额满2W或3W，以抵扣进货款的方式，返还加盟费</text>
+
+    </view> -->
+
+    <!-- 改成用一张图 -->
+    <view class="banner">
+        <image mode='widthFix' src="https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/guidePge.png" alt=""></image>
+    </view>
+
+    <view class="footerBtn clearfix">
+        <button class="zx resest-button" bindtap='callKf'>咨询客服</button>
+        <navigator url='../registerStore' class="zc">注册开店</navigator>
+    </view>
+
+  
+</view>

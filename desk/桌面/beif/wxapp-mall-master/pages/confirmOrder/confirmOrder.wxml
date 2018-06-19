@@ -1,0 +1,81 @@
+
+<view class='mian'>
+
+     <view class='locationInfo pane border-tb' bindtap='onTapChooseAddressBtn'>
+            <icon class='ico-location'></icon>
+            <view class='info'>
+                <block wx:if="{{address.linkman}}">
+                    <view class='name mianSize color000'>联系人：<text class='mianSize color999'>{{address.linkman}} {{address.phone}}</text></view>
+                    <view class='addr mianSize color000'>收货地址：<text class='mianSize color999'>{{address.provinceName}}{{address.cityName}}{{address.countyName}}{{address.detailInfo}}</text></view>
+                 </block>
+                 <block wx:else>
+                    <view class='name clearfix mianSize color000'>收货地址<text style='margin-right:-42rpx' class="fr color999 mianSize">点击添加收货地址</text> </view>    
+                </block>   
+            </view>
+            <icon class='ico-tri'></icon>
+
+     </view>
+
+    <view class='prodList pane border-tb'>
+        <view class='it border-b' data-ind='{{idx}}' wx:for="{{products}}" wx:key="unique" wx:for-index="idx" wx:for-item="item" >
+            <view class='clearfix'>
+                <view class='imgBox flex_cen'>
+                    <image src='{{item.imgUrl}}' mode='aspectFit'></image>
+                </view>
+                <view class='info'>
+                    <view class='nameBox clearfix'>
+                        <text class='name fl color000 mianSize'>{{item.produceName}}</text>
+                        <text class='price fr mianSize' wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>￥{{item.factoryPrice}}</text>
+                        <text class='price fr mianSize' wx:else>￥{{item.price}}</text>
+                    </view>
+                    <view class='guige color999'>{{item.property}}<text class='num color999'>×{{item.count}}</text></view>
+                </view>
+            </view>
+        </view>
+    </view>   
+
+    <view class='ticket pane border-tb' wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
+        <view class='clearfix'>
+            <view class='fr'  bindtap='onTapChooseCouponBtn'>
+                <icon class='ico-tri fr'></icon>
+                <block wx:if='{{curCoupon}}'>
+                <text class='color000 mianSize fr'>-{{savedMoney}}元</text>
+                </block>
+                <block wx:else>
+                <block wx:if='{{availableCoupons.length > 0}}'>
+                    <text  class='color999 mianSize fr' wx:if='{{availableCoupons.length > 0}}'>有{{availableCoupons.length}}张可用优惠券</text>
+                </block>
+                <block wx:else>
+                    <text class='color999 mianSize fr'>无可用优惠券</text>
+                </block>
+                </block>
+                
+            </view>
+        </view>
+    </view>
+
+    <block wx:if='{{availableCoupons.length > 0}}'>
+      <component-selectcoupon style="position:relative;z-index:5" coupons="{{availableCoupons}}" bind:selectcoupon="onSelectCoupon" showCoupon='{{showCoupon}}'/>
+    </block>
+    <block wx:else>
+      <component-selectcoupon style="position:relative;z-index:5" coupons="{{unavailableCoupons}}"  showCoupon='{{showCoupon}}'/>
+    </block>
+
+    <view class='footer'>
+        <view class="selInfo" hidden="{{noSelect}}">
+            <view class='r1'  wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>
+                <text class='color000'>总计：</text>
+                <text class='cnum1 mianColor'>￥{{finalFactoryPrice}}</text>
+            </view>
+            <view class='r1' wx:else>
+                <text class='color000'>总计：</text>
+                <text class='cnum1 mianColor'>￥{{finalPrice}}</text>
+            </view>
+            <view class='r2'>共{{count}}件家具</view>
+        </view>
+        <form bindsubmit="submitOrder" report-submit="true">
+            <button class="addCartBtn {{(noSelect?'':'on ')+btnff}}" form-type="submit">提交订单</button>
+        </form>    
+    </view>
+
+</view>
