@@ -149,6 +149,8 @@
       background-color: #000000;
       opacity:0.5;
       text-align: center;
+      left: 0;
+      top: 65px;
     }
     .hideContent{
       display: none;
@@ -169,19 +171,18 @@
 </head>
 <body style="background-color:transparent;width: 100%;height:90%;overflow-x: auto">
 <input type="hidden" th:value="@{/}" id="projPath"/>
-<div class="pdLibTop"><a style="cursor: pointer;" class="closeBtn" onclick="prodlib_closeBtn();">关闭</a></div>
+<div class="pdLibTop"><a style="cursor: pointer;" class="closeBtn" onclick="prodlib_closeBtn();"><img id="closebtn" style="width: 31px;height: 31px"/></a></div>
 <!-- Swiper -->
 <div class="gallery-top-box" style="height: 95%">
   <div class="swiper-container gallery-top">
-    <div class="swiper-wrapper">
+    <div class="swiper-wrapper" >
       <div class="swiper-slide" th:each="img,iterStat:${bigImgs}" th:attr="data-id=${iterStat.index}">
         <img th:src="${pathPrefix+img}" />
       </div>
     </div>
-    <div class="swiper-scrollbar"></div>
   </div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev swiper-button-white"></div>
+  <div class="swiper-button-next swiper-button-white"></div>
 </div>
 <div class="gallery-thumbs-box">
   <div class="swiper-container gallery-thumbs">
@@ -197,8 +198,8 @@
       </div>
     </div>
   </div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev swiper-button-white"></div>
+  <div class="swiper-button-next swiper-button-white"></div>
 </div>
 
 <!-- Swiper JS -->
@@ -208,11 +209,12 @@
 
     $(document).ready(function(){
         var projPath = $('#projPath').val().slice(0,-1);
-        $('.gallery-thumbs-box .swiper-button-next').attr("background-image",projPath+"/common/img/next-small.png")
+        $('.gallery-thumbs-box .swiper-button-next').attr("background-image",projPath+"/common/img/next-lg2.png")
         $('.slideshow').attr("background-image",projPath+"/common/img/play.png")
         $('.pauseed').attr("background-image",projPath+"/common/img/pause.png")
-        $('.gallery-top-box .swiper-button-prev').attr("background-image",projPath+"/common/img/left-lg.png")
-        $('.gallery-thumbs-box .swiper-button-prev').attr("background-image",projPath+"/common/img/left-small.png")
+        $('.gallery-top-box .swiper-button-prev').attr("background-image",projPath+"/common/img/left-lg2.png")
+        $('.gallery-thumbs-box .swiper-button-prev').attr("background-image",projPath+"/common/img/left-lg2.png")
+        $('#closebtn').attr("src",projPath+"/common/img/closebtn.png")
 
     })
 
@@ -226,16 +228,10 @@
         centeredSlides: true,
         autoplay:false,
         slidesPerView: 'auto',
-        spaceBetween: 10,
+        spaceBetween: 120,
         navigation: {
             nextEl: '.gallery-top-box .swiper-button-next',
             prevEl: '.gallery-top-box .swiper-button-prev',
-        },
-        scrollbar: {
-            el: '.swiper-scrollbar',
-            hide: false,
-            draggable: true,
-            dragSize:150,
         },
         on: {
             slideChangeTransitionEnd: function(){
@@ -256,16 +252,6 @@
 
         }
     })
-
-    galleryTop.scrollbar.$el.css({
-        "bottom":"0px",
-        "background":"none",
-        "height":"5px"
-    });
-    galleryTop.scrollbar.$dragEl.css({
-        'background':'rgba(171,171,171,171.6)'
-    });
-    galleryTop.scrollbar.updateSize();
 
     var galleryThumbs = new Swiper('.gallery-thumbs-box .gallery-thumbs', {
         spaceBetween: 10,
@@ -309,23 +295,13 @@
         $(".gallery-thumbs-box .swiper-container").css("width",galleryThumbs_width)
         $(".gallery-thumbs-box .swiper-container .swiper-slide .setMainPic").css("width",galleryThumbs_width)
         //大图
-        var galleryTop_width = $(window).width() - 80
+        var galleryTop_width = $(window).width()
         $(".gallery-top-box .swiper-container").css("width",galleryTop_width)
     }
 
     /* 关闭产品库 */
     function prodlib_closeBtn() {
         window.top.hideProdLibPop();
-    }
-
-    //默认选择主图
-    setCurrentPic();
-    function setCurrentPic() {
-        $("div[id^='img']").each(function(index){
-            if($(this).find("a").text() == "封面"){
-                galleryTop.slideTo(index, 1000, false);
-            }
-        });
     }
 
     //点击小图
@@ -354,6 +330,18 @@
       var displayPicPath = $("#img"+index).find("img")[0].src;
       window.top.modifySaleProdImg(mainPicPath,displayPicPath);
   }
+
+    //默认选择主图
+    function setCurrentPic() {
+        $("div[id^='img']").each(function(index){
+            if($(this).find("a").text() == "封面"){
+                //alert("封面："+index);
+                clickThumbs(index);
+                galleryTop.slideTo(index, 1000, false);
+            }
+        });
+    }
+    setCurrentPic();
 
 </script>
 </body>

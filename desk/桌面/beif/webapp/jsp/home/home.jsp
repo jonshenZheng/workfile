@@ -110,7 +110,7 @@
   
 	<div class="modal fade hone_prodlib_pop hone_prodlib_pop2018" id="modifySaleProdImg" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog" >
-			<div class="modal-content" style="width:900px;min-height:800px;margin-top:auto;margin-left: auto;">
+			<div class="" style="width:900px;min-height:800px;margin-top:auto;margin-left: auto;background-color: rgba(255, 255, 255, 0);">
 				<div class="modal-body" style="padding:0px">
 					<iframe id="content_saleProdImg" src="" name="content" frameborder="0"
 							scrolling="no" style="min-height: 800px" width="100%"></iframe>
@@ -376,14 +376,15 @@
     	function openProdLibPop(fid,startPage,isReflash,areaId,offerId,replSaleProdId,num){
             $homeMyModal = $('#myModal'),
                 $saleProdFrame_ifr = document.getElementById('content_prodlib').contentWindow;
-            
-    		$homeMyModal.modal('show');
-    		if(replSaleProdId){
-    			$saleProdFrame_ifr.showProdLibMsg(fid,startPage,isReflash,areaId,offerId,replSaleProdId,num);
-    		}
-    		else{
-    			$saleProdFrame_ifr.showProdLibMsg(fid,startPage,isReflash,areaId,offerId);	
-    		}
+            $('#myModal').on('shown.bs.modal', function (e) {
+                if(replSaleProdId){
+                    $saleProdFrame_ifr.showProdLibMsg(fid,startPage,isReflash,areaId,offerId,replSaleProdId,num);
+                }
+                else{
+                    $saleProdFrame_ifr.showProdLibMsg(fid,startPage,isReflash,areaId,offerId);
+                }
+            });
+            $homeMyModal.modal('show');
     	}
 
         //打开修改销售产品图片
@@ -394,8 +395,10 @@
             var currntSpan = $(furIframe).contents().find("span#"+modifySaleProdId);
             var hiddenInput = $(currntSpan).find("input")[0];
             var selectPicPath = $(hiddenInput).val();
-            
-            $('#content_saleProdImg').attr('src',"${prc }/offerList/modifySaleProdImg.th?saleProdId="+saleProdId+"&selectPicPath="+selectPicPath);
+
+            $('#modifySaleProdImg').on('shown.bs.modal', function (e) {
+                $('#content_saleProdImg').attr('src',"${prc }/offerList/getSaleProdImg.th?saleProdId="+saleProdId);
+            });
             $("#modifySaleProdImg").modal('show');
             $saleProdFrame_ifr = document.getElementById('modifySaleProdImg').contentWindow;
             $homeMyModal = $("#modifySaleProdImg");
@@ -409,10 +412,31 @@
             imgsrc.setAttribute("src",displayPicPath);
             var hiddenInput = $(currntSpan).find("input")[0];
             $(hiddenInput).val(mainPicPath);
+			
+			var saleProd = {fid:modifySaleProdId,picPath:mainPicPath};
+            $.ajax({
+                url: '${prc }/offerList/modifySaleProdImg',
+                type : 'POST',
+                async: false,
+                data : JSON.stringify(saleProd),
+                dataType : 'json', //返回值类型 一般设置为json
+                contentType: "application/json; charset=utf-8",
+                success : function(r){
+                    if(r.meta && r.meta.code === 200){
+                    }else{
+                        alert(r.meta.msg);
+                    }
+                },
+                error : function() {
+                    alert('修改图片失败');
+                }
+            });
         }
 
     	function hideProdLibPop(){
     		$homeMyModal.modal('hide');
+            $('#content_saleProdImg').attr('src','');
+            $homeMyModal.off('shown.bs.modal');
     	}
     
 	    /*顶部导航点击样式*/
