@@ -1,0 +1,237 @@
+<component-goBackMyStore  wx:if='{{role==ROLE_DISTRIBUTOR&&shop.shopId!=shopOfView.shopId}}'></component-goBackMyStore>
+<view class="main {{ isShowPop ? 'popNoScroll' :'' }}" style='display:flex;flex-direction:column;posiztion:relative;z-index:2'>
+
+
+    <view class='scrollBtnwp'>
+        <scroll-view class='scrollBtnBox'  scroll-x scroll-with-animation='true'  scroll-into-view='index-{{curIndex-2>=0?curIndex-2:0}}'>
+        <view class='scrollBtnIt' id='index-{{idx}}' wx:for="{{category}}" wx:key="unique" data-fid="{{item.id}}" data-id="{{item.cgid}}" data-index="{{idx}}" wx:for-index="idx" bindtap='onTapTab'>
+            <text class='scrollBtnName  {{idx==curIndex?"mianColor":"color000"}}'>{{item.name}}</text>
+            <icon class='btn-border {{idx==curIndex?"mianBtn":""}}'></icon>
+        </view>
+        </scroll-view>
+    </view>
+                                                                                                                                                                                                                                                                                                                                                                                                    
+
+
+    <view class="{{'showALLSelOpt '+isShowAllopt}}">
+        
+        <!-- <form class='cont' bindsubmit="selectAlloptFn" data-type='dynamic' bindreset='resetAlloptFn'> -->
+        <form class='cont' bindsubmit="filterFn" data-type='dynamic' bindreset='resetAlloptFn'>
+            <view class='bg' bindtap='hideAlloptFn' data-cansle='1'></view>
+            <view class="animate">
+                <view class='scroll'>
+
+                    <view class='optlist'>
+                        <view class='til'>价格区间 <text class="sml-til">（填写最低价、最高价其中一个亦可）</text></view>
+                        <view class='optBox orterPane orterPane_pri border-tb'>   
+                            <view class='clearfix'>                      
+                                <input name="minPriceV" value='{{F_minPrice}}' placeholder='最低价' type="digit"></input>
+                                <text class='sp'>——</text>
+                                <input name='maxPriceV' value='{{F_maxPrice}}' placeholder='最高价' type="digit"></input>
+                            </view>  
+                        </view> 
+                    </view>
+
+                    <view class='optlist'>
+                        <view class='til'>尺寸 <text class="sml-til">（填写长、宽、高其中一个亦可）</text><text class="swichinpt_btn" bindtap='swichinpt'>{{swichinpt_text}}</text></view>
+                        <view hidden="{{swichinpt_text !== '精准筛选'}}" class='optBox orterPane orterPane_siz border-tb'>
+                            <view class='clearfix'>  
+                                <input name='width' type="digit" placeholder='长度' value='{{F_width}}'></input>
+                                <text class='sp'>——</text>
+                                <input name='depth'  type="digit" placeholder='宽度' value='{{F_depth}}'></input>
+                                <text class='sp'>——</text>
+                                <input name='height'  type="digit" placeholder='高度' value='{{F_height}}'></input>
+                            </view> 
+                        </view> 
+
+                        <view hidden="{{swichinpt_text !== '常规筛选'}}"  class='optBox orterPane orterPane_siz border-tb'>
+                            <view class='clearfix'> 
+                                <view>
+                                    <input name='width_l' type="digit" placeholder='长度下限' value='{{F_width_l}}'></input>
+                                    <text class='sp'>——</text>
+                                    <input name='width_u' type="digit" placeholder='长度上限' value='{{F_width_u}}'></input>
+                                </view>
+
+                                <view>
+                                    <input name='depth_l' type="digit" placeholder='宽度下限' value='{{F_depth_l}}'></input>
+                                    <text class='sp'>——</text>
+                                    <input name='depth_u' type="digit" placeholder='宽度上限' value='{{F_depth_u}}'></input>
+                                </view>
+
+                                <view>
+                                    <input name='height_l' type="digit" placeholder='高度下限' value='{{F_height_l}}'></input>
+                                    <text class='sp'>——</text>
+                                    <input name='height_u' type="digit" placeholder='高度上限' value='{{F_height_u}}'></input>
+                                </view>
+                            </view>
+                        </view> 
+
+                    </view>
+
+                    <view class='optlist' wx:for="{{allSelOpt}}" wx:key="optk" wx:for-index="optallind" wx:for-item="optall">
+                        <view class='til'>{{optall.name}}</view>
+                        <view class='optBox border-tb'>   
+                            <view class='clearfix position-r'>    
+                                <view class='line border-r'></view>                    
+                                <checkbox-group name="{{optall.name}}">
+                                    <view class='border-t it {{optall.sel_ind[optaVueind]}}' bindtap='allOptSelOneFn' data-indo='{{optallind}}' data-indt='{{optaVueind}}' wx:for="{{optall.values}}" wx:for-key="optk" wx:for-item="optaVue" wx:for-index="optaVueind">
+                                        <text>{{optaVue}}</text>
+
+                                        <block wx:if="{{optaVue || optaVue === 0 || optaVue === '0'}}">
+                                            
+                                                <icon class='{{optall.sel_ind[optaVueind]}}' ></icon>                          
+                                                <checkbox value="{{optaVue}}" checked="{{optall.sel_ind[optaVueind]}}" hidden='true'/>
+                                            
+                                        </block>
+
+                                    </view>
+                                </checkbox-group >
+                            </view>
+                        </view> 
+                    </view>
+                    
+                </view>
+
+                <view class='ALLSelBtnBox'>                     
+                    <button formType="reset" class="reset">重置</button>
+                    <button formType="submit" class='mainBgColor'>确定</button>
+                </view>
+            </view>
+
+        </form>
+    </view>
+
+    <!-- 一级分类 
+    <view class="categroy-left">
+        <view wx:for="{{category}}" wx:key="index" data-fid="{{item.id}}" data-id="{{item.cgid}}" data-index="{{index}}"
+            bindtap="switchTab"
+            class="cate-list {{curIndex === index?'on':''}}">{{item.name}}</view>
+    </view> -->
+
+    <scroll-view class="categroy-right" scroll-y="{{isScroll}}" lower-threshold="20" scroll-into-view="{{toView}}" scroll-with-animation="true">
+         <block wx:for="{{category}}" wx:for-index="cgind" wx:key="index_cg" wx:for-item="item_cg">
+            <scroll-view id="{{item_cg.cgid}}"  scroll-y="prodScroll"  bindscroll="scrollFn" class="cate-box {{cgind === curIndex?'on':''}}" bindscrolltolower="upload"  scroll-top="{{resetScrollTop}}" >
+                <view class='TwoLevelwp' style="visibility:hidden" id="TwoLevelwp{{cgind}}" >
+                    <scroll-view class='TwoLevel' scroll-y="true" >
+
+                        <block wx:for="{{item_cg.children}}" wx:for-index="idx_s" wx:for-item="tmune" wx:key="index_tl">
+                            <text bindtap='selLevel' data-fid="{{tmune.id}}" data-tabind='{{cgind}}' data-listid='{{idx_s}}' class="{{'TwoLevelOpt '+tmune.isSel}}">{{tmune.name}}</text>
+                
+                        </block>
+
+                    </scroll-view>
+                </view>
+
+                <view class='TwoLevelwp fixBox {{hideIt?"hide":""}}'>
+                    <scroll-view class='TwoLevel' scroll-y="true">
+
+                        <block wx:for="{{item_cg.children}}" wx:for-index="idx_s" wx:for-item="tmune" wx:key="index_tl">
+                            <text bindtap='selLevel' data-fid="{{tmune.id}}" data-tabind='{{cgind}}' data-listid='{{idx_s}}' class="{{'TwoLevelOpt '+tmune.isSel}}">{{tmune.name}}</text>
+                
+                        </block>
+
+                    </scroll-view>
+                </view>
+                
+                <view class='selectArea'>
+                    
+                        <view class='border-b sel-tab sel-tab{{cgind}}'>
+                            <block wx:for="{{showpanCt}}" wx:for-index="pani" wx:for-item="panO" wx:key="index_pn">
+                                <view wx:if="{{pani == 0}}" class="tab-lb {{panO.isshow}}" data-ind="0" data-panind='{{cgind}}' bindtap='showpanFn'>价格<icon class='icon'></icon></view>
+                                <view wx:else class="tab-lb {{panO.isshow}}" data-ind="1" data-panind='{{cgind}}' bindtap='showpanFn'>尺寸<icon class='icon'></icon></view>
+                            </block>
+                            <view class="tab-lb" bindtap='showAlloptFn'>筛选<icon class='ico-filter'></icon></view>
+                        </view>
+                        <block wx:for="{{showpanCt}}" wx:for-index="pani" wx:for-item="panO" wx:key="index_pn" >
+
+                            <block wx:if="{{ 0 == pani}}">
+                                <view class="tab-pan {{panO.isshow}} pan_act{{cgind}}">
+                                    <!-- <form  bindsubmit="formSubmitFn2" data-ind="0" data-type='price'> -->
+                                    <form  bindsubmit="filterFn" data-ind="0" data-type='price'>
+                                        <view class='inp-line'>
+                                            <text class='unit'>￥</text>
+                                            <input name="minPriceV" data-ind='0' value='{{item_cg.detail.filter.minPrice}}' placeholder='最低价' type="digit" auto-focus=''></input>
+                                            <text class='sp'>-</text>
+                                            <!--<input name='maxPriceV' data-ind='1' value='{{item_cg.detail.filter.maxPrice}}' placeholder='最高价' type="digit" bindinput='sortPrice' ></input>-->
+                                            <input name='maxPriceV' data-ind='1' value='{{item_cg.detail.filter.maxPrice}}' placeholder='最高价' type="digit" ></input>
+                                        </view>
+                                        <view class='inp-line btnBox'>
+                                            <button class="sel-btn cancle" bindtap="hidepanFn" data-cansle='1'>取消</button>
+                                            <!--<button class="sel-btn" formType="reset" bindreset="hidepanFn">取消</button>-->
+                                            <button class="sel-btn mainBgColor" formType="submit">确定</button>
+                                            
+                                        </view>
+                                    </form>
+                                </view>
+                            </block>
+                        
+                            <block wx:else>
+                                <view class="tab-pan {{panO.isshow}} pan_act{{cgind}}">
+                                    <!-- <form  bindsubmit="formSubmitFn2" data-ind="1" data-type='shape'> -->
+                                    <form  bindsubmit="filterFn" data-ind="1" data-type='shape' data-cgind='{{cgind}}' bindreset='resetSize'>
+                                        <view class='danwei'>单位：毫米</view>
+                                        <view class='inp-line' style="border-bottom:2rpx solid #ccc;">
+                                            <input name='lengthV' type="digit" placeholder='长度' auto-focus='' value='{{item_cg.detail.filter.length}}'></input>
+                                            <text class='sp'>-</text>
+                                            <input name='widthV'  type="digit" placeholder='宽度' value='{{item_cg.detail.filter.width}}'></input>
+                                            <text class='sp'>-</text>
+                                            <input name='heightV'  type="digit" placeholder='高度' value='{{item_cg.detail.filter.height}}'></input>
+                                        </view>
+                                        <view class='inp-line btnBox'>                              
+                                            <button class="sel-btn cancle" style="margin:0 12rpx" bindtap="hidepanFn" data-cansle='2'>取消</button>
+                                            <button class="sel-btn cancle" style="margin:0 12rpx" formType="reset">重置</button>
+                                            <button class="sel-btn mainBgColor" style="margin:0 12rpx" formType="submit">确定</button>
+                                        </view>
+                                    </form> 
+                                </view>
+                            </block>
+                        
+                        </block>
+                
+                </view>
+
+                <view class='scrollbox'> 
+                    <view  class="prodlibbox" >
+                    <!-- <scroll-view  scroll-y="true" class="prodlibbox" bindscrolltolower="upload" > -->
+                        <view class='pl_box'>
+
+                            <block wx:for="{{item_cg.detail.prod.showPd}}" wx:for-index="idx" wx:for-item="pls" wx:key="index_pd">
+                                <navigator url="{{'../details/details?prodId='+pls.prodId+'&skuId='+pls.skuId}}" class='pd_it border borderRad-10'>
+                                    <view class='imgWp'>
+                                        <image src='{{pls.path}}' binderror='loadimgfail' mode='aspectFit' data-imgind='{{idx}}'></image>
+                                    </view>                              
+                                    <text class='pdName'>{{pls.prodName}}</text>
+                                    <view class='pdprice'>
+                                        <text class='pr1 mianColor mianSize'>￥{{pls.price}}</text>
+                                      <block wx:if="{{roleOfView==ROLE_DISTRIBUTOR}}">
+                                        <text class='pr2 mianBtn'>{{'赚￥'+pls.profit}}</text>
+                                      </block>
+                                    </view>
+                                </navigator>
+                            </block>
+                            
+                            <view wx:if="{{!item_cg.detail.prod.showPd.length}}" class='no-data'>暂无相关产品</view>
+
+                        </view>
+
+                        <block wx:if="{{item_cg.detail.prod.showPd.length}}">
+                            <view class="weui-loadmore" wx:if="{{item_cg.detail.prod.hasMore}}">
+                                <view class="weui-loading"></view>
+                                <view class="weui-loadmore__tips">正在加载</view>
+                            </view>
+                            <view wx:else class="weui-loadmore">
+                                <text class="weui-loadmore__tips">没有更多内容</text> 
+                            </view>
+                        </block>
+                        
+                    </view>
+                
+                </view>
+
+                
+            </scroll-view>
+        </block> 
+
+    </scroll-view>
+
+</view>
