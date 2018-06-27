@@ -87,7 +87,7 @@ var RegexpObj = {
 var UiMethod = {
 
 	//是哪个浏览器或版本
-    whichBroser ：function(version){
+    whichBroser : function(version){
         var Browser = {
           ie6 : 'MSIE 6.0',
           ie7 : 'MSIE 7.0',
