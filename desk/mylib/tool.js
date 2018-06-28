@@ -355,6 +355,22 @@ var Method = {
 		return datas;
 		
     },
+    /* 将对象的key或数组的索引存到一个数组上 */
+    getkeyToArr : function(obj){
+
+    	if( !isArray(obj) || !isObject(obj) ){
+    		return;
+    	}
+
+    	var arr = [];
+
+    	for(key in obj){
+    		arr.push(key);
+    	}
+
+    	return arr;
+
+    }
     
 };
 
