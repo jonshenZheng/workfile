@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<script>
+			function setRem(){
+				var windowWid = window.screen.width > 640 ? 640 : window.screen.width,
+				 	htmlSz =   windowWid/320*625+'%';
+				document.getElementsByTagName('html')[0].style.fontSize = htmlSz;
+			}
+			setRem();
+		</script>
+		<title></title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<style>
+
+
+			body{
+				background-color: #f7f7f7;
+			}
+
+			.ttt{
+				/*height:.6rem;*/
+				/*line-height: .6rem;*/
+				height:140px;
+				line-height: 140px;
+				text-align: center;
+				font-size: .2rem;
+				margin:.3rem 0;
+				background-color: #fff;
+			}
+
+			.tips{
+				height:.2rem;
+				line-height: .2rem;
+				text-align: center;
+				font-size: .18rem;
+			}
+
+
+			/*
+			
+			 	使用移动端1像素 的限制:
+				1、border-t、border-b、border-l、border-r :
+						(1 不会增加节点的高度，eg: <div class="cc border-t"></div>.cc{height:40px} cc的高度为40
+						(2 border-* 一个节点只能有一个这种类名；eg: <div class="cc border-t border-b"></div>这样写的话边框的位置出错，因为两个类名用同一个::after
+							解决办法：1，在外面多家一个节点，把把边线的类名随便放一个在这个节点上
+									  2，类是（border-t+border-b）、（border-l+border-r） 分别可以用这种代替 border-tb、border-lr
+
+				2、border :
+						(1 边线的节点不能使用overflow,使用了会看不到边线
+						(2 圆角会随着缩放而改变，先要在每个像素比设置对应的圆角，eg 1倍屏:border-radius : 10; 2倍屏:border-radius : 20;3倍屏:border-radius : 30;
+						(3 不能使用marging,要使用多加个节点包着就行
+						(4 高度要固定，否者底部边线会多出几像素出来
+
+			*/
+
+
+
+			.borderRad-6,.borderRad-6::after{
+			    border-radius: 6rpx;
+			} 
+
+			.borderRad-10,.borderRad-10::after{
+			    border-radius: 10rpx;
+			} 
+
+			.borderRad-20,.borderRad-20::after{
+			    border-radius: 20rpx;
+			} 
+
+			/* border */
+
+			.noBorder,.noBorder::after{
+			    border: 0 !important;
+			}
+
+			.borderBase{
+			    position: relative;
+			}
+
+			.borderBase::after{
+			    content:"";
+			    position: absolute; 
+			    transform-origin: 0 0;
+			}
+
+			.border,.border-t,.border-b,.border-l,.border-r,.border-lr,.border-tb,.mianBorder,.mianBorder-t,.mianBorder-b,.mianBorder-l,.mianBorder-r,.mianBorder-lr,.mianBorder-tb{
+			    position: relative;
+			    z-index: 1;
+			}
+
+			.border,.mianBorder{margin: 1px; }
+
+			.border-lr,.mianBorder-lr{
+			    margin-left:1px;
+			    margin-right: 1px; 
+			}
+			.border-tb,.mianBorder-tb{
+			    margin-top:1px;
+			    margin-bottom: 1px;
+			}
+
+			/*
+				不用这个的原因是安卓端部分不支持浮点数
+			.border-t{margin-top:1px; }
+			.border-b{margin-bottom:1px; }
+			.border-l{margin-left:1px; }
+			.border-r{margin-right:1px; }*/
+
+
+			.border::after,.border-t::after,.border-b::after,.border-l::after,.border-r::after,.border-lr::after,.border-tb::after,.mianBorder::after,.mianBorder-t::after,.mianBorder-b::after,.mianBorder-l::after,.mianBorder-r::after,.mianBorder-lr::after,.mianBorder-tb::after{
+			    content:"";
+			    position: absolute; 
+			    transform-origin: 0 0;
+			}
+
+			.border-b::after,.border-t::after,.mianBorder-b::after,.mianBorder-t::after{
+			    width: 100%;
+			    left: 0;
+			}
+
+			.border-l::after,.border-r::after,.mianBorder-l::after,.mianBorder-r::after{
+			    height: 100%;
+			    top: 0;
+			}
+
+			.border::after,.border-lr::after,.border-tb::after,.mianBorder::after,.mianBorder-lr::after,.mianBorder-tb::after{
+			    width:100%;
+			    height:100%;	
+			    box-sizing: content-box;
+			    z-index: -1;
+			}
+
+			.border-lr::after,.mianBorder-lr::after{
+			    left: -1px;
+			    top: 0;
+			    border-right: 1px solid #ccc;
+			    border-left: 1px solid #ccc;
+			    background-color: inherit;
+			}
+
+			.border-tb::after,.mianBorder-tb::after{
+			    left: 0;
+			    top: -1px;
+			    border-top: 1px solid #ccc;
+			    border-bottom: 1px solid #ccc;
+			    background-color: inherit;
+			}
+
+			.border::after,.mianBorder::after{
+			    left: -1px;
+			    top: -1px;
+			    border:1px solid #ccc;
+			    background-color: inherit;
+			}
+
+			.border-t::after,.mianBorder-t::after{
+			    top: -1px;
+			    border-top:1px solid #ccc;
+			}
+
+			.border-b::after,.mianBorder-b::after{
+			    bottom:0;
+			    border-bottom:1px solid #ccc;
+			}
+
+			.border-l::after,.mianBorder-l::after{
+			    left: 0;
+			    border-left:1px solid #ccc;
+			}
+
+			.border-r::after,.mianBorder-r::after{
+			    right:0;
+			    border-right:1px solid #ccc;
+			}
+
+			.border::after,.border-t::after,.border-b::after,.border-l::after,.border-r::after,.border-lr::after,.border-tb::after{
+			    border-color: #ccc !important;
+			}
+
+			.mianBorder::after,.mianBorder-t::after,.mianBorder-b::after,.mianBorder-l::after,.mianBorder-r::after,.mianBorder-lr::after,.mianBorder-tb::after{
+			    border-color: #489af7 !important;
+			}
+
+			@media only screen and (-webkit-min-device-pixel-ratio: 2.0), only screen and (min-resolution: 2dppx) {
+
+				/*.border-t{margin-top:.5px;}
+				.border-t::after{top: -0.5px; }
+
+				.border-b{margin-bottom:.5px;}
+				.border-b::after{bottom: -0.5px; }
+
+				.border-l{margin-left:.5px;}
+				.border-l::after{left: -0.5px; }
+
+				.border-r{margin-right:.5px;}
+				.border-r::after{right: -0.5px; }
+
+				.border,.mianBorder{margin: .5px; }
+				.border::after,.mianBorder::after{left: -0.5px; top: -0.5px; }*/
+
+
+			    .border-b::after, .border-t::after,.mianBorder-b::after, .mianBorder-t::after {
+			        transform: scaleY(0.5);
+			    }  
+
+			    .border-l::after, .border-r::after,.mianBorder-l::after, .mianBorder-r::after {
+			        transform: scaleX(0.5);
+			    } 
+
+			    .border::after,.border-lr::after,.border-tb::after,.mianBorder::after,.mianBorder-lr::after,.mianBorder-tb::after{
+			        width: 200%;
+			        height: 200%;
+			        transform: scale(0.5);
+			        transform-origin: 0 0;
+			    }
+
+			    .borderRad-6::after{
+			        border-radius: 12rpx;
+			    } 
+
+
+			    .borderRad-10::after{
+			        border-radius: 20rpx;
+			    } 
+
+			    .borderRad-20::after{
+			        border-radius: 40rpx;
+			    } 
+
+
+			}
+
+			@media only screen and (-webkit-min-device-pixel-ratio: 3.0), only screen and (min-resolution: 3dppx) {
+
+				/*.border-t{margin-top:.3333px;}
+				.border-t::after{top: -0.3333px; }
+
+				.border-b{margin-bottom:.3333px;}
+				.border-b::after{bottom: -0.3333px; }
+
+				.border-l{margin-left:.3333px;}
+				.border-l::after{left: -0.3333px; }
+
+				.border-r{margin-right:.3333px;}
+				.border-r::after{right: -0.3333px; }
+
+				.border,.mianBorder{margin: .3333px; }
+				.border::after,.mianBorder::after{left: -0.3333px; top: -0.3333px; }*/
+
+
+			    .border-b::after, .border-t::after,.mianBorder-b::after, .mianBorder-t::after {
+			        transform: scaleY(0.3333);
+			    }  
+
+			    .border-l::after, .border-r::after,.mianBorder-l::after, .mianBorder-r::after {
+			        transform: scaleX(0.3333);
+			    } 
+
+			    .border::after,.border-lr::after,.border-tb::after,.mianBorder::after,.mianBorder-lr::after,.mianBorder-tb::after{
+			        width: 300%;
+			        height: 300%;
+			        transform: scale(0.3333);
+			        transform-origin: 0 0;
+			    }
+
+
+			    .borderRad-6::after{
+			        border-radius: 18rpx;
+			    } 
+
+
+			    .borderRad-10::after{
+			        border-radius: 30rpx;
+			    } 
+
+			    .borderRad-20::after{
+			        border-radius: 60rpx;
+			    } 
+
+
+
+			}
+
+			@media only screen and (-webkit-min-device-pixel-ratio: 4.0), only screen and (min-resolution: 4dppx) {
+
+				/*.border-t{margin-top:.25px;}
+				.border-t::after{top: -0.25px; }
+
+				.border-b{margin-bottom:.25px;}
+				.border-b::after{bottom: -0.25px; }
+
+				.border-l{margin-left:.25px;}
+				.border-l::after{left: -0.25px; }
+
+				.border-r{margin-right:.25px;}
+				.border-r::after{right: -0.25px; }
+
+				.border,.mianBorder{margin: .25px; }
+				.border::after,.mianBorder::after{left: -0.25px; top: -0.25px; }*/
+
+
+			    .border-b::after, .border-t::after,.mianBorder-b::after, .mianBorder-t::after {
+			        transform: scaleY(0.25);
+			    }  
+
+			    .border-l::after, .border-r::after,.mianBorder-l::after, .mianBorder-r::after {
+			        transform: scaleX(0.25);
+			    } 
+
+			    .border::after,.border-lr::after,.border-tb::after,.mianBorder::after,.mianBorder-lr::after,.mianBorder-tb::after{
+			        width: 400%;
+			        height: 400%;
+			        transform: scale(0.25);
+			        transform-origin: 0 0;
+			    }
+
+			    .borderRad-6::after{
+			        border-radius: 24rpx;
+			    } 
+
+			    .borderRad-10::after{
+			        border-radius: 40rpx;
+			    } 
+
+			    .borderRad-20::after{
+			        border-radius: 80rpx;
+			    } 
+
+
+			}
+			/* border end*/
+
+
+
+		</style>
+
+
+    </head>
+    <body>
+
+		<div class="ttt" style="border-bottom:1px solid #eee"></div>
+
+
+		<!-- <div class="ttt borderBase border-b">bottom</div> 
+		<div class="ttt">
+			<div class="ttt borderBase border-t">top</div>	
+		</div>
+		<div class="ttt borderBase border-l">left</div>
+		<div class="ttt borderBase border-r">right</div> -->
+		<div style="margin:10px 0">
+			<div class="ttt borderBase border">border</div>	
+		</div>
+
+		<div style="margin:10px 0">
+			<div class="ttt borderBase border-tb">border</div>	
+		</div>
+
+		<div style="margin:10px 0">
+			<div class="ttt borderBase border-tb">border</div>	
+		</div>
+
+		<div style="margin:10px 0">
+			<div class="ttt borderBase border-tb">border</div>	
+		</div>
+		
+    </body>
+
+	<script>
+
+		
+
+
+	</script>
+
+
+</html>
