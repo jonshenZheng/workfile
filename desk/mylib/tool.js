@@ -6,6 +6,11 @@ function isObject(v){
 	return type(v,'object');
 }
 
+/*去除首尾空格*/
+trim : function(str){
+    return str.replace(RegexpObj.trim,'');
+}
+
 // 返回e很当前节点 后面缓存单例
 function EvenFn(e,IsStopPreventDefault){
 	var ev = e || window.e;
@@ -320,10 +325,73 @@ var fileMethod = {
 
 var Method = {
 
-    /*去除首尾空格*/
-    trim : function(str){
-        return str.replace(RegexpObj.trim,'');
-    },
+	/*
+	*返回数组的所有组合
+	*arr : 获取组合源数据，类型为数组
+	*max ： 最多长度的组合（包括最大长度下的组合）
+	*curLen : 返回指定长度的组合
+	*/
+	getARRzuhe : function(arr,max,curLen){
+
+	  if( Object.prototype.toString.call(arr) !== '[object Array]' || !arr.length){
+	    return [];
+	  }
+
+	  let keyWd = arr,
+	      keyWdLen = keyWd.length,
+	      keyWd_max = max || keyWdLen,
+	      startLen = 1,
+	      restArr = [],
+	      justLen = 0,
+	      cmm = [];
+
+
+	  if(curLen && curLen > 0){
+	    justLen = curLen >=  keyWd_max ? keyWd_max : curLen;
+	  }
+	       
+	  function getCommStr(deep) {
+
+	    if (deep > 0){
+
+	      let arrInd = startLen - deep,
+	          i = 0;
+
+	      deep--;
+
+	      for (; i < keyWdLen;i++){
+
+	        cmm[arrInd] = keyWd[i];
+
+	        if (deep > 0){
+	          getCommStr(deep);
+	        }
+	        else{
+	          restArr.push(cmm.join('')) 
+	        }
+
+	      }
+
+
+	    }
+
+	  }
+
+
+	  for (; startLen <= keyWd_max; startLen++){
+
+	      if(justLen && justLen !== startLen){
+	        continue;
+	      }
+
+	      cmm = [];
+	      getCommStr(startLen);
+	  }    
+	  
+	  return restArr
+
+	},
+
     /*格式化所有空格，变为一个空格*/
     contOneSpace : function(str){
         str = this.trim(str);
@@ -370,7 +438,24 @@ var Method = {
 
     	return arr;
 
-    }
+    },
+    /*获取 函数名*/
+	function getFnName(fn){
+
+	    if(typeof fn !== 'function'){
+	        return;
+	    }
+
+	    var str = String(fn),
+	        end = str.indexOf('('),
+	        name = '';
+
+	    str = str.slice(8,end);
+	    name = trim(str);
+
+	    return name;     
+
+	}
     
 };
 
