@@ -1,0 +1,28 @@
+<!--pages/play/play.wxml-->
+<view class='mian'>
+
+    <view class='duishouBox'>
+        <image mode='widthFix'></image>
+        <view class='duishouName'>luxi</view>
+    </view>
+
+    <view class='timeBox flex_cen'>
+        <text class='num'>{{timeNum}}</text>
+    </view>
+
+    <view class='myBox'>
+        <input type='number' class='inp-num' maxlength='1' value='{{inputNum}}' bindinput='getNum'></input>
+        <button class='reset-button sentNumBtn'>Sent</button>
+    </view>
+
+
+</view>
+
+<view class='playAgainBox flex_cen-v {{showAgain?"active":""}}'>
+
+    <text class='bufu'>不服，再来一局</text>
+
+    <button class='reset-button playagain' bindtap='replay'>again</button>
+
+
+</view>

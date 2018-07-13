@@ -1,0 +1,10 @@
+<view class="mian flex_cen-v">
+    <view class='headImgBox'>
+        <image mode='widthFix'></image>
+        <view class='name'>str</view>
+    </view>
+
+    <navigator url='../play/play' class='jonin'>in</navigator>
+    <!-- <button class='jonin'>in</button> -->
+
+</view>

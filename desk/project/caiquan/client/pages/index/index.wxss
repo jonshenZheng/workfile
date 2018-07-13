@@ -1,0 +1,79 @@
+page,.mian{
+    height: 100%;
+}
+
+.headImgBox{
+    margin-top: -30%;
+    margin-bottom: 20%;
+}
+
+.headImgBox image{
+    display: block;
+    width: 180rpx;
+    height: 190rpx;
+    background-color: #f60;
+    margin-bottom: 20rpx;
+    border-radius: 50%;
+}
+
+.headImgBox .name{
+    text-align: center;
+    font-size: 44rpx;
+    color: #333;
+}
+
+page .jonin{
+    width: 300rpx;
+    text-align: center;
+    height: 60rpx;
+    line-height: 60rpx;
+    background-color: #3296fa;
+    color: #fff;
+    font-size: 34rpx;
+    border-radius: 10rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import '../common/common.wxss';

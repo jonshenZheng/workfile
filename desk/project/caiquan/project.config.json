@@ -1,0 +1,10 @@
+{
+	"miniprogramRoot": "./client",
+	"qcloudRoot": "./server",
+	"setting": {
+		"newFeature": true
+	},
+	"appid": "wx3ed894ba2696cb24",
+	"projectname": "caiquan",
+	"condition": {}
+}

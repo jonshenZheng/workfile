@@ -1,0 +1,45 @@
+@import "../search/search.wxss";
+
+
+<template name="t1">
+    {{cc}}
+</template>
+
+
+<template name="sereachList">
+  <scroll-view wx:if="{{goodsList.prodIntros.length}}" class='reserBox' scroll-y="true" bindscrolltolower="upload">  
+
+        <view class='ajustbox'>  
+            <view class='realbox'>
+
+                <block wx:for="{{goodsList.prodIntros}}" wx:for-index="idx" wx:key="key">
+                    <navigator url="{{'../details/details?prodId='+item.prodId}}" class='pd_it'>
+                        <view class='it' wx:key="key">
+                            <view class='imgwp'>
+                                <image src="{{baseImgUrl+item.path}}"></image>
+                            </view>
+                            <view class='pdname'>{{item.prodName}}</view>
+                            <text class='price'>￥{{item.price}}</text> 
+                        </view>
+                    </navigator>
+                </block>
+
+            </view>
+            
+        </view>
+
+        <view class="weui-loadmore" wx:if="{{goodsList.hasMore}}">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+        <view wx:else class="weui-loadmore">
+            <text class="weui-loadmore__tips">已无更多产品</text> 
+        </view>
+
+    </scroll-view>
+    <view wx:else>
+        <view class="no-data">很抱歉，没有搜索到相关的产品..</view>
+    </view>
+</template>
+
+ 
