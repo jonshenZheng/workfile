@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+
+		<script>
+
+
+
+			/*
+*返回数组的所有组合
+*arr : 获取组合源数据，类型为数组
+*max ： 最多长度的组合（包括最大长度下的组合）
+*curLen : 返回指定长度的组合
+*/
+function getARRzuhe(arr,max,curLen){
+
+  if( Object.prototype.toString.call(arr) !== '[object Array]' || !arr.length){
+    return [];
+  }
+
+  let keyWd = arr,
+      keyWdLen = keyWd.length,
+      keyWd_max = max || keyWdLen,
+      startLen = 1,
+      restArr = [],
+      justLen = 0,
+      cmm = [];
+
+
+  if(curLen && curLen > 0){
+    justLen = curLen >=  keyWd_max ? keyWd_max : curLen;
+  }
+       
+  function getCommStr(deep) {
+
+    if (deep > 0){
+
+      let arrInd = startLen - deep,
+          i = 0;
+
+      deep--;
+
+      for (; i < keyWdLen;i++){
+
+        cmm[arrInd] = keyWd[i];
+
+        if (deep > 0){
+          getCommStr(deep);
+        }
+        else{
+          restArr.push(cmm.join('')) 
+        }
+
+      }
+
+
+    }
+
+  }
+
+
+  for (; startLen <= keyWd_max; startLen++){
+
+      if(justLen && justLen !== startLen){
+        continue;
+      }
+
+      cmm = [];
+      getCommStr(startLen);
+  }    
+  
+  return restArr
+
+}
+
+
+
+// 匹配到相应的字符串 返回字符串
+
+function getpw(){
+
+    let keyName = 'aske',
+        keyVal = '3Z?>',
+        temp = '',
+        keyNm = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','@'],
+        keyNmLen = keyNm.length,
+        keyWd = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '`', '-', '=', '{', '}', '|', '[', ']', '\\', ':', '"', ';', '\'', '<', '>', '?', ',', '.', '/'],
+        keyWdLen = keyWd.length,
+        keyNm_max = 4,
+        keyWd_max = 4,
+        startNameLen = 1,
+        startValLen = 1,
+        isBreak = false,
+        runCount = 0;
+        name_cmm = [],
+        val_cmm = []
+        ;
+
+        function getCommName(deep) {
+
+            if (deep > 0){
+
+                let arrInd = keyNm_max - deep,
+                    i = 0;
+
+                deep--;
+
+                for (; i < keyNmLen;i++){
+
+                    if(isBreak){
+                      break;
+                    }
+
+                    name_cmm[arrInd] = keyWd[i];
+
+                    if (deep > 0){
+                        getCommName(deep);
+                    }
+                    else{
+                        runCount++;
+
+                         for (; startValLen <= keyWd_max; startValLen++){
+                              val_cmm = [];
+                              getCommVal(startValLen);
+                              console.log('runCount: '+runCount);
+                          } 
+
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        
+        function getCommVal(deep) {
+
+            if (deep > 0){
+
+                let arrInd = startValLen - deep,
+                    i = 0;
+
+                deep--;
+
+                for (; i < keyWdLen;i++){
+
+                    if(isBreak){
+                      break;
+                    }
+
+                    val_cmm[arrInd] = keyWd[i];
+
+                    if (deep > 0){
+                        getCommVal(deep);
+                    }
+                    else{
+                        runCount++;
+                        name = name_cmm.join('');
+                        val = val_cmm.join('');
+                        if(keyName === name  && keyVal === val){
+                          isBreak = true;
+                          console.log('找到了 Name:'+name+'Val:'+val);
+                        }
+                    }
+
+                }
+
+
+            }
+
+        }
+
+
+
+        for (; startNameLen <= keyWd_max; startNameLen++){
+            name_cmm = [];
+            getCommName(startNameLen);
+            console.log('runCount: '+runCount);
+        }    
+
+      console.log(runCount);
+
+    }
+
+  
+getpw();
+
+
+
+
+
+
+
+
+
+		</script>
+
+
+    </body>
+</html>
