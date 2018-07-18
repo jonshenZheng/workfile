@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+
+		<script>
+
+
+
+'use strict';
+
+// function getpw(){
+
+//     let keyName = 'aske',
+//         keyVal = '3Z?>',
+//         temp = '',
+//         keyWd = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '`', '-', '=', '{', '}', '|', '[', ']', '\\', ':', '"', ';', '\'', '<', '>', '?', ',', '.', '/'],
+//         keyWdLen = keyWd.length,
+//         keyWd_max = 4,
+//         startValLen = 1,
+//         isBreak = false,
+//         runCount = 0,
+//         val_cmm = []
+//         ;
+
+        
+//         function getCommVal(deep) {
+
+//             if (deep > 0){
+
+//                 let arrInd = startValLen - deep,
+//                     i = 0;
+
+//                 deep--;
+
+//                 for (; i < keyWdLen;i++){
+
+//                     if(isBreak){
+//                       break;
+//                     }
+
+//                     val_cmm[arrInd] = keyWd[i];
+
+//                     if (deep > 0){
+//                         getCommVal(deep);
+//                     }
+//                     else{
+//                         runCount++;
+//                         val = val_cmm.join('');
+//                         if(keyVal === val){
+//                           isBreak = true;
+//                           console.log('找到了:'+'Val:'+val);
+//                         }
+//                     }
+
+//                 }
+
+
+//             }
+
+//         }
+
+
+
+//         for (; startValLen <= keyWd_max; startValLen++){
+//             val_cmm = [];
+//             getCommVal(startValLen);
+//             console.log('runCount: '+runCount);
+//         }    
+
+//       console.log(runCount);
+
+//     }
+
+
+
+//尾调优化
+function getpw(){
+        
+    let keyName = 'aske',
+        keyVal = '3Z?>',
+        temp = '',
+        //keyWd = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '`', '-', '=', '{', '}', '|', '[', ']', '\\', ':', '"', ';', '\'', '<', '>', '?', ',', '.', '/'],
+        keyWd = ['a','b','c','d'],
+        keyWdLen = keyWd.length,
+        maxLen = keyWdLen - 1,
+        keyWd_max = 4,
+        startValLen = 1,
+        isBreak = false,
+        runCount = 0,
+        val_cmm = [],
+        for_ind = [],
+        temp_ind = 0,
+        temp_ind2 = 0,
+        layer = 0,
+        deep = 0
+        ;
+
+
+        function initForInd(len,val){
+
+            let i = len > 0 ? len : 0;
+
+            for(;i;i--){
+                for_ind.push(val);
+            }
+
+        }
+
+
+        function changeArrVal(arr,beg,end,val){
+
+            let len = arr.length,
+                max = len - 1,
+                begin,
+                temp,
+                last;
+
+            begin = beg || 0;   
+            last = end || max;
+
+            if(begin > max){
+                begin = max;
+            }
+            else if(begin < 0){
+                begin = 0;
+            }
+
+            if(last < 0){
+                last = 0
+            }
+            else if(last > max){
+                last = max;
+            }
+
+            if(last < begin){
+                temp = begin;
+                begin = last;
+                last = temp;
+            }
+
+
+            for(;begin <= last;begin++){
+                arr[begin] = val;
+            }
+
+
+
+        }
+
+
+        function commV(){
+            
+            if(for_ind[0] >= maxLen && for_ind[maxLen] >= maxLen ){
+                return;
+            }
+            else{            
+
+                if(deep > maxLen){
+
+                    if(layer < 0){
+                        return;
+                    }
+                    //deep = 0;
+                    console.log(val_cmm.join(','))
+                    temp_ind2 = deep - 1;
+                    temp_ind = for_ind[temp_ind2]+1;
+                    for_ind[temp_ind2] = temp_ind;
+                    val_cmm[temp_ind2] = keyWd[temp_ind];
+
+                    if(for_ind[temp_ind2] > maxLen ){
+                        
+                        deep -= 2;
+                                           
+                        if( for_ind[layer] >= maxLen ){
+                            layer--;    
+                            deep = layer;
+                        }
+
+                        changeArrVal(for_ind,layer+1,'',-1);
+                        changeArrVal(val_cmm,layer+1,'',keyWd[0]);
+                        
+                        
+                    }
+                    
+                }
+                else{
+                    temp_ind = for_ind[deep]+1;
+                    for_ind[deep] = temp_ind;
+                    val_cmm[deep] = keyWd[temp_ind];
+                    deep++;
+
+                }
+
+
+            }
+
+            return commV();
+
+        }
+
+
+        initForInd(keyWd_max,-1);
+        layer = maxLen-1;
+        commV(0);
+  
+
+      console.log(runCount);
+
+}
+
+  
+getpw();
+
+
+
+
+
+
+
+		</script>
+
+
+    </body>
+</html>
