@@ -1,0 +1,190 @@
+/* pages/test/test.wxss */
+
+page{
+    background-color: #f7f7f7;
+    height: auto;
+}
+
+.mian{
+    padding-bottom: 104rpx;
+}
+
+.bgBox{
+    margin-top: 20rpx;
+    padding: 30rpx 20rpx;
+    background-color: #fff;
+}
+
+.headInfo .nameBox{
+    padding-bottom: 20rpx;
+}
+
+.headInfo .nameBox .fl{
+    font-size: 32rpx;
+    color: #000;
+}
+
+.headInfo .nameBox .fr{
+    font-size: 28rpx;
+    color: #A1A1A1;
+}
+
+.headInfo .nameBox .fr:first-child{
+    margin-left: 24rpx;
+}
+ 
+.headInfo .phoneBox{
+    padding-bottom: 20rpx;
+}
+
+.headInfo .phoneBox{
+    padding-left: 20rpx;
+}
+
+.headInfo .phoneBox .fl{
+    font-size: 32rpx;
+    color: #000;
+}
+
+.headInfo .phoneBox .fr{
+    font-size: 24rpx;
+    color: #fff;
+    padding: 4rpx 8rpx;
+    background-color: #bcbcbc;
+    border-radius: 6rpx;
+}
+
+.headInfo .tipsBox{
+    font-size: 28rpx;
+    color: #489af7;
+}
+
+.saleInfoBox{
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.saleInfoBox .it{
+    padding: 24rpx 0;
+}
+
+.saleInfoBox .it:last-child::after{
+    display: none;
+}
+
+.saleInfoBox .it .til{
+    font-size: 32rpx;
+    color: #000;
+}
+.saleInfoBox .it .val{
+    font-size: 32rpx;
+    color: #A1A1A1;
+}
+
+
+.footerBtn{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.footerBtn .btn{
+    float: left;
+    width: 50%;
+    text-align: center;
+    height: 84rpx;
+    line-height: 84rpx;
+    font-size: 32rpx;
+    color: #fff;
+    background-color: #489AF7;
+    position: relative;
+}
+
+.footerBtn .btn .bord{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+}
+
+.footerBtn .btn .bord::after{
+    border-color: #fff !important;
+}
+
+
+
+.footerBtn .btn .ico-key{
+    display: inline-block;
+    width: 22rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-key.png);
+    background-size: 100% 100%;
+    margin-right: 20rpx;
+    margin-bottom: -8rpx;
+}
+
+.footerBtn .btn .ico-heart{
+    display: inline-block;
+    width: 36rpx;
+    height: 36rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-heart.png);
+    background-size: 100% 100%;
+    margin-right: 20rpx;
+    margin-bottom: -6rpx;
+}
+
+.footerBtn .btn .ico-heart.on{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-heart-on.png);
+    background-size: 100% 100%;
+}
+
+.footerBtn .btn .ico-lock{
+    display: inline-block;
+    width: 34rpx;
+    height: 36rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-lock.png);
+    background-size: 100% 100%;
+    margin-right: 20rpx;
+    margin-bottom: -6rpx;
+}
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import '../common/common.wxss';

@@ -7,6 +7,7 @@ Page({
   data: {
     getCodeText: 0,
     hideInp: false,
+    isAgreement : false,
     registryData: {},
   },
   onLoad(options) {
@@ -95,6 +96,11 @@ Page({
         });
       },
       success: function () {
+        wx.showToast({
+          title: '验证码已发送请注意查收',
+          icon: 'none'
+        })
+
         that.setData({ getCodeText: '60s' });
 
         let timer = setInterval(function () {
@@ -259,116 +265,47 @@ Page({
       return false;
     }
 
+    if (!this.data.isAgreement){
+        wx.showToast({
+            title: '请同意服务协议',
+            icon: 'none'
+        })
+        return false;
+    }
+
     return true;
   },
   onTapOpenShopBtn: function (e) {
     let that = this;
     let isFormal = e.target.dataset.formal == '1';
-    let data = this.data.registryData;
-    data.discount = data.ratio;
+    let registryData = this.data.registryData;
+    registryData.discount = registryData.ratio;
     if (!this.validateData()) {
       return;
     }
 
-    var tik = 0;
-    let queryOpenFormalShopSuccess = function (shopId) {//需要一直查询是否开店成功
-      rq({
-        url: baseRqUrl + 'shop/formal',
-        method: 'PUT',
-        showLoding: true,
-        success: function (res) {
-          let success = res.data.data;
-          if (success)
-            that.onRegisterSuccess(isFormal);
-          else {
-            if (tik > 600)
-              wx.showToast({
-                title: '请联系客服',
-                icon: 'none'
-              })
-            else {
-              tik++;
-              setTimeout(() => {
-                queryOpenFormalShopSuccess(shopId);
-              }, tik < 10 ? 1000 : 5000)
-            }
-          }
-        }
-      })
-    }
-
-    // 这里的业务逻辑是：
-    // 1) 不管是不是试用，先给用户整成试用分销商，
-    // 2) 再判断用户是想试用还是成为正式，正式则继续发起微信支付
-    // 3) 正式->如果微信支付被取消，那么跳转成为临时分销商
-    // 4）总是会跳转到user页面，同时刷新信息
+    // 校验店铺数据
     rq({
-      url: baseRqUrl + 'shop/openShop',
+      url: baseRqUrl + 'shop/check',
       method: 'POST',
-      data: data,
-      success: function (res1) {
-        let shopId = res1.data.data.shopId;
-        if (!isFormal) {
-          that.onRegisterSuccess(isFormal);//试用则直接跳转
-        } else {//正式则发起微信支付
-          rq({
-            url: baseRqUrl + 'distri/pay',
-            success: function (res2) {
-              let paymentData = res2.data.data;
-              console.log(paymentData)
-              wx.requestPayment({
-                'timeStamp': paymentData.timeStamp,
-                'nonceStr': paymentData.nonceStr,
-                'package': paymentData.package,
-                'signType': paymentData.signType,
-                'paySign': paymentData.sign,
-                success: function () {
-                  wx.showToast({
-                    title: '支付成功',
-                    icon: 'none'
-                  });
-                  setTimeout(() => {
-                    wx.showLoading();
-                    queryOpenFormalShopSuccess(shopId);
-                  }, 1000);
-                },
-                fail: function () {
-                  wx.showToast({
-                    title: '支付失败',
-                    icon: 'none'
-                  });
-                  that.onRegisterSuccess(false);
-                }
-              })
-            }
-
+      data: registryData,
+      success: function (res) {
+        if (res.data.meta.code === 200) {// 校验通过，进入到选套餐页
+          app.tmpData.registryData = registryData;
+          wx.navigateTo({
+            url: './chooseVip/chooseVip',
           })
         }
-      },
-      errorcb: function (r) {
-        wx.showToast({
-          title: r.data.meta.msg,
-          icon: 'none'
-        });
       }
     })
   },
-  onRegisterSuccess: function (isFormal) {
-    wx.showToast({
-      title: (isFormal ? '' : '试用') + '店铺注册成功',
-      icon: 'none'
-    });
-    setTimeout(
-      () => {
-        wx.showLoading({
-          title: '正在跳转到店铺',
-        });
-        getApp().login(() => {
-          wx.reLaunch({
-            url: '../user/user',
-          })// 直接relaunch 防止任何意外
-        });//需要重新再登录一遍
-      }
-      , 500);
+  //勾选注册协议
+  agreementFn : function(){
+    this.setData({
+        isAgreement: !this.data.isAgreement
+    })
+  },
+  onTapCtrlProtoUri : function(e){
+      common.resolveCtrlProtoUri(e.currentTarget.dataset.uri);
   }
 })

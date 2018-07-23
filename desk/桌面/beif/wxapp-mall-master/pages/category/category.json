@@ -2,7 +2,7 @@
     "usingComponents": {
         "component-goBackMyStore": "../../component/goBackMyStore/goBackMyStore"
     },  
-    "navigationBarTitleText": "产品分类",
+    "navigationBarTitleText": "产品库",
     "backgroundColor": "#eeeeee",
     "enablePullDownRefresh": false
 }

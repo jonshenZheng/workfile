@@ -1,0 +1,93 @@
+<view class="mian">
+
+    <view class="headInfo bgBox">
+
+        <view class="nameBox clearfix">
+            <text class='fl'>邓女士</text>
+            <text class='fr'>浏览次数:1000</text>
+            <text class='fr'>抢占次数:0</text>
+        </view>
+
+        <view class='phoneBox clearfix'>
+            <text class='fl'>135*****001</text>
+            <text class='fr'>已经查看</text>
+        </view>
+
+        <view class='tipsBox'>抢占商机，显示完整联系方式和公司名称</view>
+
+    </view>
+
+    <view class="saleInfoBox bgBox">
+
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl til'>所在城市</text>
+                <text class='fr val'>山东济南</text>
+            </view>
+        </view>
+
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl til'>建筑面积</text>
+                <text class='fr val'>500㎡</text>
+            </view>
+        </view>
+
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl til'>装修进度</text>
+                <text class='fr val'>未装修</text>
+            </view>
+        </view>
+
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl til'>家具风格</text>
+                <text class='fr val'>时尚简约</text>
+            </view>
+        </view>
+
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl til'>备注</text>
+                <text style='width:500rpx' class='fr val'>整个项目半层，目前两个办公室自用，剩余的出租，之后会收回全部自用。需要实用的高性价比产品</text>
+            </view>
+        </view>
+
+        <view class='it border-b'>
+            <view class='clearfix'>
+                <text class='fl til'>商机发布时间</text>
+                <text class='fr val'>2018-06-28 09:50</text>
+            </view>
+        </view>
+
+    </view>
+
+
+
+</view>
+
+<view class='footerBtn'>
+    
+    <view class='btn'>
+        <icon class='ico-key'></icon>
+        <text>抢占商机</text>
+        <icon class='bord border-r'></icon>
+    </view>
+    <view class='btn'>
+        <icon class='ico-heart'></icon>
+        <text>收藏</text>
+    </view>
+
+    <!-- 商机状态改变和已收藏的样式 -->
+    <!-- <view class='btn'>
+        <icon class='ico-lock'></icon>
+        <text>商机被占</text>
+        <icon class='bord border-r'></icon>
+    </view>
+    <view class='btn'>
+        <icon class='ico-heart on'></icon>
+        <text>101</text>
+    </view> -->
+</view>
+

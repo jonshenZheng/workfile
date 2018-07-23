@@ -1,0 +1,40 @@
+page{
+
+}
+
+.wpBox{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpBox .testBox{
+    background-color: #f60;
+    position: relative;
+}
+
+.wpBox .testBox.animate{
+    transition : height .5s;
+}
+
+.wpBox .testBox .bg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.2;
+}
+
+
+.wpBox .contBox{
+    background-color: #3385ff;
+    color: #fff;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+
+

@@ -1,0 +1,150 @@
+<view class="mian">
+
+    <view class='headTab'>
+        <view class='btn_a active Color000 mianSize'>
+            <view class='na'>商机公海</view>
+        </view>
+        <view class='btn_a Color000 mianSize'>
+            <view class='na'>我的商机</view>
+        </view>
+        <view class='btn_a Color000 mianSize'>
+            <view class='na'>我的收藏</view>
+        </view>
+    </view>
+
+    <scroll-view class='tableScroll ' scroll-x scroll-into-view="{{toView}}">
+
+        <view id="pageV1" class='pageV'>1</view>
+        <view id="pageV2" class='pageV'>2</view>  
+        <view id="pageV3" class='pageV'>3</view>
+    
+    </scroll-view>
+
+    <view id="pageV1" class='pageV pageV1' style='none' >
+    
+        <view class='topBox'>
+            <view class='sereachBox'>
+                <input type='text' class='color000 mianSize'></input>
+            </view>
+            <view class='updateText'>更新了15条销售线索</view>
+        </view>
+
+        <scroll-view class='xiansuoBox' scroll-y>
+
+            <view class='listBox'>
+                <view class='it'>
+                    <view class='tp border-b'>
+                        <view class='ifo'>
+                            <text class='name'>邓女士</text>
+                            <text class='phone'>135*****001</text>
+                            <text class='status'>已经查看</text>
+                        </view>
+                        <view class='locati'>
+                            <view class='la la1'><icon class='ico-location'></icon><text class='wd'>山东济南山东济南山东济南</text></view>
+                            <view class='la la2'><icon class='ico-home'></icon><text class='wd'>50000000000000000㎡</text></view>
+                            <view class='la la3'><icon class='ico-time'></icon><text class='wd'>2018.06.28</text></view>
+                        </view>
+                    </view>
+                    <view class='bt clearfix'>
+                        <view class='bt1'>
+                            <icon class='ico-key'></icon>
+                            <text class='mianColor'>抢占商机</text>
+                            <icon class='bord border-r'></icon>
+                        </view>
+                        <view class='bt2'>
+                            <icon class='ico-heart'></icon>
+                            <text class='mianColor'>收藏</text>
+                        </view>
+                    </view>
+                
+                </view>
+                <view class='it'>
+                    <view class='tp border-b'>
+                        <view class='ifo'>
+                            <text class='name'>邓女士</text>
+                            <text class='phone'>135*****001</text>
+                        </view>
+                        <view class='locati'>
+                            <view class='la la1'><icon class='ico-location'></icon><text class='wd'>山东济南山东济南山东济南</text></view>
+                            <view class='la la2'><icon class='ico-home'></icon><text class='wd'>50000000000000000㎡</text></view>
+                            <view class='la la3'><icon class='ico-time'></icon><text class='wd'>2018.06.28</text></view>
+                        </view>
+                    </view>
+                    <view class='bt clearfix'>
+                        <view class='bt1'>
+                            <icon class='ico-lock'></icon>
+                            <text class='mianColor'>商机被占</text>
+                            <icon class='bord border-r'></icon>
+                        </view>
+                        <view class='bt2'>
+                            <icon class='ico-heart'></icon>
+                            <text class='mianColor'>101</text>
+                        </view>
+                    </view>
+                
+                </view>
+                <view class='it'>
+                    <view class='tp border-b'>
+                        <view class='ifo'>
+                            <text class='name'>邓女士</text>
+                            <text class='phone'>135*****001</text>
+                        </view>
+                        <view class='locati'>
+                            <view class='la la1'><icon class='ico-location'></icon><text class='wd'>山东济南山东济南山东济南</text></view>
+                            <view class='la la2'><icon class='ico-home'></icon><text class='wd'>50000000000000000㎡</text></view>
+                            <view class='la la3'><icon class='ico-time'></icon><text class='wd'>2018.06.28</text></view>
+                        </view>
+                    </view>
+                    <view class='bt clearfix'>
+                        <view class='bt1'>
+                            <icon class='ico-select'></icon>
+                            <text class='mianColor'>抢占成功</text>
+                            <icon class='bord border-r'></icon>
+                        </view>
+                        <view class='bt2'>
+                            <icon class='ico-heart on'></icon>
+                            <text class='mianColor'>102</text>
+                        </view>
+                    </view>
+                
+                </view>
+            </view>
+            <view class="weui-loadmore">
+                <view class="weui-loading"></view>
+                <view class="weui-loadmore__tips">加载中</view>
+            </view>
+
+
+
+        </scroll-view>
+
+
+    
+    </view>
+
+
+
+</view>
+
+
+<view class='maskBox'></view>
+<view class='upMuneBox'>
+    <view class='listBox'>
+        <view class='it border-t'>13570571001</view>
+        <view class='it border-t'>呼叫</view>    
+    </view>
+    <view class='cancleBtn'>取消</view>
+</view>
+
+<!-- 呼叫滑动出来的面板 -->
+<!-- <view class='maskBox active'></view>
+<view class='upMuneBox active'>
+    <view class='listBox'>
+        <view class='it border-t'>13570571001</view>
+        <view class='it border-t'>呼叫</view>    
+    </view>
+    <view class='cancleBtn'>取消</view>
+</view> -->
+
+
+

@@ -1,0 +1,97 @@
+<scroll-view class="wpBox" scroll-y="true" bindscroll="scrollFn">
+
+    <!-- 先做满足一定加速度显示隐藏 -->
+    
+    <view class='showBox fixBox {{hideIt?"hide":""}}'>
+        <!-- <view  hidden='{{hideIt}}' class='showIt {{hideIt?"hide":""}}'>i show</view> -->
+        <view class='showIt'>i show</view>
+    </view>
+
+    <view class='showBox' style='visibility:hidden' >
+        <view class='showIt'>i show</view>
+    </view>
+
+    <view  class='scrollBox'>
+
+        <view class='scrollwp'>
+        
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+            <view class='it yelow'>yelow</view>
+            <view class='it red'>red</view>
+            <view class='it green'>green</view>
+
+
+        </view>
+
+
+    </view>
+
+
+</scroll-view>

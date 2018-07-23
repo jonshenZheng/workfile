@@ -1,16 +1,17 @@
 {
-  "pages": [
-
-
+  "pages": [    
       "pages/category/category",
-    "pages/index/index",
+    "pages/index/index",    
+    "pages/totalsolution/totalsolution",
+    "pages/registerStore/chooseVip/chooseVip",
+    "pages/registerStore/registerStore",
+    "pages/cart/cart",
+    
+    "pages/category2/category2",
+    "pages/registerStore/guidePage/guidePage",
     "pages/user/user",
     "pages/orders/orders",
-    "pages/cart/cart",
     "pages/profitsetting/profitsetting",
-    "pages/registerStore/guidePage/guidePage",
-    "pages/registerStore/registerStore",    
-    
     "pages/register/register",
     "pages/cart2/cart2",
     "pages/address/address",
@@ -22,7 +23,8 @@
     "pages/protocol/protocol",
     "pages/addrList/addrList",
     "pages/package/package",
-    "pages/totalsolution/totalsolution",
+    "pages/totalsolution/bizoppDetail/bizoppDetail",
+    "pages/totalsolution/bizoppDetail/trackRecord/trackRecord",
     "pages/orders/orderDetails/orderDetails",
     "pages/orders/orderDetails/updateVisitorOrder/updateVisitorOrder",
     "pages/confirmOrder/confirmOrder",
@@ -45,19 +47,19 @@
         "pagePath": "pages/index/index",
         "iconPath": "image/home_off.png",
         "selectedIconPath": "image/home_on.png",
-        "text": "主页"
+        "text": "首页"
       },
       {
         "pagePath": "pages/category/category",
         "iconPath": "image/category_off.png",
         "selectedIconPath": "image/category_on.png",
-        "text": "分类"
+        "text": "产品库"
       },
       {
         "pagePath": "pages/totalsolution/totalsolution",
         "iconPath": "image/totalsolution_off.png",
         "selectedIconPath": "image/totalsolution_on.png",
-        "text": "获取报价"
+        "text": "　　　　"
       },
       {
         "pagePath": "pages/cart/cart",

@@ -2,6 +2,7 @@ let app = getApp(),
   rq = app.bzRequest,
   commJS = require("../common/common.js"),
   baseImgUrl = app.globalData.baseImgUrl,
+  pageBeforeLoadRun = app.pageBeforeLoadRun,
   baseURL = app.globalData.svr;
 
 // pages/placeorder/placeorder.js
@@ -27,6 +28,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    pageBeforeLoadRun(this);  
     let self = this;
 
     let tempCount = 0,
@@ -229,6 +231,12 @@ Page({
                 savedMoney: that.data.totalPrice - res.data.data.price
               })
             }
+          }
+          else{
+              wx.showToast({
+                  title: res.data.data.failMsg,
+                  icon : 'none'
+              });
           }
         }
       })    

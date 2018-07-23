@@ -4,7 +4,7 @@
 <view>view-> {{shopOfView.shopName}}{{" "+roleOfView}}</view>  -->
 
 <block wx:if='{{goodsDetail.basicInfo}}'>
-  <view class="container {{ isShowPop ? 'popNoScroll' :'' }}">
+  <view class="container {{ isShowPop ? 'popNoScroll' :'' }} {{needAdapter?'iphoneX':''}}">
     <view class="swiper-container">
       <swiper class="swiper_box" autoplay="{{autoplay}}" circular='true' indicator-dots="true" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
         <block wx:for="{{goodsDetail.pics}}" wx:key="id">
@@ -21,31 +21,40 @@
         <view class="goods-text fr wid400 color999">（不包含运费、税费、安装等费用）</view>
       </view>
 
+      <view class='chandiBox'>
+            <view class='box1'>产地：广东省</view>
+            <!-- <view class='Box1'>产地：{{goodsDetail.basicInfo.madeIn}}</view> -->
+            <view class='box2'>下单量：100</view>
+            <!-- <view class='Box2'>下单量：{{goodsDetail.basicInfo.saleCount}}</view> -->
+      </view>
+
       <block wx:if='{{roleOfView==ROLE_DISTRIBUTOR&&shopOfView.shopId==shop.shopId}}'>
         <view class='allpriceBox mianBorder borderRad-10'>
-            <view class='clearfix'>
-                <view class='box1'>
+            <view class='clearfix' style='display:flex'>
+                <view class='box1' style='flex-grow:1'>
                     <view class="prIt mianColor">成本价¥{{goodsDetail.basicInfo.factoryPrice}}</view>
                     <view class="prIt mianColor">赚¥{{goodsDetail.basicInfo.profit}}</view>
                     <view class="prIt mianColor">店铺价¥{{goodsDetail.basicInfo.price}}</view>
                     <view class="prIt mianColor">面价¥{{goodsDetail.basicInfo.marketPrice}}</view>
                 </view>
-                <view class='setPriceBtn mianBorder-l'>
-                    <button class='setPriceBtn resest-button mianColor flex_cen-v' bindtap='onTapModifyPriceBtn'>
-                    <icon class='ico-pencil'></icon>
-                    一键改价
-                    </button>
-                </view>
-                <view class='shareBtn mianBorder-l'>
-                    <button class='shareBtn resest-button mianColor flex_cen-v' bindtap='onTapShareBtn' wx:if='{{distributorInfo.level==DIST_LV_ON_TRAIL}}'>
-                        <icon class='ico-export'></icon>
-                        分享赚钱
-                    </button>
-                    <button class='shareBtn resest-button mianColor flex_cen-v' open-type='share' wx:else>
-                        <icon class='ico-export'></icon>
-                        分享赚钱
-                    </button>
-                </view>
+                <block wx:if="{{!showReplaceProd}}">
+                    <view class='setPriceBtn mianBorder-l'>
+                        <button class='setPriceBtn resest-button mianColor flex_cen-v' bindtap='onTapModifyPriceBtn'>
+                        <icon class='ico-pencil'></icon>
+                        一键改价
+                        </button>
+                    </view>
+                    <view class='shareBtn mianBorder-l'>
+                        <button class='shareBtn resest-button mianColor flex_cen-v' bindtap='onTapShareBtn' wx:if='{{distributorInfo.level==DIST_LV_ON_TRAIL}}'>
+                            <icon class='ico-export'></icon>
+                            分享赚钱
+                        </button>
+                        <button class='shareBtn resest-button mianColor flex_cen-v' open-type='share' wx:else>
+                            <icon class='ico-export'></icon>
+                            分享赚钱
+                        </button>
+                    </view>
+                </block>
             </view>    
         </view>
       </block>
@@ -65,7 +74,7 @@
         </view>
       </view>
     </view>
-    <view class="footer-box">
+    <view class="footer-box" wx:if="{{!showReplaceProd}}">
         <navigator class="homeBtn" open-type='switchTab' url='../index/index' > 首页</navigator>
       <!-- <view class="contact">
         <button style="opacity:0;position:absolute;left:0;top:0;width:100%;height:100%;" open-type="contact" session-from="{{sendkefuMsg}}" size="27" send-message-title="{{goodsDetail.basicInfo.name}}" send-message-img="{{baseimgURL+goodsDetail.pics[0]}}"></button>
@@ -82,21 +91,43 @@
       <view class="join-shop-cart viceBtn {{btnff}}" bindtap="addToShopCart" data-cname='join-shop-cart-on' bindtouchcancel='btnEndFn' bindtouchstart='btnStartFn' bindtouchend='btnEndFn'>加入购物车</view>
       <view class="buy_now mianBtn" bindtap="onTapInstantPurchaseBtn">立即购买</view>
     </view>
+    <view class="footer-box" wx:else>
+        <button bindtap="popupSelectView" class='reset-button mianBtn repaceBtn'>替换到首页，成为单品推荐</button>
+    </view>
 
     <!-- 属性选择组件-->  
-    <component-selectProperty
-        style="position:relative;z-index:5" 
-        goods-selection="{{goodsSelection}}" 
-        goods-detail="{{goodsDetail}}" 
-        shopofview="{{shopOfView}}"  
-        prodid="{{prodIdParm}}"  
-        btnfirstname="加入购物车"
-        btnsecondname="立即购买"
-        bindfirstfn="addToShopCart"
-        bindsecondfn="onTapInstantPurchaseBtn"
-        bindcloseproperty="closeproperty"
-        id="SelectProp" >
-    </component-selectProperty>
+    <block wx:if="{{!showReplaceProd}}">
+        <component-selectProperty
+            style="position:relative;z-index:5" 
+            goods-selection="{{goodsSelection}}" 
+            goods-detail="{{goodsDetail}}" 
+            shopofview="{{shopOfView}}"  
+            prodid="{{prodIdParm}}"  
+            btnfirstname="加入购物车"
+            btnsecondname="立即购买"
+            bindfirstfn="addToShopCart"
+            bindsecondfn="onTapInstantPurchaseBtn"
+            bindcloseproperty="closeproperty"
+            bindupdatedata="updateData"
+            id="SelectProp" >
+        </component-selectProperty>
+    </block>
+    <block wx:else>
+        <component-selectProperty
+            style="position:relative;z-index:5" 
+            goods-selection="{{goodsSelection}}" 
+            goods-detail="{{goodsDetail}}" 
+            shopofview="{{shopOfView}}"  
+            prodid="{{prodIdParm}}"  
+            btnfirstname="确定"
+            bindfirstfn="submitRepalcePd"
+            bindcloseproperty="closeproperty"
+            bindupdatedata="updateData"
+            hide-num="true"
+            id="SelectProp" >
+        </component-selectProperty>
+    </block>
+
     <!-- 属性选择组件 end-->  
     <view class="show-popup" hidden="{{bHideSelectView}}">
       <view class="popup-mask" bindtap="hideSelectView"></view>

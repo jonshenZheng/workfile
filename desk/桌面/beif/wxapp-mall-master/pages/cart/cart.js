@@ -489,5 +489,119 @@ Page({
 
     }
   },
+  getSelectPropCOP: function () {
+      this.SelectPropCOP = this.selectComponent('#SelectProp');
+  }, 
+  //替换产品
+    replaceProdFn:function(e){
+        debugger
+        let that = this,
+            data = e.detail,
+            //basicInfo = data.basicInfo,
+            count = data.num,
+            skuid = data.skuid,
+            handle = data.thisCase,
+            cartId = handle.cartId; 
+
+        if (skuid){
+
+            rq({
+                method: 'PUT',
+                withoutToken: false,
+                data: JSON.stringify({ id: cartId, skuId: skuid, count: count}),
+                url: baseURL + 'shopcart/replace',
+                success: function (r) {
+                    handle.hideSelectView();
+                    that.onShow();
+                },
+                errorcb : function(r){
+                    wx.showToast({
+                        title: r.data.meta.msg,
+                        icon: 'none'
+                    });
+                }
+            })
+
+        }
+        else{
+            wx.showToast({
+                title: '每个属性必须选择一项',
+                icon: 'none'
+            });
+        }
+
+    },
+    //显示SKU弹窗
+  showSkuInfo : function(e){
+      
+      let that = this,
+          ind = e.currentTarget.dataset.ind,
+          arr = this.data.carts,
+          temp = arr[ind],
+          count = temp.count,
+          cartId = temp.id,
+          prodId = temp.produceId,
+          skuId = temp.skuId,
+          shopId = this.data.shopOfView.shopId;
+
+
+      rq({
+          method: 'GET',
+          withoutToken: false,
+          url: baseURL + 'produce/goodsSelection/' + shopId + '/' + prodId + '/' + skuId,
+          success: function (r) {
+
+
+              let goodsDetail = {},
+                  goodsSelection = {};
+
+              goodsDetail.basicInfo = {};
+              goodsDetail.basicInfo.factoryPrice = temp.factoryPrice;
+              goodsDetail.basicInfo.icon = temp.imgUrl;
+              goodsDetail.basicInfo.id = skuId;
+              //goodsDetail.basicInfo.marketPrice = 123;
+              goodsDetail.basicInfo.name = temp.produceName;
+              goodsDetail.basicInfo.price = temp.price;
+              //goodsDetail.pics = [];
+              //goodsDetail.specification = {};  
+
+              goodsSelection = r.data.data;
+
+
+              let selection = goodsSelection;
+              let selected = goodsSelection.selected;
+
+              for (let i = 0; i < selected.properties.length; i++) {
+                  let idx = selected.properties[i];
+                  try {
+                      selection.properties[i].values[idx].selected = true
+                  } catch (e) {
+                      console.error(e)
+                  }
+              }
+
+
+              if (!that.SelectPropCOP) {
+                  that.getSelectPropCOP();
+              }
+
+              that.SelectPropCOP.setData({
+                  goodsSelection: goodsSelection,
+                  goodsDetail: goodsDetail,
+                  prodid: prodId,
+                  purchaseQuantity: count,
+                  isRangePrice : false
+              });
+
+              that.SelectPropCOP.cartId = cartId;
+
+              that.SelectPropCOP.showSelectView();
+
+              
+
+          }
+      })
+      
+  }
 
 })

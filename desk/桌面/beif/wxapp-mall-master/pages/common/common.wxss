@@ -7,6 +7,14 @@ page{
     background: none;
 }
 
+.showWordBox{
+    text-align: justify;
+    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+
 .flex_cen{
     display: flex;
     justify-content : center;
@@ -48,7 +56,15 @@ page{
     text-align: right !important;
 }
 
-
+.display-b{
+    display: block;
+}
+.display-i{
+    display: inline !important;
+}
+.display-ib{
+    display: inline-block;
+}
 
 .no-data{
     padding:40rpx 0;
@@ -79,7 +95,8 @@ page{
 }
 .weui-loadmore {
   width: 65%;
-  margin: 30rpx auto 10rpx;
+  margin: 0 auto;
+  padding: 20rpx 0 20rpx;
   line-height: 30rpx;
   font-size: 14px;
   text-align: center;
@@ -112,6 +129,12 @@ page{
     background-color: #f32845 !important;
 }
 
+
+.textHide{
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 
 .position-a{
     position: absolute;

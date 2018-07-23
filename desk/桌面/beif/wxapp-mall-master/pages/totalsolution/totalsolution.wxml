@@ -1,65 +1,409 @@
-<!--pages/totalsolution/totalsolution.wxml-->
+<block wx:if='{{isDataInjected}}'>
 
-<!--<view class="warmTips">全套方案设计服务暂未开启，敬请期待！</view>-->
+  <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+    <view class="mian">
 
-<!-- <view class='videoBox'>
-    <view class='video'>
-        <view class="section tc">
-            <video src="{{vedioSrc}}"   controls ></video>
+      <view class='headTab'>
+        <view class='btn_a {{curIndex == 0?"active":""}} Color000 mianSize' bindtap='swichTab' data-ind='0'>
+          <view class='na'>商机公海</view>
+        </view>
+        <view class='btn_a {{curIndex == 1?"active":""}} Color000 mianSize' bindtap='swichTab' data-ind='1'>
+          <view class='na'>我的商机</view>
+        </view>
+        <view class='btn_a {{curIndex == 2?"active":""}} Color000 mianSize' bindtap='swichTab' data-ind='2'>
+          <view class='na'>我的收藏</view>
+        </view>
+      </view>
+
+      <view class='tableScroll'>
+        <swiper class='swiper-wrap' current="{{curIndex}}" circular="false" vertical="{{false}}" duration="500" bindchange="onSwiperChange">
+          <swiper-item>
+            <view id="pageV0" class='pageV pageV0'>
+              <view class='pageV0Wp'>
+                <view class='updateText {{isShowReflash?"active":""}}'>
+                  <block wx:if='{{hasNewBizopp}}'>
+                    <text>你有新的销售线索点击“刷新”为你更新</text>
+                    <button class="reset-button btn-b" bindtap='onTapRrefreshBtn'>刷新</button>
+                  </block>
+                  <block wx:else>
+                    <text>先看看刚刷出来的线索吧，稍等片刻可以再次刷新</text>
+                  </block>
+                </view>
+                <scroll-view class='xiansuoBox' scroll-y lower-threshold="10" scroll-with-animation="true" scroll-top="{{reScrollToTop}}" bindscrolltolower='onBizoppSeaViewScrollToLower'>
+
+                  <view class='infoScroll'>
+
+                    <view class='updateTipsBox {{isShowUpdateTips?"active":""}}'>
+                      <text wx:if='{{updateNum}}'>更新了{{updateNum}}条销售线索</text>
+                      <text wx:else>暂时没有更多的商机</text>
+                    </view>
+
+                    <view class='listBox'>
+                      <block wx:for="{{bizoppsInSea}}" wx:for-item="bizopp" wx:for-index="idx" wx:key="id">
+                        <view class='watchesTips' wx:if="{{showhistoryId === bizopp.id}}">
+                          <icon class='border-b'></icon>
+                          <text>上次浏览到</text>
+                        </view>
+                        <view class='it' id='bizopp-{{idx}}'>
+                          <view class='tp border-b' bindtap='onTapBizoppView' data-bizoppid='{{bizopp.id}}'>
+                            <view class='ifo'>
+                              <text class='name'>{{bizopp.contactPerson}}</text>
+                              <text class='phone'>{{bizopp.contactPhone}}</text>
+                              <!-- todo -->
+                              <text class='status' wx:if='{{bizopp.onceTracked && !bizopp.mine}}'>已经查看</text>
+                            </view>
+                            <view class='locati'>
+                              <view class='la la1'>
+                                <icon class='ico-location'></icon>
+                                <text class='wd'>{{bizopp.location}}</text>
+                              </view>
+                              <view class='la la2'>
+                                <icon class='ico-home'></icon>
+                                <text class='wd'>{{bizopp.area}}㎡</text>
+                              </view>
+                              <view class='la la3'>
+                                <icon class='ico-time'></icon>
+                                <text class='wd'>{{bizopp.publishTime}}</text>
+                              </view>
+                            </view>
+                          </view>
+                          <view class='bt clearfix'>
+                            <view class='bt1' bindtap='onTapTrackBtn' data-bizoppid='{{bizopp.id}}'>
+                              <block wx:if='{{bizopp.mine}}'>
+                                <icon class='ico-select'></icon>
+                                <block wx:if='{{distributorInfo.level<=DIST_LV_EXPERIENCE}}'>
+                                  <text class='mianColor'>查看成功</text>
+                                </block>
+                                <block wx:else>
+                                  <text class='mianColor'>抢占成功</text>
+                                </block>
+                              </block>
+                              <block wx:else>
+                                <block wx:if='{{bizopp.status==BIZOPP_STATUS_TRACKED}}'>
+                                  <icon class='ico-lock'></icon>
+                                  <text class='mianColor'>商机被占</text>
+                                </block>
+                                <block wx:else>
+                                  <icon class='ico-key'></icon>
+                                  <text class='mianColor'>抢占商机</text>
+                                </block>
+                              </block>
+
+                              <icon class='bord border-r'></icon>
+                            </view>
+                            <view class='bt2' bindtap='onTapFavoritesBtn' data-bizoppid='{{bizopp.id}}'>
+                              <icon class="ico-heart {{bizopp.inFavorites?'on':''}}"></icon>
+                              <block wx:if='{{bizopp.favoritesCount>0}}'>
+                                <text class='mianColor'>{{bizopp.favoritesCount}}</text>
+                              </block>
+                              <block wx:else>
+                                <text class='mianColor'>收藏</text>
+                              </block>
+                            </view>
+                          </view>
+
+                        </view>
+                      </block>
+
+                    </view>
+
+                  </view>
+                  
+                  <view class="weui-loadmore">
+                    <block wx:if="{{hasMoreHistoryBizopp}}">
+                      <view class="weui-loading"></view>
+                      <view class="weui-loadmore__tips">加载中</view>
+                    </block>
+                    <block wx:else>
+                      <text class="weui-loadmore__tips">没有更多内容</text>
+                    </block>
+
+                  </view>
+
+                </scroll-view>
+
+              </view>
+            </view>
+          </swiper-item>
+
+          <swiper-item>
+            <view id="pageV1" class='pageV pageV1'>
+              <view class='page2Tab clearfix'>
+                <view class="wp1 {{curIndex2==0?'active':''}}" bindtap='swichTabUnderMyBizopp' data-ind='0'>
+                  <text>已抢占（{{bizoppsTracked.length}}/{{trackCapacity}}）</text>
+                </view>
+                <view class="wp2 {{curIndex2==1?'active':''}}" bindtap='swichTabUnderMyBizopp' data-ind='1'>
+                  <text>已锁定（{{lockedCount}}）</text>
+                </view>
+              </view>
+
+              <!-- 已抢占 -->
+              <view hidden='{{curIndex2 != 0}}' class='xiansuoBox myXiansuoBox'>
+                <view class='listBox' wx:if="{{bizoppsTracked.length}}">
+
+                  <view style='min-height:100%'>
+                    <block wx:for="{{bizoppsTracked}}" wx:for-item="bizopp" wx:for-index="idx" wx:key="id">
+                      <view class='it'>
+                        <view class='tp border-b' data-bizoppid='{{bizopp.id}}' bindtap='onTapBizoppView'>
+                          <view class='ifo'>
+                            <text class='name'>{{bizopp.contactPerson}}</text>
+                            <text class='phone'>{{bizopp.contactPhone}}</text>
+                            <text class='status on' wx:if='{{bizopp.trackPhaseName}}'>{{bizopp.trackPhaseName}}</text>
+                          </view>
+                          <view class='locati'>
+                            <view class='la la1'>
+                              <icon class='ico-location'></icon>
+                              <text class='wd'>{{bizopp.location}}</text>
+                            </view>
+                            <view class='la la2'>
+                              <icon class='ico-home'></icon>
+                              <text class='wd'>{{bizopp.area}}㎡</text>
+                            </view>
+                            <view class='la la3' style='width:280rpx'>
+                              <icon class='ico-time'></icon>
+                              <text class='wd'>{{bizopp.expiredTimeNoYear}}过期</text>
+                            </view>
+                          </view>
+                        </view>
+                        <view class='bt clearfix'>
+                          <view class='bt1' data-phonenum="{{bizopp.contactPhone}}" bindtap='commPhone'>
+                            <icon class='ico-telephone'></icon>
+                            <text class='mianColor'>拨打电话</text>
+                            <icon class='bord border-r'></icon>
+                          </view>
+                          <view class='bt2' bindtap='onTapLockBtn' data-bizoppid='{{bizopp.id}}'>
+                            <icon class='ico-key'></icon>
+                            <text class='mianColor'>锁住商机</text>
+                            <icon class='bord border-r'></icon>
+                          </view>
+                          <view class='bt3' bindtap='onTapUntrackBtn' data-bizoppid='{{bizopp.id}}'>
+                            <icon class='ico-remove'></icon>
+                            <text class='mianColor'>移除商机</text>
+                          </view>
+                        </view>
+
+                      </view>
+                    </block>
+                  </view>
+                </view>
+                <view wx:else class='NullTisBox'>
+                  <image class='tipsImg1' mode="widthFix" src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/mySalesInfo-nullTips.png'></image>
+                  <view class='tipsImg1Text tipsImg1Text1'>没有抢占任何商机</view>
+                  <view class='tipsImg1Text'>快去“商机公海"抢占吧~</view>
+                  <button bindtap='swichTab' data-ind='0' class='reset-button btn-b1'>去抢占</button>
+                </view>
+
+
+              </view>
+
+              <!-- 已锁定 -->
+              <view hidden='{{curIndex2 != 1}}' class='xiansuoBox myXiansuoBox'>
+
+                <scroll-view scroll-y='true' style='overflow:auto' class='listBox' wx:if="{{bizoppsLocked.length}}" bindscrolltolower='onMyLockedBizoppViewScrollToLower' lower-threshold="10">
+                  <view style='min-height:100%;'>
+                    <block wx:for="{{bizoppsLocked}}" wx:for-item="bizopp" wx:for-index="idx" wx:key="id">
+                      <view class='it'>
+                        <view class='tp border-b' data-bizoppid='{{bizopp.id}}' bindtap='onTapBizoppView'>
+                          <view class='ifo'>
+                            <text class='name'>{{bizopp.contactPerson}}</text>
+                            <text class='phone'>{{bizopp.contactPhone}}</text>
+                            <text class='status on' wx:if='{{bizopp.trackPhaseName}}'>{{bizopp.trackPhaseName}}</text>
+                          </view>
+                          <view class='locati'>
+                            <view class='la la1'>
+                              <icon class='ico-location'></icon>
+                              <text class='wd'>{{bizopp.location}}</text>
+                            </view>
+                            <view class='la la2'>
+                              <icon class='ico-home'></icon>
+                              <text class='wd'>{{bizopp.area}}㎡</text>
+                            </view>
+                            <view class='la la3'></view>
+                          </view>
+                        </view>
+                        <view class='bt clearfix'>
+                          <view class='bt1' data-phonenum='{{bizopp.contactPhone}}' bindtap='commPhone'>
+                            <icon class='ico-telephone'></icon>
+                            <text class='mianColor'>拨打电话</text>
+                            <icon class='bord border-r'></icon>
+                          </view>
+                          <view class='bt2' bindtap='onTapUntrackBtn' data-bizoppid='{{bizopp.id}}'>
+                            <icon class='ico-remove'></icon>
+                            <text class='mianColor'>移除商机</text>
+                          </view>
+                        </view>
+
+                      </view>
+                    </block>
+                  </view>
+                  <view class="weui-loadmore">
+                    <block wx:if="{{!noMoreLockedBizopps}}">
+                      <view class="weui-loading"></view>
+                      <view class="weui-loadmore__tips">加载中</view>
+                    </block>
+                    <block wx:else>
+                      <text class="weui-loadmore__tips">没有更多内容</text>
+                    </block>
+                  </view>
+                </scroll-view>
+                <view wx:else class='NullTisBox'>
+                  <image class='tipsImg1' mode="widthFix" src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/mySalesInfo-nullTips.png'></image>
+                  <view class='tipsImg1Text tipsImg1Text1'>没有锁定任何商机</view>
+                  <view class='tipsImg1Text tipsImg1Text2'>您可以对已抢占的商机进行锁定</view>
+                  <view class='tipsImg1Text tipsImg1Text3'>从而关闭已抢占商机的倒计时，永久锁住商机</view>
+                </view>
+
+              </view>
+
+            </view>
+          </swiper-item>
+
+          <swiper-item>
+            <view id="pageV2" class='pageV pageV2'>
+              <view class='xiansuoBox myXiansuoBox' wx:if="{{bizoppsInFavorites.length}}">
+                <scroll-view scroll-y class='listBox' bindscrolltolower='onMyFavoritesViewScrollToLower' lower-threshold="10">
+                  <view style='min-height:100%'>
+                    <block wx:for="{{bizoppsInFavorites}}" wx:for-item="bizopp" wx:for-index="idx" wx:key="id">
+                      <view class='it' id='bizopp-{{idx}}'>
+                        <view class='tp border-b' bindtap='onTapBizoppView' data-bizoppid='{{bizopp.id}}'>
+                          <view class='ifo'>
+                            <text class='name'>{{bizopp.contactPerson}}</text>
+                            <text class='phone'>{{bizopp.contactPhone}}</text>
+                            <!-- todo -->
+                            <text class='status' wx:if='{{bizopp.onceTracked && !bizopp.mine}}'>已经查看</text>
+                          </view>
+                          <view class='locati'>
+                            <view class='la la1'>
+                              <icon class='ico-location'></icon>
+                              <text class='wd'>{{bizopp.location}}</text>
+                            </view>
+                            <view class='la la2'>
+                              <icon class='ico-home'></icon>
+                              <text class='wd'>{{bizopp.area}}㎡</text>
+                            </view>
+                            <view class='la la3'>
+                              <icon class='ico-time'></icon>
+                              <text class='wd'>{{bizopp.publishTime}}</text>
+                            </view>
+                          </view>
+                        </view>
+                        <view class='bt clearfix'>
+                          <view class='bt1' bindtap='onTapTrackBtn' data-bizoppid='{{bizopp.id}}'>
+                            <block wx:if='{{bizopp.status==BIZOPP_STATUS_TRACKED}}'>
+                              <block wx:if='{{bizopp.mine}}'>
+                                <icon class='ico-select'></icon>
+                                <text class='mianColor'>抢占成功</text>
+                              </block>
+                              <block wx:else>
+                                <icon class='ico-lock'></icon>
+                                <text class='mianColor'>商机被占</text>
+                              </block>
+                            </block>
+                            <block wx:else>
+                              <icon class='ico-key'></icon>
+                              <text class='mianColor'>抢占商机</text>
+                            </block>
+                            <icon class='bord border-r'></icon>
+                          </view>
+                          <view class='bt2' bindtap='onTapFavoritesBtn' data-bizoppid='{{bizopp.id}}'>
+                            <icon class="ico-heart {{bizopp.inFavorites?'on':''}}"></icon>
+                            <block wx:if='{{bizopp.favoritesCount>0}}'>
+                              <text class='mianColor'>{{bizopp.favoritesCount}}</text>
+                            </block>
+                            <block wx:else>
+                              <text class='mianColor'>收藏</text>
+                            </block>
+                          </view>
+                        </view>
+
+                      </view>
+                    </block>
+                  </view>
+                  <view class="weui-loadmore">
+                    <block wx:if="{{!noMoreFavorites}}">
+                      <view class="weui-loading"></view>
+                      <view class="weui-loadmore__tips">加载中</view>
+                    </block>
+                    <block wx:else>
+                      <text class="weui-loadmore__tips">没有更多内容</text>
+                    </block>
+                  </view>
+                </scroll-view>
+
+              </view>
+              <view wx:else class='NullTisBox'>
+                <image class='tipsImg' mode="widthFix" src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/mySalesInfo-nullTips3.png'></image>
+                <view class='tipsImg1Text tipsImg1Text3'>没有收藏任何商机</view>
+                <view class='tipsImg1Text '>收藏有助于您快速标记并找出商机</view>
+              </view>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
+      <!-- </scroll-view> -->
+    </view>
+    <view class="shislniBox" >
+        <view class='keyNum fr'>
+            <icon class='ico-key'></icon>
+            <text class=''>{{keyCount}}把</text>
         </view>
     </view>
-</view> -->
-<view class='layout'>
-    <view class='MainTilBox'>申请试用，体验一站式解决方案的魅力</view>
+  </block>
+  <block wx:else>
+    <view class='layout'>
+      <view class='MainTilBox'>申请试用，体验一站式解决方案的魅力</view>
 
-    <form bindsubmit="formSubmit" report-submit="true">
-        <view class='formTil'><text class="red">*</text>1.上传户型文件（图片文件）</view>
+      <form bindsubmit="formSubmit" report-submit="true">
+        <view class='formTil'>
+          <text class="red">*</text>1.上传户型文件（图片文件）</view>
         <view class="uploadImgBox clearfix">
-            <view class='box imgBox' wx:for="{{selectImgArr}}" wx:for-index="imgInd" wx:key="imgk" >
-                <image src="{{item}}" mode='scaleToFill'></image>
-                <icon class="delIco" data-ind='{{imgInd}}' bindtap='delImgFn' ></icon>
-            </view>
-            <view class='box addImgBtn {{isHedeAddImgBtn ? "hide" : ""}}' bindtap='selectImgFn'></view>
+          <view class='box imgBox' wx:for="{{selectImgArr}}" wx:for-index="imgInd" wx:key="imgk">
+            <image src="{{item}}" mode='scaleToFill'></image>
+            <icon class="delIco" data-ind='{{imgInd}}' bindtap='delImgFn'></icon>
+          </view>
+          <view class='box addImgBtn {{isHedeAddImgBtn ? "hide" : ""}}' bindtap='selectImgFn'></view>
         </view>
-        <view class='formTil'><text class="red">*</text>2.联系方式</view>
+        <view class='formTil'>
+          <text class="red">*</text>2.联系方式</view>
         <view class='inpBox border borderRad-10'>
-            <input type='number' class='phoneInp' style='margin-right:200rpx' name="phoneNum" value='{{nullVal}}' placeholder='请留下你的手机号码，方便我们联系您'></input>
-            <!-- <text class='getCode mianColor'>获取验证码</text> -->
+          <input type='number' class='phoneInp' style='margin-right:200rpx' name="phoneNum" value='{{nullVal}}' placeholder='请留下你的手机号码，方便我们联系您'></input>
+          <!-- <text class='getCode mianColor'>获取验证码</text> -->
         </view>
         <!-- <view class='inpBox border-4'>
             <input type='text' class='phoneInp' name="code" value='{{nullVal}}' placeholder='短信验证码'></input>
         </view> -->
-        
+
         <view class='formTil mg-t'>3.客户需求（选填，可多选）</view>
         <view class='multOptBox'>
-            
-            <view>
-                <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds"  data-ind='{{idx}}' wx-if="{{idx < 3}}">{{itemName.name}}</view>
-                </block>
 
-            </view>
-            <view>
-                <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 6 && idx > 2 }}">{{itemName.name}}</view>
-                </block>
+          <view>
+            <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
+              <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 3}}">{{itemName.name}}</view>
+            </block>
 
-            </view>
-            <view>
-                <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 12 && idx > 5 }}">{{itemName.name}}</view>
-                </block>
- 
-            </view>
-            <view>
-                <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
-                    <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{ idx > 11 }}">{{itemName.name}}</view>
-                </block>
-            </view>
+          </view>
+          <view>
+            <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
+              <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 6 && idx > 2 }}">{{itemName.name}}</view>
+            </block>
+
+          </view>
+          <view>
+            <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
+              <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{idx < 12 && idx > 5 }}">{{itemName.name}}</view>
+            </block>
+
+          </view>
+          <view>
+            <block wx:for="{{needsList}}" wx:for-index="idx" wx:for-item="itemName" wx:key="needs">
+              <view class='border borderRad-10 opt {{itemName.isActive ? "active":""}}' bindtap="selectNeeds" data-ind='{{idx}}' wx-if="{{ idx > 11 }}">{{itemName.name}}</view>
+            </block>
+          </view>
 
         </view>
         <button class='subFormBtn mianBtn' form-type="submit">提交</button>
-    </form>
-    <view class="bot-padding"></view>
-</view>
-
+      </form>
+      <view class="bot-padding"></view>
+    </view>
+  </block>
+</block>

@@ -1,6 +1,7 @@
 {
     "usingComponents": {
-        "component-goBackMyStore": "../../component/goBackMyStore/goBackMyStore"
+        "component-goBackMyStore": "../../component/goBackMyStore/goBackMyStore",
+        "component-selectProperty": "../../component/selectProperty/selectProperty"
     },
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "购物车",

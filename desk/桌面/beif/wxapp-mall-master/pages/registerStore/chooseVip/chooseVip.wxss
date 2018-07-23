@@ -1,0 +1,128 @@
+/* pages/registerStore/choosePackage/choosePackage.wxss */
+
+page{
+    height: auto;
+    padding-bottom: 100rpx;
+    background-color: #fff;
+}
+
+
+.zhifuBtn{
+    height: 98rpx;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    flex-direction: column;
+}
+
+.zhifuBtn .selTex{
+    display: block;
+    text-align: center;
+}
+
+.headImg{
+    padding-top: 20.53333%;
+    background: url(http://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/chooseVip-headimg.png) center center;
+    background-size: 100% auto;
+    margin-bottom: 40rpx;
+}
+
+.headImg image{
+    display: block;
+    width: 100%;
+}
+
+.chooseWp{
+    padding: 0 22rpx;
+    margin-bottom: 32rpx;
+    height: 228rpx;
+    overflow: hidden;
+}
+
+.scrollView{
+    display: flex;
+    text-align: center;
+    white-space:nowrap;
+}
+
+.chooseIt{
+    width: 166rpx;
+    height: 226rpx;
+    display: inline-block;
+    margin-right: 14rpx;
+}
+
+.chooseIt:last-child{
+    margin-right: 0;
+}
+
+.chooseIt .it{
+    width: 162rpx;
+    height: 222rpx;
+    position: relative;
+}
+
+.chooseIt .it.active::after{
+    border-color: #e97b9b !important;
+}
+
+.chooseIt .t1,.chooseIt .t2,.chooseIt .t3{
+    display: block;
+    text-align: center;
+}
+
+.chooseIt .t1{
+    padding-top: 40rpx;
+    font-size: 30rpx;
+    color: #000;
+}
+
+.chooseIt .t2{
+    padding-top: 10rpx;
+}
+
+.chooseIt .t2 text{
+    color: #000;
+}
+
+.chooseIt .t2 .t2_l{
+    font-size: 28rpx;
+}
+
+.chooseIt .t2 .t2_r{
+    font-size: 38rpx;
+}
+
+.chooseIt .t3{
+    padding-top: 36rpx;
+    font-size: 26rpx;
+    color: #000;
+}
+
+
+.chooseIt .ico-sel{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: -1px;
+    width: 46rpx;
+    height: 46rpx;
+    background: url(http://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/chooseVip-sel-ico.png);
+    background-size: 100% 100%;
+    border-radius: 10rpx;
+}
+
+.chooseIt .it.active .ico-sel{
+    display: block;
+}
+
+
+.chooseIt .it.active .t2 .t2_r{
+    color: #e97b9b;
+}
+
+
+
+
+@import '../../common/common.wxss';

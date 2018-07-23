@@ -2,6 +2,7 @@
  
 .ticketWp{
     margin: 0 15rpx;
+    min-height: 400rpx;
 }
 
 .ticketWp .it{
@@ -10,6 +11,7 @@
     background-color: #fff;
     margin-top: 16rpx;
     border-radius: 10rpx;
+    min-height: 168rpx;
 }
 
 .ticketWp .moneyBox{
@@ -178,12 +180,10 @@
     line-height: 80rpx;
 }
 
-
-
-
-
-
-
+.iphoneX.couponPop .mianBtn{
+    height: 168rpx;
+    line-height: 168rpx;
+}
 
 
 @import '../../pages/common/common.wxss';

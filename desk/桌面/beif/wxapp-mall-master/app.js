@@ -26,11 +26,31 @@ App({
     }
 
   },
+
   onLaunch:function(){
+    let that = this;
     // 读取配置数据--是否强制显示访客视图
     let forceVisitorView = wx.getStorageSync(this.globalData.forceVisitorViewStorageKey);
     this.globalData.forceVisitorView = forceVisitorView ? true : false;
+
+    let sysInfo = wx.getSystemInfoSync();
+    this.globalData.phoneInfo = sysInfo;
+
+    if (!this.globalData.isCancleAdapter){
+
+        //判断是需要适配
+        let that = this;  
+
+        // if (sysInfo.model === "iPhone X") {
+        //     that.globalData.needAdapter = true;
+        // }
+        if ((sysInfo.screenHeight / sysInfo.screenWidth) > 1.8){
+            that.globalData.needAdapter = true;
+        }
+        
+    }
   },
+
   onShow: function () {
     let that = this,
       baseUrl = that.globalData.svr;
@@ -80,16 +100,16 @@ App({
     hasLogin: false,
     loginLock: false,
     phoneNumKf: '020-87917217',
-    //svr: 'https://192.168.0.115:8081/mall/wxapp/',
+    // svr: 'http://192.168.0.111:8080/wxapp/',
     // svr: 'https://192.168.0.115:8443/mall/wxapp/',
-    //svr: 'https://192.168.0.114:8081/mall /wxapp/',
+    //svr: 'https://192.168.0.114:8081/mall/wxapp/',
     // svr: 'https://192.168.0.100:443/wxapp/lxh/',
     // svr: 'https://192.168.0.100:443/wxapp/lgr/',
     // svr: 'https://100mall.baizeai.com/wxapp/lxh/',
     // svr: 'https://100mall.baizeai.com/wxapp/lgr/',
     svr: 'https://mall.baizeai.com/wxapp/',
     // svr: 'https://mall.baizeai.com/test/wxapp/',
-    version: '2.0.0', //building
+    version: '2.2.2', 
     token: null,
     needRegPhoneNumKey: 'needRegPhoneNumKey',
     needNikeNameKey: 'needNikeNameKey',
@@ -106,6 +126,58 @@ App({
     forceVisitorView: false,
     forceVisitorViewStorageKey: "forceVisitorView", // 强制访客视图
     goCategoryInd : null,//从首页进某一个分类
+    isCancleAdapter : true, //是否取消适配全面屏
+    needAdapter: false, //该手机是否要适配
+    shareTitle: '[有人@我] 这里有十万款办公家具产品，简直太牛了', //页面转发标题
+    indexRecommendsId : 'none', //首页爆款替换Id
+    phoneInfo : {}, //储存设备信息
+  },
+  setPageGlobalDataFn: function (curPageObj) {
+
+      let needSetVal = ['needAdapter'],
+          that = this,
+          v;
+
+      let getV = function (arr) {
+
+          let len = arr.length,
+              i = 0,
+              obj = {},
+              key;
+
+          if (!len || !curPageObj || typeof curPageObj !== 'object') {
+              return {}
+          }
+
+          for (; i < len; i++) {
+              key = arr[i];
+              obj[key] = that.globalData[key];
+          }
+
+          return obj;
+      }
+
+      v = getV(needSetVal);
+      curPageObj.setData(v);
+  },
+  //给每个页面设置公用的方法
+  setCommonFn: function (pageHandle){
+      let commJs = require('pages/common/common.js'),
+          methodName = ['commPhone'],
+          i = 0,
+          key = '',
+          len = methodName.length;
+
+      for(;i<len;i++){
+          key = methodName[i];
+          pageHandle[key] = commJs[key];
+      }
+
+  },
+  pageBeforeLoadRun:function(pageHandle){
+    //要在每个页面onload前执行的
+    this.setPageGlobalDataFn(pageHandle);
+    this.setCommonFn(pageHandle);
   },
   tmpData:{},
   SentNickName: function (v) {
@@ -207,6 +279,19 @@ App({
                   // 分销商信息
                   globalData.distributorInfo = resData.distributorInfo;
 
+                  // 设置中间红标，文本
+                  if (globalData.role == "ROLE_VISITOR") {
+                    wx.setTabBarItem({
+                      index: 2,
+                      text: '获取报价'
+                    })
+                  } else {
+                    wx.setTabBarItem({
+                      index: 2,
+                      text: '销售线索'
+                    })
+                  } 
+                  
                   // 执行回调
                   while (that.loginCallbackBuffer.length > 0){
                     let callback = that.loginCallbackBuffer.shift();
@@ -264,8 +349,6 @@ App({
    * getApp().bzRequest({url:'http://127.0.0.2:8080/',data:{'d1':1},complete:function(res){console.log(123)}})
    */
   bzRequest: function (OBJECT) {
-    //请求失败不弹窗提示
-    OBJECT.noErrorLog = true;
 
     let h = OBJECT['header'] || {};
 

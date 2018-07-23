@@ -1,11 +1,12 @@
 <view class='couponPopWpBg {{showCoupon?"active":""}}' bindtap='hideCouponPop'>
 </view>
-<view class='couponPop {{showCoupon?"active":""}}'>
+<view class='couponPop {{showCoupon?"active":""}} {{needAdapter?"iphoneX":""}}'>
   <view class='til'>优惠券</view>
   <view class='list'>
     <view class='ticketWp'>
+
       <block wx:if='{{coupons.length>0}}'>
-        <view class='it border-4' wx:for="{{coupons}}" wx:key="unique" bindtap='selectFn' data-ind='{{index}}'>
+        <view class='it border borderRad-10' wx:for="{{coupons}}" wx:key="unique" bindtap='selectFn' data-ind='{{index}}'>
           <view class='moneyBox flex_cen {{item.available?"mianBtn":"disableBtn"}}'>
             <view class='number'>
               <text class='unit'>¥</text>
@@ -39,7 +40,7 @@
 
         </view>
       </block>
-      <text wx:else>空空如也~ </text>
+      <text class='display-b textAli-c color999 mianSize' style='line-height:380rpx'  wx:else>空空如也~ </text>
     </view>
   </view>
 

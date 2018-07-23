@@ -1,0 +1,96 @@
+
+<view class="wpBox" id="areaBox">
+
+    <view class='testBox {{animateName}}' id="cvAarea" style='height:{{height}}'>
+        <view class='wp' style='transform:scale3d({{scaleY}},{{scaleY}},1)'>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+             <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+
+             <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+             <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text><text class='cg'>分类X1</text>
+            <text class='cg'>分类X1</text>
+        </view>
+    
+        
+
+        <view hidden='{{!showBg}}' class='bg' style='opacity:{{opacity}}' ></view>
+    
+    </view>
+
+    <view class='contBox' id="areaBox-it" bindtouchstart='startFn' bindtouchmove='moveFn' bindtouchend='endFn' >
+    
+        <view class='ct'>
+            分类内容
+        </view>
+    
+        <text hidden='{{height!=="0px"}}' bindtap='shouqiFn'>展开</text>
+
+    </view>
+
+</view>

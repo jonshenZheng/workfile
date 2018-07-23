@@ -1,0 +1,24 @@
+page{
+    height: auto
+}
+.areaBox{
+    width: 600rpx;
+    background-color: #f60;
+    height: 800rpx;
+    position: relative;
+    margin:30rpx auto 0;
+}
+
+.areaBox .block{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100rpx;
+    width: 100rpx;
+    background-color: #34a123;
+    text-align: center;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    color: #fff;
+}
+

@@ -1,0 +1,184 @@
+<view class="mian" wx:if='{{bizopp}}'>
+
+  <block wx:if='{{bizopp.mine && !bizopp.noExpiry}}'>
+    <!-- 我的商机-已抢占 显示的内容 -->
+    <view class='timeBox'>
+      <text class='timeTips'>距离商机保留时间：</text>
+      <view class='tipsDel'>倒计时结束后，商机将归还公海</view>
+      <view class='tipsDel'>消耗1把钥匙，关闭倒计时，永久锁住商机</view>
+      <button class='tBTN reset-button' bindtap='onTapLockBizoppBtn'>锁住商机</button>
+
+      <view class='timeW'>{{expiryCountdown.days}}天{{expiryCountdown.hours}}时{{expiryCountdown.minutes}}分{{expiryCountdown.seconds}}秒</view>
+    </view>
+    <!-- 我的商机-已抢占 显示的内容 end-->
+  </block>
+
+  <block wx:if='{{!bizopp.mine}}'>
+    <!-- 公海商机 显示的内容 -->
+    <view class="headInfo bgBox">
+
+      <view class="nameBox clearfix">
+        <text class='fl'>{{bizopp.contactPerson}}</text>
+        <text class='fr' style="margin-left:20rpx">浏览次数: {{bizopp.viewCount?bizopp.viewCount:0}}</text>
+        <text class='fr'>抢占次数: {{bizopp.trackCount?bizopp.trackCount:0}}</text>
+      </view>
+
+      <view class='phoneBox clearfix'>
+        <text class='fl'>{{bizopp.contactPhone}}</text>
+        <text class='fr' wx:if='{{bizopp.onceTracked}}'>已经查看</text>
+      </view>
+
+      <view class='tipsBox'>抢占商机，显示完整联系方式和公司名称</view>
+
+    </view>
+    <!-- 公海商机 显示的内容 end-->
+  </block>
+
+  <block wx:else>
+    <!-- 我的商机-已抢占和我的商机-已锁定 显示的内容 -->
+    <view class="headInfo bgBox">
+
+      <view class="nameBox clearfix">
+        <text class='fl'>{{bizopp.contactPerson}}</text>
+        <text class='fr type' wx:if='{{bizopp.trackRecords.length>0}}'>{{bizopp.trackRecords[0].statusName}}</text>
+      </view>
+
+      <view class='phoneBox clearfix'>
+        <text class='fl'>{{bizopp.contactPhone}}</text>
+        <view class='fr callBtn' data-phonenum='{{bizopp.contactPhone}}' bindtap='commPhone'>
+          <icon class='ico-telephone'></icon>
+          <text>拨打电话</text>
+        </view>
+      </view>
+
+      <view class='companyName'>{{bizopp.companyName}}</view>
+
+    </view>
+    <!-- 我的商机-已抢占和我的商机-已锁定 显示的内容 end-->
+  </block>
+
+  <view class="saleInfoBox bgBox">
+
+    <view class='it border-b'>
+      <view class='clearfix'>
+        <text class='fl til'>所在城市</text>
+        <text class='fr val'>{{bizopp.location}}</text>
+      </view>
+    </view>
+
+    <view class='it border-b'>
+      <view class='clearfix'>
+        <text class='fl til'>建筑面积</text>
+        <text class='fr val'>{{bizopp.area}}㎡</text>
+      </view>
+    </view>
+
+    <view class='it border-b' wx:if='{{bizopp.phaseName}}'>
+      <view class='clearfix'>
+        <text class='fl til'>装修进度</text>
+        <text class='fr val'>{{bizopp.phaseName}}</text>
+      </view>
+    </view>
+
+    <view class='it border-b' wx:if='{{bizopp.style}}'>
+      <view class='clearfix'>
+        <text class='fl til'>家具风格</text>
+        <text class='fr val'>{{bizopp.style}}</text>
+      </view>
+    </view>
+
+    <view class='it border-b'>
+      <view class='clearfix'>
+        <text class='fl til'>备注</text>
+        <text style='max-width:500rpx;text-align:right' class='fr val'>{{bizopp.memo}}</text>
+      </view>
+    </view>
+
+    <view class='it border-b'>
+      <view class='clearfix'>
+        <text class='fl til'>商机发布时间</text>
+        <text class='fr val'>{{bizopp.publishTime}}</text>
+      </view>
+    </view>
+
+  </view>
+
+  <block wx:if='{{bizopp.mine}}'>
+    <view class='genzhongjilv-tipBox'>
+      <view class='til'>跟进记录</view>
+      <view class='val'>填写跟进记录方便您记录商机情况，记录内容仅对自己可见</view>
+    </view>
+
+    <!-- 我的商机-已抢占和我的商机-已锁定 显示的内容 -->
+    <view class='recordBox'>
+      <block wx:for="{{bizopp.trackRecords}}" wx:for-item="trackRecord" wx:for-index="idx" wx:key="id">
+        <view class='genzhongjilv-pane'>
+          <view class='til border-b'>
+            <text class='textHide'>{{trackRecord.title}}</text>
+            <icon class='ico-remove' bindtap='onTapRemoveTrackRecordBtn' data-recordid='{{trackRecord.id}}'></icon>
+          </view>
+          <view class='detail showWordBox'>{{trackRecord.content}}</view>
+          <view class='jl-time clearfix'>
+            <text class='fl'>{{trackRecord.statusName}}</text>
+            <text class='fr'>{{trackRecord.recordTime}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 我的商机-已抢占和我的商机-已锁定 显示的内容 end-->
+  </block>
+
+
+  <block wx:if='{{bizopp.mine}}'>
+    <!-- 我的商机-已抢占和我的商机-已锁定 显示的内容 -->
+    <view class='footerBtn'>
+
+      <view class='btn' bindtap='onTapAddTrackRecordBtn'>
+        <icon class='ico-record'></icon>
+        <text>跟进记录</text>
+        <icon class='bord border-r'></icon>
+      </view>
+      <view class='btn' bindtap='onTapUntrackBizoppBtn'>
+        <icon class='ico-remove'></icon>
+        <text>移除商机</text>
+      </view>
+
+    </view>
+    <!-- 我的商机-已抢占和我的商机-已锁定 显示的内容 end-->
+  </block>
+
+  <block wx:else>
+    <!-- 公海商机 显示的内容 -->
+    <view class='footerBtn'>
+      <block wx:if='{{bizopp.status==BIZOPP_STATUS_TRACKED}}'>
+        <view class='btn' bindtap='onTapTrackBtn'>
+          <icon class='ico-lock'></icon>
+          <text>商机被占</text>
+          <icon class='bord border-r'></icon>
+        </view>
+      </block>
+      <block wx:else>
+        <view class='btn' bindtap='onTapTrackBtn'>
+          <icon class='ico-key'></icon>
+          <block wx:if='{{distributorInfo.level<=DIST_LV_EXPERIENCE}}'>
+            <text>查看商机</text>
+          </block>
+          <block wx:else>
+            <text>抢占商机</text>
+          </block>
+          <icon class='bord border-r'></icon>
+        </view>
+      </block>
+      <view class='btn' bindtap='onTapFavoritesBtn'>
+        <icon class="ico-heart  {{bizopp.inFavorites?'on':''}}"></icon>
+        <block wx:if='{{bizopp.favoritesCount>0}}'>
+          <text>{{bizopp.favoritesCount}}</text>
+        </block>
+        <block wx:else>
+          <text>收藏</text>
+        </block>
+      </view>
+    </view>
+    <!-- 公海商机 显示的内容 end-->
+  </block>
+</view>

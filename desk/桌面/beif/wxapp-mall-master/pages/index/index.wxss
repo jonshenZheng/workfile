@@ -460,6 +460,10 @@ swiper-item image {
 
 .headimgWp{
     position: relative;
+    height: 240rpx;
+    overflow: hidden;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-headImg.png) center center;
+    background-size: 110% auto;
 }
 
 .headimgWp image{
@@ -628,7 +632,7 @@ swiper-item image {
 
 .prodList .imgBox{
     width: 220rpx;
-    height: 220rpx;
+    height: 218rpx;
     background-color: #f5f5f5;
     float: left;
     border-top-left-radius: 10rpx;
@@ -637,8 +641,8 @@ swiper-item image {
 }
 
 .prodList .imgBox image{
-    max-height: 220rpx;
-    max-width: 220rpx;
+    max-height: 218rpx;
+    max-width: 218rpx;
 }
 
 .prodList .infoBox{
@@ -648,7 +652,35 @@ swiper-item image {
 
 .prodList .pdName{
     padding: 26rpx 0 4rpx;
+    position: relative;
 }
+
+.baokuanImg .replacePd{
+    position: absolute;
+    right: 20rpx;
+    top: 28rpx;
+    font-size: 26rpx;
+    z-index: 1;
+}
+
+.baokuanImg .replacePd .ico-replace{
+    display: inline-block;
+    width: 26rpx;
+    height: 26rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/index-replaceProd.png);
+    background-size: 100% 100%;
+    margin-bottom: -4rpx;
+    margin-right: 6rpx;
+}
+
+.prodList .pdName .nameText{
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 166rpx;
+}
+
 
 .prodList .leibie{
     font-size: 26rpx;
@@ -687,6 +719,15 @@ swiper-item image {
 
 .baokuanImg{
     padding-bottom: 10rpx;
+    position: relative;
+}
+
+.prodList .price1 .hide{
+    visibility: hidden;
+}
+
+.prodList .price1 .hide.show{
+    visibility: visible;
 }
 
 

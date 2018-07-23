@@ -9,48 +9,51 @@
 </view>
 
 
+<view class='PbBox {{needAdapter?"iphoneX":""}}'>
+    <block wx:if='{{index1}}'>
 
-<block wx:if='{{index1}}'>
-
-  <view class='topBox'>
-    <view class='text-til'>
-      <icon class='ico-money'></icon>
-      <text class='color000'>设置店铺价与成本价的比例：</text>
-    </view>
-    <view class='tips color999'>例如：您设置比例为110%，则店铺价=成本价*110%</view>
-    <view class='tips2 color999'>保存后，对应的产品类别的店铺价将更新为该比例。</view>
-  </view>
-  <scroll-view class='border-tb' scroll-y style=" white-space: nowrap; display: flex">
-    <view class='Pane' data-index='{{idx}}' wx:for="{{profitSettings[index1].children}}" wx:key="unique" wx:for-index="idx" wx:for-item="setting2">
-      <view class='Pane-it border-b'>
-        <view class='clearfix'>
-            <text class='mianSize color000 i-name'>{{setting2.name}}</text>
-            <input class='i-val mianSize color000' type='number' maxlength='5' data-index='{{idx}}' bindinput='onInputPorfitRatio' value='{{profitSettings[index1].children[idx].priceRate}}' />
-            <text class='unit mianSize color000'>%</text>
+        <view class='topBox'>
+            <view class='text-til'>
+            <icon class='ico-money'></icon>
+            <text class='color000'>设置店铺价与成本价的比例：</text>
+            </view>
+            <view class='tips color999'>例如：您设置比例为110%，则店铺价=成本价*110%</view>
+            <view class='tips2 color999'>保存后，对应的产品类别的店铺价将更新为该比例。</view>
         </view>
-      </view>
-    </view>
-  </scroll-view>
-</block>
-<block wx:else>
-  <view class='topBox'>
-    <view class='text-til'>
-      <icon class='ico-money'></icon>
-      <text class='color000'>设置店铺价与成本价的比例：</text>
-    </view>
-    <view class='tips color999'>例如：您设置比例为110%，则店铺价=成本价*110%</view>
-    <view class='tips2 color999'>保存后，整个店铺的店铺价将更新为该比例。\n如需更新某个产品类别的店铺价，请在对应的类别设置上浮比例。</view>
-  </view>
-  <view class='border-t border-b'>
-    <view class='Pane'>
-      <view class='Pane-it border clearfix'>
-        <text class='mianSize color000 i-name'>全部</text>
-        <input class='i-val mianSize color000' type='number' maxlength='5' bindinput='onInputPorfitRatio' value='{{profitSettings[index1].priceRate}}' />
-        <text class='unit mianSize color000'>%</text>
-      </view>
-    </view>
-  </view>
+        <scroll-view class='border-tb' scroll-y style=" white-space: nowrap; display: flex">
+            <view class='Pane' data-index='{{idx}}' wx:for="{{profitSettings[index1].children}}" wx:key="unique" wx:for-index="idx" wx:for-item="setting2">
+            <view class='Pane-it border-b'>
+                <view class='clearfix'>
+                    <text class='mianSize color000 i-name'>{{setting2.name}}</text>
+                    <input class='i-val mianSize color000' type='number' maxlength='5' data-index='{{idx}}' bindinput='onInputPorfitRatio' value='{{profitSettings[index1].children[idx].priceRate}}' />
+                    <text class='unit mianSize color000'>%</text>
+                </view>
+            </view>
+            </view>
+        </scroll-view>
+        </block>
+        <block wx:else>
+        <view class='topBox'>
+            <view class='text-til'>
+            <icon class='ico-money'></icon>
+            <text class='color000'>设置店铺价与成本价的比例：</text>
+            </view>
+            <view class='tips color999'>例如：您设置比例为110%，则店铺价=成本价*110%</view>
+            <view class='tips2 color999'>保存后，整个店铺的店铺价将更新为该比例。\n如需更新某个产品类别的店铺价，请在对应的类别设置上浮比例。</view>
+        </view>
+        <view class='border-tb'>
+            <view class='Pane'>
+            <view class='Pane-it'>
+                <view class='clearfix'>
+                    <text class='mianSize color000 i-name'>全部</text>
+                    <input class='i-val mianSize color000' type='number' maxlength='5' bindinput='onInputPorfitRatio' value='{{profitSettings[index1].priceRate}}' />
+                    <text class='unit mianSize color000'>%</text>
+                </view>
+            </view>
+            </view>
+        </view>
 
-</block>
+    </block>
+</view>
 
-<button class='saveBtn mianBtn' bindtap='onTapSaveBtn'>保存</button>
+<button class='saveBtn mianBtn {{needAdapter?"iphoneX":""}}' bindtap='onTapSaveBtn'>保存</button>

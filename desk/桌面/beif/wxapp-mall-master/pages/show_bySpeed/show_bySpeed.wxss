@@ -1,0 +1,64 @@
+page,.wpBox{
+    height: 100%;
+}
+
+.wpBox{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.showBox{
+    height: 160rpx;
+    border-bottom: 1px solid #ddd;
+    transition: all .3s;
+}
+
+.showBox.fixBox{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.showBox .showIt{
+    height: 100%;
+    text-align: center;
+    line-height: 80px;
+    color: #fff;
+    background-color: #2d74d7;
+}
+
+.showBox.fixBox.hide{
+    transform : translate3d(0,-100%,0);
+}
+
+
+.scrollBox{
+    /* flex: 1;
+    height: 100%;
+    overflow: auto; */
+}
+
+.scrollBox .it{
+    height: 60rpx;
+    padding: 10rpx 20rpx;
+    border-bottom: 1px solid #ddd;
+}
+
+.scrollBox .yellow{
+    border-color: yellow;
+}
+
+.scrollBox .red{
+    border-color: red;
+}
+
+.scrollBox .green{
+    border-color: green;
+}
+
+.scrollBox .scrollwp{
+    
+}
+

@@ -151,6 +151,8 @@ swiper-item image {
   box-shadow:0 0 8rpx 0 ;
   z-index: 5;
 }
+
+
 .footer-box .homeBtn{
   position: relative;
   width: 102rpx;
@@ -629,8 +631,10 @@ swiper-item image {
 .allpriceBox .box1 .prIt{
     font-size: 28rpx;
     float: left;
-    margin: 0 10rpx 18rpx 0;
-    width: 190rpx;
+    /* margin: 0 10rpx 18rpx 0; */
+    /* width: 190rpx; */
+    margin: 0 3% 18rpx 0;
+    width : 47%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -672,4 +676,65 @@ swiper-item image {
     font-size: 32rpx;
 }
 
+.footer-box .repaceBtn{
+    height: 100%;
+    text-align: center;
+    line-height: 100rpx; 
+}
+
+.iphoneX .footer-box .repaceBtn{
+    line-height: 168rpx;
+}
+
+.container.iphoneX{
+    padding-bottom:168rpx;
+}
+
+.iphoneX .footer-box{
+    height: 168rpx;
+}
+
+.iphoneX .footer-box .homeBtn,.iphoneX .footer-box .shop-cart-btn{
+    padding-top: 60rpx;
+}
+
+.iphoneX .footer-box .homeBtn{
+    background-position: center 42rpx;
+}
+
+.iphoneX .footer-box .shop-cart-btn,.iphoneX .footer-box .add-to-favorite{
+    background-position: center 53rpx;
+}
+
+.iphoneX .footer-box .add-to-favorite{
+    padding-top: 96rpx;
+}
+
+.iphoneX .footer-box .join-shop-cart,.iphoneX .footer-box .buy_now{
+    line-height: 168rpx;
+}
+
+.iphoneX .footer-box .cartNum.circle{
+    top: 34rpx;
+}
+
+.chandiBox{
+    display: flex;
+    height: 60rpx;
+    margin: 0 25rpx;
+}
+
+.chandiBox .box1,.chandiBox .box2{
+    float: left;
+    height: 60rpx;
+    width: 50%;
+}
+
+.chandiBox .box1{
+    text-align: left;
+}
+
+.chandiBox .box2{
+    text-align: right;
+}
 

@@ -2,6 +2,7 @@
 let app = getApp(),
   req = app.bzRequest,
   baseRqUrl = app.globalData.svr,
+  pageBeforeLoadRun = app.pageBeforeLoadRun,
   common = require("../common/common.js"),
   TAB_ALL_ID = '0';
 const MSG_SET_PROFIT_SUCCESS = '设置价格成功';
@@ -23,6 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    pageBeforeLoadRun(this);  
     common.injectData(this, options);
   },
   onDataInjected: function (options) {

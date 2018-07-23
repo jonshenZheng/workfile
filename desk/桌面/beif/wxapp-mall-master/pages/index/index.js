@@ -106,19 +106,24 @@ Page({
       withoutToken: true
     });
 
-    // 爆款推荐
-    rq({
-      url: baseURL + 'recommend/getRecommend/' + this.data.shopOfView.shopId,
-      success: function (r) {
-        common.checkImgExist(r.data.data.recommends, 'pic');
-        that.setData({
-          recommend: r.data.data.recommends
-        });
-      }
-    })
+    this.getRecommendFn();
 
     // 更新角色视图，例如分销商开关店铺视图
     common.updateRoleView(this);
+  },
+  getRecommendFn : function(){
+      // 爆款推荐
+      console.log('加载爆款推荐')
+      let that = this;
+      rq({
+          url: baseURL + 'recommend/getRecommend/' + this.data.shopOfView.shopId,
+          success: function (r) {
+              common.checkImgExist(r.data.data.recommends, 'pic');
+              that.setData({
+                  recommend: r.data.data.recommends
+              });
+          }
+      })
   },
   closeBigPopFn: function () {
     this.setData({
@@ -127,6 +132,7 @@ Page({
     });
   },
   onShareAppMessage: function () {
+      debugger
     return {
       title: '[有人@我] 这里有十万款办公家具产品，简直太牛了',
       imageUrl: "https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/share-index.png",
@@ -148,6 +154,18 @@ Page({
           url: '../category/category'
       });
 
+  },
+
+  repalceProdFn : function(e){
+      let i = e.currentTarget.dataset.fid,
+          id = e.currentTarget.dataset.pid;
+      //app.globalData.goCategoryInd = i;
+    
+      app.globalData.indexRecommendsId = id;
+
+      wx.navigateTo({
+          url: '../category2/category2'
+      });
   },
 
   btnStartFn: function (e) {

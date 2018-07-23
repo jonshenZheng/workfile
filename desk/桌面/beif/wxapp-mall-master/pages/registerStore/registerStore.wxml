@@ -91,14 +91,19 @@
       </view>
     </view>
   </view>
+    <view class="agreement">
+        <icon bindtap='agreementFn' class='ico-checkbox {{isAgreement?"on":""}}'></icon>
+        <text bindtap='agreementFn' class='mianSize txt1'>我已阅读并同意</text>
+        <text bindtap='onTapCtrlProtoUri' class='mianColor mianSize' data-uri='wx-webview://https://mall.baizeai.com/static/registStoreProtocol.html?hasShare=false&pageTitle=办公袋服务协议'>《办公袋服务协议》</text>
+    </view>
 
 <block wx:if='{{isDataInjected}}'>
-  <view class='footerBtn clearfix' wx:if='{{role != ROLE_DISTRIBUTOR && !distributorInfo}}'>
-    <button bindtap='onTapOpenShopBtn' data-formal='0' class='btn1 viceBtn' data-runfn='hasATry'>店铺试用</button>
-    <button bindtap='onTapOpenShopBtn' data-formal='1' class='btn2 mianBtn' data-runfn='regist'>完成注册，成为分销商</button>
+  <view class='footerBtn clearfix justRegist' wx:if='{{role != ROLE_DISTRIBUTOR && !distributorInfo}}'>
+    <button bindtap='onTapOpenShopBtn' class='btn2 mianBtn' data-runfn='regist'>完成注册，成为分销商</button>
   </view>
-  <view wx:else class='footerBtn clearfix justRegist'>
-    <button bindtap='onTapOpenShopBtn' data-formal='1' class='btn2 mianBtn' data-runfn='regist'>完成注册，成为正式分销商</button>
+  <view wx:else class='footerBtn clearfix'>
+    <navigator class='btn1 viceBtn' open-type='switchTab' url='../user/user'>返回店铺</navigator>
+    <button bindtap='onTapOpenShopBtn' class='btn2 mianBtn' data-runfn='regist'>完成注册，成为正式分销商</button>
   </view>
 </block>
-</view>
+</view> 

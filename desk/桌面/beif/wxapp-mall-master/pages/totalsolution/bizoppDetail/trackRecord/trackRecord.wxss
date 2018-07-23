@@ -1,0 +1,160 @@
+/* pages/test/test.wxss */
+
+page{
+    background-color: #f7f7f7;
+}
+
+.mian{
+    padding-bottom: 110rpx;
+}
+
+.setStatusBox{
+    margin-top: 20rpx;
+    background-color: #fff;
+    padding: 0 20rpx;
+}
+
+.setStatusBox .til,.setStatusBox .val{
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 32rpx;
+}
+
+.setStatusBox .valBox{
+    padding-right: 30rpx;
+}
+
+.setStatusBox .valBox .red{
+    color: #CC3300;
+}
+
+.setStatusBox .val{
+    color: #A1A1A1;
+}
+
+.setStatusBox .til{
+    color: #1E1E1E;
+}
+
+
+.valBox{
+    position: relative;
+}
+
+.setStatusBox .ico-tri{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -13rpx;
+    width: 16rpx;
+    height: 26rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/mySalesInfo-tri.png);
+    background-size: 100% 100%;
+}
+
+
+
+.formBox{
+    background-color: #fff;
+    margin-top: 20rpx;
+    padding-left: 20rpx;
+}
+
+.formBox .tilBox{
+    padding-right: 20rpx;
+}
+
+.formBox .til,.formBox .val,.formBox .val-inp{
+    height: 88rpx;
+    line-height: 88rpx;
+    font-size: 32rpx;
+}
+
+.formBox .til{
+    color: #1E1E1E;
+}
+
+.formBox .val{
+    color: #A1A1A1;
+}
+
+.formBox .val-inp{
+    text-align: right;
+    color: #1E1E1E;
+}
+
+.formBox .textValBox{
+    padding-right: 20rpx;
+}
+
+.formBox textarea{
+    width: 100%;
+}
+
+
+.footerBtnBox{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.footerBtnBox .btn-b{
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    color: #fff;
+    font-size: 32rpx;
+    background-color: #1890FF;
+}
+
+
+.maskBox{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #afafaf;
+    z-index: 2;
+}
+
+.upMuneBox{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(100%);
+    transition: all .3s;
+    background-color: #e5e5e9;
+    z-index: 2;
+}
+
+.upMuneBox .listBox{
+    background-color: #fff;
+    margin-bottom: 20rpx;
+}
+
+.upMuneBox .listBox .it,.upMuneBox .cancleBtn{
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    font-size: 32rpx;
+    color: #000;
+}
+
+.upMuneBox .cancleBtn{
+    background-color: #fff;
+}
+
+.maskBox.active{
+    display: block;
+}
+
+.upMuneBox.active{
+    transform: translateY(0);
+}
+
+
+@import '../../../common/common.wxss';

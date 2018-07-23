@@ -26,11 +26,11 @@
                 <text class='gdDec color999 '>{{colItem.property}}</text>
                 <icon class='ico-tri'></icon>
             </view> -->
-                            <view class='decBox'>
+                            <view class='decBox' bindtap='showSkuInfo' data-ind='{{colInd}}' >
                                 <text class='gdDec color999 '>{{colItem.property}}</text>
                                 <icon class='ico-tri'></icon>
                             </view>
-                            <text class='gdPrice mianColor mianSize'>￥{{colItem.price}}</text>
+                            <text style='padding-right:14rpx;' class='gdPrice mianColor mianSize'>￥{{colItem.price}}</text>
                             <text class='gdPrice mianColor mianSize' wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'> 成本价￥{{colItem.factoryPrice}}</text>
                         </view>
                         <!--<icon class='delBtn' bindtap='delItemFn' data-ind='{{colInd}}'></icon>-->
@@ -118,3 +118,13 @@
         </view>
     </view>
 </view> -->
+
+<!-- 属性选择组件-->  
+<component-selectProperty
+    style="position:relative;z-index:5" 
+    shopofview="{{shopOfView}}"  
+    btnsecondname="确定"
+    bindsecondfn="replaceProdFn"
+    id="SelectProp" >
+</component-selectProperty>
+<!-- 属性选择组件 end-->  

@@ -2,8 +2,12 @@
 
 page{
     height: auto;
+}
+
+.pdBox{
     padding-bottom: 110rpx;
 }
+
 .order-box{
     margin: 30rpx 20rpx;
     background-color: #fff;
@@ -378,6 +382,16 @@ page{
     margin-top: 16rpx;
 }
 
+.iphoneX.footer{
+    height: 168rpx;
+}
 
+.iphoneX.footer .btnB{
+    margin-top: 50rpx;
+} 
+
+.pdBox.iphoneX{
+    padding-bottom: 168rpx;
+}
 
 

@@ -2,6 +2,8 @@ let app = getApp(),
   rq = app.bzRequest,
   baseRqUrl = app.globalData.svr,
   common = require("../common/common.js"),
+  needNikeNameKey = app.globalData.needNikeNameKey,
+  hasNikename =  wx.getStorageSync(needNikeNameKey),
   baseImgUrl= app.globalData.baseImgUrl;
 
 Page({
@@ -28,6 +30,7 @@ Page({
                 thumb: res.userInfo.avatarUrl,
                 nickname: res.userInfo.nickName
               })
+
             }
           })
         }
@@ -42,11 +45,13 @@ Page({
       this.startExpiryCountdownIfNecessary();
       this.requestNoBrowsedOrderCountIfNecessary();
       this.requestSalesAmountIfNecessary();
+      this.setDataPhoneHidden();
     } else {//当shop数据未准备好时，使用onDataInjected进行刷新购物车数据
       this.onDataInjected = ()=>{
         that.startExpiryCountdownIfNecessary();
         that.requestNoBrowsedOrderCountIfNecessary();
         that.requestSalesAmountIfNecessary();
+        that.setDataPhoneHidden();
       }
     }
 
@@ -75,8 +80,7 @@ Page({
    * 启动分销商过期的倒计时，当用户是分销商角色且为试用
    */
   startExpiryCountdownIfNecessary: function () {
-    if (this.data.role == this.data.ROLE_DISTRIBUTOR
-      && this.data.distributorInfo.level == this.data.DIST_LV_ON_TRAIL) {
+    if (this.data.role == this.data.ROLE_DISTRIBUTOR) {
       let expiryDate = new Date(this.data.distributorInfo.expiryDate.replace(/\-/g, "/"));
       let that = this;
       this.expiryCountdownHandler = common.countdown(expiryDate, function (res) {
@@ -85,7 +89,7 @@ Page({
         that.setData({
           distributorInfo: that.data.distributorInfo
         });
-        // console.log(that.data.expiryCountdown)
+        // console.log(res)
       });
     }
   },
@@ -98,7 +102,7 @@ Page({
 
     let lastReqTime = this.lastReqTimeOfNoBrowsedOrder;
     let curTime = new Date();
-    if (lastReqTime && curTime - lastReqTime < 60000) //没超过60s则不进行请求
+    if (lastReqTime && curTime - lastReqTime < 30000) //没超过30s则不进行请求
         return;
     this.lastReqTimeOfNoBrowsedOrder = curTime;//更新
     
@@ -121,7 +125,7 @@ Page({
 
     let lastReqTime = this.lastReqTimeOfSaleAmount;
     let curTime = new Date();
-    if (lastReqTime && curTime - lastReqTime < 30000) //没超过30s则不进行请求
+    if (lastReqTime && curTime - lastReqTime < 60000) //没超过60s则不进行请求
       return;
     this.lastReqTimeOfSaleAmount = curTime;//更新
 
@@ -137,6 +141,15 @@ Page({
       }
     })
   },
+  setDataPhoneHidden:function(){
+    let distributorInfo = this.data.distributorInfo;
+    if (distributorInfo && distributorInfo.phone){
+      distributorInfo.phoneHidden = distributorInfo.phone.substring(0, 3) + '****' + distributorInfo.phone.substring(7, 11);
+      this.setData({
+        distributorInfo: distributorInfo
+      })
+    }
+  },
   callkf: function () {
     let phone = this.data.shopOfView.servicePhone;//getApp().globalData.phoneNumKf;
     if(this.data.role == this.data.ROLE_DISTRIBUTOR)
@@ -151,6 +164,12 @@ Page({
       thumb: e.detail.userInfo.avatarUrl,
       nickname: e.detail.userInfo.nickName
     })
+
+    if (!hasNikename) {
+        //第一次授权的时候发送更多个人信息给后台
+        app.SentNickName(hasNikename);
+    }
+
   },
   changeStoreView:function(e){
     let globalData = getApp().globalData;
@@ -214,6 +233,17 @@ Page({
           })
         }
       }
+    })
+  },
+  /**
+   * 点击查看我的订单按钮
+   * 清空
+   */
+  onTapViewMyOrdersBtn:function(){
+    this.lastReqTimeOfNoBrowsedOrder = null;//清除上次查询订单数记录，导致一旦进入订单页就一定会要求刷新这块数据
+    this.lastReqTimeOfSaleAmount = null;
+    wx.navigateTo({
+      url: '../orders/orders',
     })
   }
 })

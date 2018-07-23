@@ -52,5 +52,5 @@
 page{
     background-color: #fff;
     height: auto;
-    margin-bottom: 110rpx;
+    padding-bottom: 110rpx;
 }

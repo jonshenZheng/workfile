@@ -179,4 +179,24 @@
     width: 100%
 }
 
+.agreement{
+    padding: 20rpx 0 20rpx 80rpx;
+    position: relative;
+    background-color: #f5f5f5
+}
 
+.agreement .ico-checkbox{
+    position: absolute;
+    left: 30rpx;
+    top: 50%;
+    margin-top: -15rpx;
+    width: 30rpx;
+    height: 30rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/registStore-select-off.png);
+    background-size: 100% 100%;
+}
+
+.agreement .ico-checkbox.on{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/registStore-select-on.png);
+    background-size: 100% 100%;
+}

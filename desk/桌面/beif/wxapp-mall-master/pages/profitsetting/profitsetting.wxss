@@ -2,9 +2,13 @@
 
 page{
     background-color: #fff !important;
-    margin: 78rpx 0 88rpx;
+    /* margin: 78rpx 0 0; */
     height: auto;
 
+}
+
+.PbBox{
+    padding-bottom: 88rpx;
 }
 
 .scrollBtnwp{
@@ -47,6 +51,10 @@ page{
     z-index: 2;
 }
 
+.iphoneX.saveBtn{
+    height: 168rpx;
+    line-height: 168rpx;
+}
 
 
 .topBox{
@@ -79,7 +87,7 @@ page{
     line-height: 30rpx;
 }
 
-.Pane-it{
+page .Pane-it{
     margin-left: 30rpx;
     padding-right: 70rpx;
     position: relative;
@@ -134,5 +142,8 @@ page{
     background-color: transparent;
 }
 
+.iphoneX.PbBox{
+    padding-bottom: 168rpx;
+}
 
 @import '../common/common.wxss';

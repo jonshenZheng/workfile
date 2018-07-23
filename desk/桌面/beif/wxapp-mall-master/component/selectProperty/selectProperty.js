@@ -1,14 +1,11 @@
 let app = getApp(),
     rq = app.bzRequest,
     baseURL = app.globalData.svr,
+    pageBeforeLoadRun = app.pageBeforeLoadRun,
     commJS = require("../../pages/common/common.js");
 
 Component({
     properties: {
-        fn1 :{
-            type : Function,
-            value: function(e){}
-        }, 
         goodsSelection : {
             type : Object,
             value : {}
@@ -44,14 +41,21 @@ Component({
         btnsecondfn : {
             type : Function,
             value : function(){}
-        }
+        },
+        hideNum: {
+            type: Boolean,
+            value: false,
+        },
 
     },
     data: {
+        ROLE_DISTRIBUTOR: commJS.ROLE_DISTRIBUTOR,
         baseURL : getApp().globalData.svr,
         isRangePrice: false,
         showMaxPrice: 0,
         showMinPrice: 0,
+        showMaxFactoryPrice: 0,
+        showMinFactoryPrice: 0,
         selectedPropertyStr : '',
         purchaseQuantity: 1,//用户设置的购买数量,每点一次加入购车,就会放入bHideSelectView个商品
         minPurchaseQuantity: 1,
@@ -59,6 +63,14 @@ Component({
         btnff: '',
         //bHideSelectView: true,//是否显示选择的view
     },
+    attached : function(){
+        pageBeforeLoadRun(this);
+    },
+
+    ready : function(){
+      commJS.injectData(this)
+    },
+
     methods: {
         /**
          * 规格选择弹出框隐藏
@@ -176,7 +188,6 @@ Component({
 
             let kefuMsg = '产品名：' + this.data.goodsDetail.basicInfo.name + '规格：' + selectedPropertyStr;
 
-
             priceRangeObj = this.getPriceRange(selectedPropertyIndexs2, compositions);
 
             if (checkRes.skuId) {
@@ -188,6 +199,8 @@ Component({
                     isRangePrice: false,
                     showMaxPrice: 0,
                     showMinPrice: 0,
+                    showMaxFactoryPrice: 0,
+                    showMinFactoryPrice: 0,
                 });
             }
             else {
@@ -199,6 +212,8 @@ Component({
                     isRangePrice: true,
                     showMaxPrice: priceRangeObj.maxPrice,
                     showMinPrice: priceRangeObj.minPrice,
+                    showMaxFactoryPrice: priceRangeObj.maxFactoryPrice,
+                    showMinFactoryPrice: priceRangeObj.minFactoryPrice,
                 });
             }
 
@@ -225,12 +240,29 @@ Component({
                         that.setData({
                             goodsDetail: r.data.data.goodsDetail,
                         });
+
+                        let data = {};
+                        data.purchaseQuantity = that.data.purchaseQuantity;
+                        data.selectedPropertyStr = selectedPropertyStr;
+                        data.goodsDetail = that.data.goodsDetail;
+                        data.goodsSelection = that.data.goodsSelection;
+                        that.triggerEvent('updatedata', data);
+
+
                     },
                     complete: function () {
                         wx.hideLoading();
                     }
                 })
 
+            }
+            else{
+                let data = {};
+                data.purchaseQuantity = this.data.purchaseQuantity;
+                data.selectedPropertyStr = selectedPropertyStr;
+                data.goodsDetail = this.data.goodsDetail;
+                data.goodsSelection = this.data.goodsSelection;
+                this.triggerEvent('updatedata', data);
             }
         },
 
@@ -317,6 +349,13 @@ Component({
                 purchaseQuantity: val
             })
 
+            let data = {};
+            data.purchaseQuantity = this.data.purchaseQuantity;
+            data.selectedPropertyStr = this.data.selectedPropertyStr;
+            data.goodsDetail = this.data.goodsDetail;
+            data.goodsSelection = this.data.goodsSelection;
+            this.triggerEvent('updatedata', data);
+
         },
         getPriceRange: function (selectedPropertyIndexs2, compositions) {
 
@@ -324,6 +363,8 @@ Component({
             let i = 0,
                 maxPrice = 0,
                 minPrice = 0,
+                maxFactoryPrice = 0,
+                minFactoryPrice = 0,
                 isfirst = true,
                 len = compositions.length,
                 compProp;
@@ -337,6 +378,8 @@ Component({
                         isfirst = false;
                         maxPrice = compositions[i].price;
                         minPrice = compositions[i].price;
+                        maxFactoryPrice = compositions[i].factoryPrice;
+                        minFactoryPrice = compositions[i].factoryPrice;
                         continue;
                     }
                     if (compositions[i].price > maxPrice) {
@@ -346,30 +389,45 @@ Component({
                     if (compositions[i].price < minPrice) {
                         minPrice = compositions[i].price;
                     }
+
+                    if (compositions[i].factoryPrice > maxFactoryPrice) {
+                        maxFactoryPrice = compositions[i].factoryPrice;
+                    }
+
+                    if (compositions[i].factoryPrice < minFactoryPrice) {
+                        minFactoryPrice = compositions[i].factoryPrice;
+                    }
+
                 }
 
             }
 
             return {
                 minPrice: minPrice,
-                maxPrice: maxPrice
+                maxPrice: maxPrice,
+                maxFactoryPrice: maxFactoryPrice,
+                minFactoryPrice: minFactoryPrice,
             }
 
 
         },
-        btn1Fn : function(e){
-            debugger
+        getProdInfo : function(){
             let data = {},
-            res = this.checkSelection();
+                res = this.checkSelection();
             data.skuid = res.skuId;
-            //data.id = this.data.goodsDetail.basicInfo.id;
             data.num = this.data.purchaseQuantity;
-
+            data.basicInfo = this.data.goodsDetail.basicInfo;
+            data.thisCase = this;
+            return data;
+        },
+        btn1Fn : function(e){
+            let data = this.getProdInfo();
+            //data.id = this.data.goodsDetail.basicInfo.id;
+            //data.num = this.data.purchaseQuantity;
             this.triggerEvent('firstfn', data);
         },
         btn2Fn : function(e){
-            let data = {};
-            data.ind = 2;
+            let data = this.getProdInfo();
             this.triggerEvent('secondfn', data);
         },
         btnStartFn: function (e) {
@@ -383,29 +441,6 @@ Component({
             common.btnEndFn(this);
         },
 
-
-
-
-
-
-
-
-
-
-        // 这里是一个自定义方法
-        customMethod: function () { },
-        togglePop : function(){
-            let isHide = !this.data.ishide;
-            this.setData({
-                ishide: isHide
-            });
-            var myEventDetail = {
-                val: isHide
-            }; // detail对象，提供给事件监听函数
-            var myEventOption = {}; // 触发事件的选项
-            
-            this.triggerEvent('myevent', myEventDetail, myEventOption);
-        }
     }
 });
 

@@ -1,0 +1,7 @@
+<view class='areaBox' id="areaBox">
+
+    <!-- <view id="areaBox-it" class='block' bindtouchstart='startFn' bindtouchmove='moveFn' style='left:{{left}}px;top:{{top}}px' >drog</view> -->
+
+    <view id="areaBox-it" class='block' bindtouchstart='startFn' bindtouchmove='moveFn' style='transform:translate3d({{left}}px,{{top}}px,0)' >drog</view>
+
+</view>

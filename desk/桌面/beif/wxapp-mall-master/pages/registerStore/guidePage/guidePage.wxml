@@ -14,7 +14,7 @@
 
     <!-- 改成用一张图 -->
     <view class="banner">
-        <image mode='widthFix' src="https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/guidePge.png" alt=""></image>
+        <image mode='widthFix' src="https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/guidePge.jpg" alt=""></image>
     </view>
 
     <view class="footerBtn clearfix">

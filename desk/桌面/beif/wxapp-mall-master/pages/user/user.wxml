@@ -1,63 +1,134 @@
 <component-goBackMyStore wx:if='{{role==ROLE_DISTRIBUTOR&&shop.shopId!=shopOfView.shopId}}'></component-goBackMyStore>
 <view class="main mianSize" wx:if='{{isDataInjected}}'>
 
-    <block wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}'>
-        <block wx-if='{{distributorInfo.level==DIST_LV_ON_TRAIL}}'>
-            <view class='headVipWp' wx-if='{{distributorInfo.expiryCountdown&&!distributorInfo.expiryCountdown.isOver}}' >
-                <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-try.png' mode='widthFix' ></image>
-                <view class='vipBtnBox clearfix'>
-                    <text class='timeTips'>剩余时间仅有：</text>
-                    <view class='timeBox'>
-                        <view class='tBox'>{{distributorInfo.expiryCountdown.days}}</view>
-                        <view class='unit'>天</view>
-                        <view class='tBox'>{{distributorInfo.expiryCountdown.hours}}</view>
-                        <view class='unit'>时</view>
-                        <view class='tBox'>{{distributorInfo.expiryCountdown.minutes}}</view>
-                        <view class='unit'>分</view>
-                        <view class='tBox'>{{distributorInfo.expiryCountdown.seconds}}</view>
-                        <view class='unit'>秒</view>
-                    </view>
-                    <navigator class='btnV' url='../registerStore/registerStore?type=regist' open-type="navigate" >
-                        <icon class='btnB'></icon>
-                        <text>成为正式分销商</text>
-                    </navigator>
-                </view>
-            </view>
+    <block wx:if='{{isDataInjected}}'>
 
-            <view class='headVipWp exprired' wx:else>
+        <block wx:if='{{role==ROLE_DISTRIBUTOR}}'>
+            <!-- 试用、体验 -->
+            <block wx:if='{{distributorInfo.level < 20}}'>
+                <block wx:if='{{distributorInfo.expiryCountdown&&!distributorInfo.expiryCountdown.isOver}}'>
+                   
+                    <view class='headVipWp trial'>
+                        <block wx:if='{{distributorInfo.level == DIST_LV_ON_TRAIL}}'>
+                            <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-try.png' mode='widthFix' ></image>
+                        </block>
+                        <block wx:elif='{{distributorInfo.level == 10}}'>
+                            <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-tiyan.png' mode='widthFix' ></image>
+                        </block>
+                        <!--总是显示倒计时-->
+                        <view class='vipBtnBox clearfix'>
+                            <text class='timeTips'>剩余时间仅有：</text>
+                            <view class='timeBox' >
+                              <block wx:if='{{!distributorInfo.expiryCountdown.isOver}}'>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.days}}</view>
+                                <view class='unit'>{{!distributorInfo.expiryCountdown.isOver}}天</view>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.hours}}</view>
+                                <view class='unit'>时</view>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.minutes}}</view>
+                                <view class='unit'>分</view>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.seconds}}</view>
+                                <view class='unit'>秒</view>
+                              </block>
+                              <block wx:else>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>天</view>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>时</view>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>分</view>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>秒</view>
+                              </block>
+                            </view>
+                            <navigator class='btnV' url='../registerStore/chooseVip/chooseVip' open-type="navigate" >
+                                <icon class='btnB'></icon>
+                                <text>成为正式分销商</text>
+                            </navigator>
+                        </view>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class='headVipWp exprired'>
+                        <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-expired.png' mode='widthFix'></image>
+                        <view class='expriredBox clearfix'>
+                            <navigator class='btnV big' url='../registerStore/chooseVip/chooseVip' open-type="navigate" >
+                                <icon class='btnB'></icon>
+                                <text>激活身份，成为分销商</text>
+                            </navigator>
+                        </view>
+                    </view>
+                </block>
+            </block>
+            <!-- 正式分销商 -->
+            <block wx:else>
+                <!-- 正式、有效期少于7天 -->
+
+                <!-- 这里只是显示代码结构，判断条件需要根据实际来 -->
+                <block wx:if='{{distributorInfo.expiryCountdown&&distributorInfo.expiryCountdown.days<7}}'>
+                    <!-- 有效期少于7天 -->
+                    <view class='headVipWp formal'>
+                        <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-7.png' mode='widthFix'></image>
+                        <view class='countBox'style="top:33.4%" >
+                            <icon class='ico-countMoney'></icon>
+                            <text class='color000 mianSize'>累计销售额：{{distributorInfo.salesAmountLocaleStr}}</text>
+                        </view>
+                        <view class='vipBtnBox clearfix'>
+                            <text class='timeTips'>剩余时间仅有：</text>
+                            <view class='timeBox'>
+                              <block wx:if='{{!distributorInfo.expiryCountdown.isOver}}'>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.days}}</view>
+                                <view class='unit'>{{!distributorInfo.expiryCountdown.isOver}}天</view>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.hours}}</view>
+                                <view class='unit'>时</view>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.minutes}}</view>
+                                <view class='unit'>分</view>
+                                <view class='tBox'>{{distributorInfo.expiryCountdown.seconds}}</view>
+                                <view class='unit'>秒</view>
+                              </block>
+                              <block wx:else>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>天</view>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>时</view>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>分</view>
+                                <view class='tBox'>0</view>
+                                <view class='unit'>秒</view>
+                              </block>
+                            </view>
+                            <navigator class='btnV' url='../registerStore/chooseVip/chooseVip' open-type="navigate" >
+                                <icon class='btnB'></icon>
+                                <text>延长分销商权限</text>
+                            </navigator>
+                        </view>
+                    </view> 
+                </block>
+                <block wx:else>
+                    <!-- 正式 -->
+                    <view class='headVipWp formal'>
+                        <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg.png' mode='widthFix'></image>
+                        <view class='countBox'>
+                            <icon class='ico-countMoney'></icon>
+                            <text class='color000 mianSize'>累计销售额：{{distributorInfo.salesAmountLocaleStr}}</text>
+                        </view>
+                    </view>
+                </block>
+            </block>
+        </block>
+        <!-- 过期的分销商，此时他的身份为游客但是却有分销商信息 -->
+        <block wx:elif='{{role==ROLE_VISITOR && distributorInfo}}'>
+            <view class='headVipWp exprired'>
                 <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-expired.png' mode='widthFix'></image>
                 <view class='expriredBox clearfix'>
-                    <navigator class='btnV' url='../registerStore/registerStore?type=regist' open-type="navigate" >
+                    <navigator class='btnV big' url='../registerStore/chooseVip/chooseVip' open-type="navigate" >
                         <icon class='btnB'></icon>
-                        <text>成为正式分销商</text>
+                        <text>激活身份，成为分销商</text>
                     </navigator>
                 </view>
-            </view>
+            </view> 
         </block>
-        <block wx:else>
-            <view class='headVipWp'>
-                <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg.png' mode='widthFix'></image>
-                <view class='countBox'>
-                    <icon class='ico-countMoney'></icon>
-                    <text class='color000 mianSize'>累计销售额：{{distributorInfo.salesAmountLocaleStr}}</text>
-                </view>
-            </view>   
-        </block>
-    </block>
 
-    <block wx-if='{{isDataInjected && role==ROLE_VISITOR &&distributorInfo}}'>
-        <view class='headVipWp exprired'>
-            <image src='https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/user-vipImg-expired.png' mode='widthFix'></image>
-            <view class='expriredBox clearfix'>
-                <navigator class='btnV' url='../registerStore/registerStore?type=regist' open-type="navigate" >
-                    <icon class='btnB'></icon>
-                    <text>成为正式分销商</text>
-                </navigator>
-            </view>
-        </view>
- 
     </block>
-
 
     <view class='headerbox' wx:if="{{!thumb}}">
         <button  class='getUserInfo' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录</button>
@@ -68,9 +139,9 @@
             <image src="{{thumb}}" class="thumb"></image>
             <view class='thumbInfo'>
                 <view class="nickname mianSize">{{nickname}} 
-                    <text class='vip-logo color000' wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}' >{{distributorInfo.level==DIST_LV_ON_TRAIL ? (distributorInfo.expiryCountdown.isOver?'试用期失效':'试用分销商'):'正式分销商'   }}</text>
+                    <text wx-if='{{isDataInjected && (role==ROLE_DISTRIBUTOR||distributorInfo)}}' class='vip-logo color000'>{{role==ROLE_VISITOR?'失效分销商':distributorInfo.title}}</text>
                 </view>
-                <view class='phoneN' wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}' >{{distributorInfo.servicePhone}}</view>
+                <view class='phoneN' wx-if='{{isDataInjected && role==ROLE_DISTRIBUTOR}}' >{{distributorInfo.phoneHidden}}</view>
             </view>
         </view>
         <!-- <icon class='user-ico-tri'></icon> -->
@@ -124,19 +195,17 @@
                 </view>
             </view>
         </view>
-        <navigator url='../orders/orders'>
-            <view class='item border-b'>
-                <view class='clearfix'>
-                    <view class='icoBox'>
-                        <icon class='ico ico-order'></icon>
-                    </view>
-                    <text class='lab-til color000 mianSize'>我的订单</text>
-                    <view class='location mianColor'>
-                        <text wx:if='{{unbrowsedOrderCount>0}}' class='order-num'>{{unbrowsedOrderCount}}</text><icon class='ico-tri'></icon>                    
-                    </view>
+        <view class='item border-b' bindtap='onTapViewMyOrdersBtn'>
+            <view class='clearfix'>
+                <view class='icoBox'>
+                    <icon class='ico ico-order'></icon>
+                </view>
+                <text class='lab-til color000 mianSize'>我的订单</text>
+                <view class='location mianColor'>
+                    <text wx:if='{{unbrowsedOrderCount>0}}' class='order-num'>{{unbrowsedOrderCount}}</text><icon class='ico-tri'></icon>                    
                 </view>
             </view>
-        </navigator>
+        </view>
         <navigator url='../coupon/coupon'>
           <view class='item border-b' wx-if='{{isDataInjected&&role==ROLE_DISTRIBUTOR && distributorInfo.level!=DIST_LV_ON_TRAIL}}'>
               <view class='clearfix'>

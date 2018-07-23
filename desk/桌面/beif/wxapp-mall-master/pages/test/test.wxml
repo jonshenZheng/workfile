@@ -1,0 +1,17 @@
+<view style='height: 100px; position:fixed; margin-top:0; z-index:100;width:100%;'>
+
+    <view style='height: {{50-expandableViewHeight}}px;background: pink; margin-top:0; z-index:100;width:100%;' wx:if='{{expandableViewHeight<50}}'>
+        <text style='z-index:99'>我需要被藏起来{{expandableViewHeight}}</text>
+    </view>
+    <view style=' position:relative;height: 50px;background: white; margin-top:0; z-index:111;width:100%;'>
+        <text style='position:relative;z-index:111'>我不需要被藏起来{{expandableViewHeight}}</text>
+    </view>
+
+</view>
+
+
+<scroll-view style="height: 100%;" scroll-y='true' bindscroll='scroll'>
+    <view style='height: 100px;background: {{item.color}}' wx:for="{{list}}" wx:key="unique" wx:for-index="idx" wx:for-item="item">
+        <text>{{item.content}}</text>
+    </view>
+</scroll-view>

@@ -244,7 +244,11 @@
     line-height: 100rpx;
     font-size: 32rpx;
     flex: 1;
+    box-sizing:content-box;
 }
 
-
+.iphoneX .showPopAddBox2 .btnV{
+    height: 168rpx;
+    line-height: 168rpx;
+}
 

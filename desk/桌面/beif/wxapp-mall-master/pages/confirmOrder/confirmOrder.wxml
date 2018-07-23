@@ -1,5 +1,5 @@
 
-<view class='mian'>
+<view class='mian {{needAdapter?"iphoneX":""}}'>
 
      <view class='locationInfo pane border-tb' bindtap='onTapChooseAddressBtn'>
             <icon class='ico-location'></icon>
@@ -25,7 +25,7 @@
                 <view class='info'>
                     <view class='nameBox clearfix'>
                         <text class='name fl color000 mianSize'>{{item.produceName}}</text>
-                        <text class='price fr mianSize' wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>￥{{item.factoryPrice}}</text>
+                        <text class='price fr mianSize' wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>￥{{item.factoryPrice}}</text>
                         <text class='price fr mianSize' wx:else>￥{{item.price}}</text>
                     </view>
                     <view class='guige color999'>{{item.property}}<text class='num color999'>×{{item.count}}</text></view>
@@ -36,7 +36,8 @@
 
     <view class='ticket pane border-tb' wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
         <view class='clearfix'>
-            <view class='fr'  bindtap='onTapChooseCouponBtn'>
+            <text wx:if="{{curCoupon}}" class='color999 mianSize fl'>优惠券</text>
+            <view class='fr' bindtap='onTapChooseCouponBtn'>
                 <icon class='ico-tri fr'></icon>
                 <block wx:if='{{curCoupon}}'>
                 <text class='color000 mianSize fr'>-{{savedMoney}}元</text>
@@ -63,7 +64,7 @@
 
     <view class='footer'>
         <view class="selInfo" hidden="{{noSelect}}">
-            <view class='r1'  wx:if='{{isDataInjected&&roleOfView==ROLE_DISTRIBUTOR}}'>
+            <view class='r1'  wx:if='{{isDataInjected&&role==ROLE_DISTRIBUTOR}}'>
                 <text class='color000'>总计：</text>
                 <text class='cnum1 mianColor'>￥{{finalFactoryPrice}}</text>
             </view>

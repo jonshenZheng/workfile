@@ -162,3 +162,618 @@
 }
 
 
+
+.mian{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.headTab{
+    display: flex;
+    background-color: #fff;
+    width: 100%;
+    height: 98rpx;
+    padding-bottom: 2px;
+    box-sizing: content-box;
+    flex: none;
+}
+
+.tableScroll{
+    height: 100%;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.tableScroll .pageV{
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+    flex:none;
+}
+
+.headTab .btn_a{
+    flex:1;
+    text-align: center;
+}
+
+.headTab .btn_a .na{
+    display: inline-block;
+    padding: 0 12rpx;
+    height: 98rpx;
+    line-height: 98rpx;
+    border-bottom: 2px solid #fff;
+}
+
+.headTab .btn_a.active .na{
+    color: #1890FF;
+    border-color: #1890FF;
+}
+
+.pageV0 .topBox{
+    padding: 10rpx 0;
+    height: 68rpx;
+    box-sizing: border-box;
+    flex: none;
+}
+
+.pageV0 .topBox .sereachBox{
+    margin: 0 20rpx 0;
+}
+
+.pageV0 .topBox .sereachBox{
+    height: 48rpx;
+    line-height: 48rpx;
+    border-radius: 10rpx;
+    text-align: center;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-sereach.png) center center no-repeat #fff;
+    background-size: 92rpx 24rpx;
+}
+
+.pageV0 .updateText,.pageV0 .xiansuoBox .updateText{
+    text-align: center;
+    background-color:#f2f8ff;
+    height: 0;
+    overflow: hidden;
+    transition: height .4s;
+    flex: none;
+}
+
+.pageV0 .updateText.active,.pageV0 .xiansuoBox .updateText.active{
+    height: 70rpx !important;
+}
+
+.pageV0 .updateText text{
+    display: inline-block;
+    color: #489af7;
+    font-size: 24rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    vertical-align: middle;
+}
+
+.pageV0 .updateText .btn-b{
+    display: inline-block;
+    height: 50rpx;
+    line-height: 50rpx;
+    width: 120rpx;
+    text-align: center;
+    font-size: 26rpx;
+    color: #fff;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/salesInfo-reflashBtn.png);
+    background-size: 100% 100%;
+    vertical-align: middle;
+    margin-left: 40rpx;
+}
+
+.pageV0 .updateText .btn-disable{
+    color: gray;
+}
+
+.pageV0 .xiansuoBox{
+    height: 100%;
+}
+
+.xiansuoBox{
+    flex: 1;
+    overflow: auto;
+}
+
+.xiansuoBox .it{
+    background-color: #fff;
+    margin-bottom: 10rpx;
+}
+
+.xiansuoBox .it .tp{
+    padding: 26rpx;
+}
+.xiansuoBox .it .ifo{
+    padding-bottom: 10rpx;
+}
+
+.xiansuoBox .it .name,.xiansuoBox .it .phone{
+    font-size: 32rpx;
+}
+
+.xiansuoBox .it .name,.xiansuoBox .it .phone,.xiansuoBox .it .status{
+    display: inline-block;
+    margin-right: 24rpx;
+}
+
+.xiansuoBox .it .status{
+    padding: 4rpx 10rpx;
+    background-color: #BCBCBC;
+    font-size:24rpx;
+    border-radius: 6rpx;
+    color:#fff;
+}
+
+.xiansuoBox .it .status.on{
+    background-color: #ebf5ff;
+    color: #489af7;
+    border-radius: 20rpx;
+}
+
+.xiansuoBox .locati{
+    display: flex;
+}
+
+.xiansuoBox .locati .la{
+    font-size: 28rpx;
+    color: #888;
+}
+
+.xiansuoBox .locati .la1,.xiansuoBox .locati .la2{
+    width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space : nowrap;
+}
+
+.xiansuoBox .locati .la3{
+    width: 246rpx;
+}
+
+.xiansuoBox .locati icon{
+    margin:0 6rpx -5rpx 0;
+}
+
+.xiansuoBox .locati .ico-time{
+    display: inline-block;
+    width: 32rpx;
+    height: 32rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-time.png);
+    background-size: 100% 100%;
+}
+
+.xiansuoBox .locati .ico-location{
+    display: inline-block;
+    width: 32rpx;
+    height: 32rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-location.png);
+    background-size: 100% 100%;
+}
+
+.xiansuoBox .locati .ico-home{
+    display: inline-block;
+    width: 32rpx;
+    height: 32rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-home.png);
+    background-size: 100% 100%;
+}
+
+.xiansuoBox .bt{
+    display: flex;
+}
+
+.xiansuoBox .bt .bt1,.xiansuoBox .bt .bt2,.xiansuoBox .bt .bt1,.xiansuoBox .bt .bt3{
+    float: left;
+    width: 50%;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 28rpx;
+    flex: 1;
+}
+
+.xiansuoBox .bt .ico-key{
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-key.png);
+    background-size: 100% 100%;
+    margin-bottom: -10rpx;
+    margin-right: 20rpx;
+}
+
+.xiansuoBox .bt .ico-heart{
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-hart.png);
+    background-size: 100% 100%;
+    margin-bottom: -10rpx;
+    margin-right: 20rpx;
+}
+
+.xiansuoBox .bt .ico-heart.on{
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-hart-on.png);
+    background-size: 100% 100%;    
+}
+
+.xiansuoBox .bt .ico-select{
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-select.png);
+    background-size: 100% 100%;
+    margin-bottom: -10rpx;
+    margin-right: 20rpx;
+}
+
+
+.xiansuoBox .bt .ico-lock{
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-lock.png);
+    background-size: 100% 100%;
+    margin-bottom: -10rpx;
+    margin-right: 20rpx;
+}
+
+
+
+.xiansuoBox .bt .bt1,.xiansuoBox .bt .bt2{
+    position: relative;
+}
+
+.xiansuoBox .bt .bord{
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+}
+
+.xiansuoBox .infoScroll{
+    min-height: 100%;
+}
+
+.pageV1 .page2Tab{
+    margin: 20rpx 30rpx;
+}
+
+.pageV1 .page2Tab .wp1,.pageV1 .page2Tab .wp2{
+    width: 300rpx;
+    height: 54rpx;
+    line-height: 54rpx;
+    text-align: center;
+    font-size: 30rpx;
+    border-radius: 75rpx;
+    background-color: #fff;
+    color: #999;
+}
+
+.pageV1 .page2Tab .wp1.active,.pageV1 .page2Tab .wp2.active{
+    background-color: #1890ff;
+    color: #fff;
+}
+    
+
+.pageV1 .page2Tab .wp1{
+    float: left;
+}
+.pageV1 .page2Tab .wp2{
+    float: right;
+}
+
+.pageV1 .xiansuoBox .ico-telephone{
+    display: inline-block;
+    width: 36rpx;
+    height: 36rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-telephone.png);
+    background-size: 100% 100%;
+    margin-right: 20rpx;
+    margin-bottom: -8rpx;
+}
+
+.pageV1 .xiansuoBox .ico-remove{
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/xiaoshouXS-remove.png);
+    background-size: 100% 100%;
+    margin-right: 20rpx;
+    margin-bottom: -10rpx;
+}
+
+
+.maskBox{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #afafaf;
+    z-index: 2;
+}
+
+.upMuneBox{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(100%);
+    transition: all .3s;
+    background-color: #e5e5e9;
+    z-index: 2;
+}
+
+.upMuneBox .listBox{
+    background-color: #fff;
+    margin-bottom: 20rpx;
+}
+
+.upMuneBox .listBox .it,.upMuneBox .cancleBtn{
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    font-size: 32rpx;
+    color: #000;
+}
+
+.upMuneBox .cancleBtn{
+    background-color: #fff;
+}
+
+.maskBox.active{
+    display: block;
+}
+
+.upMuneBox.active{
+    transform: translateY(0);
+}
+
+.pageV0Wp{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+
+
+
+view[hidden]{
+    display: none !important;
+} 
+
+/* .pageV2 .listBox{
+    height: 100%;
+    overflow:auto; 
+} */
+
+.pageV1{
+    position: relative;
+}
+
+.pageV1 .xiansuoBox{
+    position: absolute;
+    top: 94rpx;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    flex: none;
+}
+
+.pageV1 .xiansuoBox:last-child{
+    overflow: visible;
+}
+
+.pageV1 .xiansuoBox .listBox{
+    height: 100%;
+}
+
+
+/* .pageV2{
+    position: relative;
+}
+
+.pageV2 .xiansuoBox{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    flex: none;
+} */
+
+.pageV2 .xiansuoBox,.pageV2 .xiansuoBox .listBox{
+    height: 100%;
+}
+
+
+.watchesTips{
+    position: relative;
+    margin: 20rpx 0;
+}
+
+.watchesTips icon{
+    position: absolute;
+    height: 1px;
+    left: 0;
+    top: 50%;
+    width: 100%;
+}
+
+.watchesTips text{
+    position: relative;
+    display: block;
+    width: 200rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #888888;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    z-index: 1;
+}
+
+.updateTipsBox{
+    background-color: #FEFCEC;
+    text-align : center;
+    height: 0rpx;
+    overflow: hidden;
+    transition: height .3s;
+}
+
+.updateTipsBox.active{
+    height: 70rpx;
+}
+
+.updateTipsBox text{
+    display: block;
+    height: 70rpx;
+    line-height: 70rpx;
+    font-size: 24rpx;
+    color: #f60;
+}
+
+.NullTisBox{
+    height: 100%;
+}
+
+.NullTisBox .tipsImg{
+    display: block;
+    width: 34.133%;
+    padding-top: 10%;
+    margin: 106rpx auto 0;
+}
+
+.NullTisBox .tipsImg1{
+    display: block;
+    width: 34.133%;
+    padding-top: 10%;
+    margin: 0 auto 0;
+}
+
+
+.NullTisBox .tipsImg1Text{
+    text-align: center;
+    font-size: 28rpx;
+    color: #888;
+    margin-top: 20rpx;
+}
+
+.NullTisBox .tipsImg1Text1{
+    margin-top: 50rpx;
+}
+
+.NullTisBox .tipsImg1Text2{
+    margin-top: 20rpx;
+}
+
+.NullTisBox .tipsImg1Text3{
+    margin-top: 0;
+}
+
+.NullTisBox .btn-b1{
+    display: block;
+    width: 300rpx;
+    height: 78rpx;
+    line-height: 78rpx;
+    background : url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/mySalesInfo-nullTips-btn.png);
+    background-size: 100% 100%;
+    font-size: 32rpx;
+    color: #fff;
+    margin-top: 30rpx;
+}
+
+.NullTisBox .tipsImg2{
+    width: 79.2%;
+    padding-top: 10%;
+}
+
+.swiper-wrap{
+    height: 100%;
+    width: 100%;
+}
+
+.swper2WpBox{
+    height: 100%;
+}
+
+.shislniBox{
+    position: fixed;
+    right: 0;
+    bottom: 40rpx;
+    display: flex;
+    justify-content : flex-end;
+}
+
+.shislniBox .keyNum{
+    min-width: 140rpx;
+    /* background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-keyNumBg.png); */
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-keyNumBg.jpg) center center no-repeat; 
+    background-color: #f60;
+    background-size:200% 100%; 
+    text-align: center;
+    height: 70rpx;
+    flex: none;
+    margin-right: 60rpx;
+    margin-top: 20rpx;
+    border-radius: 50rpx;
+    padding: 0 10rpx;
+    position: relative;
+}
+
+.shislniBox .keyNum::before{
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 2px #c3c3c3;
+    border-radius: 50rpx;
+}
+
+.shislniBox .keyNum::after{
+    position: absolute;
+    left: 0;
+    top: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    box-shadow: -1px -1px 2px #c3c3c3;
+    border-radius: 50rpx;
+}
+
+.shislniBox .keyNum .ico-key{
+    margin-top: 16rpx;
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    /* background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-Num.png); */
+    background: url(https://baize-webresource.oss-cn-shenzhen.aliyuncs.com/weixin/image/publicSalesInfo-key.png);
+    background-size : 100% 100%; 
+    vertical-align: middle;
+}
+
+.shislniBox .keyNum text{
+    display: inline-block;
+    color: #fff;
+    font-size: 30rpx;
+    /* margin-left:-16rpx; */
+    vertical-align: middle;
+    margin-top: 12rpx;
+}
+
+
+

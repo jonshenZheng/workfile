@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "component-goBackMyStore": "../../component/goBackMyStore/goBackMyStore",
+    "component-selectProperty": "../../component/selectProperty/selectProperty"
+  },
+  "navigationBarTitleText": "产品选择"
+}

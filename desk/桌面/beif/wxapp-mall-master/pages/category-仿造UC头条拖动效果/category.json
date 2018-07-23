@@ -1,8 +1,0 @@
-{
-    "usingComponents": {
-        "component-goBackMyStore": "../../component/goBackMyStore/goBackMyStore"
-    },  
-    "navigationBarTitleText": "产品分类",
-    "backgroundColor": "#eeeeee",
-    "enablePullDownRefresh": false
-}

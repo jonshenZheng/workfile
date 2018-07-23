@@ -1,0 +1,40 @@
+<view class='headImg'></view>
+
+<block wx:if='{{vipPackages.length>0}}'>
+    <view class='chooseWp clearfix'>
+        <scroll-view class='scrollView' scroll-x scroll-with-animation='true' scroll-into-view='index-{{curIndex-2>=0?curIndex-2:0}}'>
+            <view class='chooseIt' id='index-{{idx}}' data-index='{{idx}}' wx:for="{{vipPackages}}" wx:key="unique" wx:for-index="idx" wx:for-item="vip" bindtap='onTap2ChooseVip'>
+                <view class='it border borderRad-10 {{idx==curIndex?"active":""}}'>
+                    <!-- <text wx:if='{{idx==curIndex}}'>*</text> -->
+                    <text class='t1'>{{vip.duration}}</text>
+                    <view class='t2'>
+                        <text class='t2_l'>￥</text>
+                        <text class='t2_r'>{{vip.price}}</text>
+                    </view>
+                    <text class='t3'>{{vip.vipName}}</text>
+                    <icon class='ico-sel'></icon>
+                </view>
+            </view>
+
+        </scroll-view>  
+    
+    </view>
+  
+
+  <view>
+    <image style='width:100%' mode="widthFix" src='{{vipPackages[curIndex].detailImage}}'></image>
+  </view>
+
+    <form bindsubmit="onTapOpenShopBtn" report-submit="true">
+        <!-- <button bindtap='onTapOpenShopBtn' class='reset-button zhifuBtn mianBtn flex_cen'>
+            <text class='selTex fontSiz-34'>{{vipPackages[curIndex].price ==0?'立即试用':'立即支付'}}</text> 
+            <text class='selTex fontSiz-24'>{{"已选择“"+vipPackages[curIndex].packageName+"”"}}</text>
+        </button>   -->
+        <button form-type="submit" class='reset-button zhifuBtn mianBtn flex_cen'>
+            <text class='selTex fontSiz-34'>{{vipPackages[curIndex].price ==0?'立即试用':'立即支付'}}</text> 
+            <text class='selTex fontSiz-24'>{{"已选择“"+vipPackages[curIndex].packageName+"”"}}</text>
+        </button>  
+    </form>
+  
+
+</block>

@@ -1,5 +1,6 @@
 let app = getApp(),
-  baseURL = app.globalData.svr;
+  baseURL = app.globalData.svr,
+  isIphone = app.globalData.phoneInfo.system.indexOf('iOS') === -1 ? false : true;
 
 /*首页banner跳转*/
 function resolveCtrlProtoUri(uri) {
@@ -8,14 +9,42 @@ function resolveCtrlProtoUri(uri) {
   let idx = uri.search('://');
   let proto = uri.substring(0, idx);
   let body = uri.substring(idx + 3, uri.length);
+  
   if (proto == 'wx-switchtab') {
     wx.switchTab({
       url: body,
     })
   } else if (proto == 'wx-webview') {
     if (wx.canIUse('web-view')) {
+
+        let hasShare = '',
+            shareTitle = '',
+            pageTitle = '',
+            temp,
+            val;
+
+        temp = body.split('?');
+        body = temp[0];
+
+        if(temp.length>1){
+            temp = temp[1];
+
+            if (temp.indexOf('hasShare=') !== -1){
+                hasShare = temp.split('hasShare=')[1].split('&')[0];
+
+                shareTitle = temp.split('shareTitle=');
+
+                shareTitle = shareTitle.length > 1 ? shareTitle.split('&')[0] : '';
+            }
+
+            if (temp.indexOf('pageTitle=') !== -1) {
+                pageTitle = temp.split('pageTitle=')[1].split('&')[0];
+            }
+
+        }
+
       wx.navigateTo({
-        url: '../webview/webview?url=' + body,
+          url: '../webview/webview?url=' + body + '&hasShare=' + hasShare + '&shareTitle=' + shareTitle + '&pageTitle=' + pageTitle,
       });
     }
   } else if (proto == 'wx-redirect') {
@@ -314,7 +343,8 @@ function trim(v){
 const ROLE_DISTRIBUTOR = "ROLE_DISTRIBUTOR";//分销商
 const ROLE_VISITOR = "ROLE_VISITOR";//游客
 const DIST_LV_ON_TRAIL = 0;//试用期分销商
-const DIST_LV_FORMAL = 1;//正式分销商
+const DIST_LV_EXPERIENCE = 10;//体验分销商
+
 /**
  * 往vm里注入角色，shop等数据，这样的话能够方便地使用之进行条件渲染，或者进行逻辑判断。
  * 这里有个很霸道的约定，那就是假如传入的e里面有shopId，那么就认为是此时需要用访客身份来显示
@@ -400,7 +430,7 @@ function injectData(page, options) {
       page.setData({
         distributorInfo, distributorInfo,
         DIST_LV_ON_TRAIL: DIST_LV_ON_TRAIL,
-        DIST_LV_FORMAL: DIST_LV_FORMAL
+        DIST_LV_EXPERIENCE: DIST_LV_EXPERIENCE
       })
 
     // 进行回调
@@ -521,6 +551,8 @@ function countdown(toDate, callback){
 }
 
 function goBackToMyShop(){
+
+    
   let globalData = getApp().globalData;
   console.log('是否店铺视图', wx.getStorageSync(globalData.forceVisitorViewStorageKey))
   globalData.forceVisitorView = wx.getStorageSync(globalData.forceVisitorViewStorageKey) ? true : false;
@@ -529,6 +561,9 @@ function goBackToMyShop(){
   wx.reLaunch({
     url: '../index/index'
   })
+
+
+  
 }
 
 /**
@@ -555,7 +590,44 @@ function checkPageDirty(page, callback){
   })
 }
 
+
+function commPhone(e){
+    let phoneNum = e.currentTarget ? e.currentTarget.dataset.phonenum : '';
+
+    if(phoneNum && phoneNum.length === 11){
+        //安卓
+        if (!isIphone) {
+            wx: wx.showModal({
+                content: phoneNum,
+                showCancel: true,
+                confirmText: '呼叫',
+                confirmColor: '#489AF7',
+                success: function (res) {
+
+                    if(res.cancel){
+                        return;
+                    }
+
+                    WX: wx.makePhoneCall({
+                        phoneNumber: phoneNum,
+                    })
+                }
+            })
+        }
+        //苹果
+        else {
+            WX: wx.makePhoneCall({
+                phoneNumber: phoneNum,
+            })
+        }
+    }
+}
+
+
+
 module.exports = {
+
+  ROLE_DISTRIBUTOR: ROLE_DISTRIBUTOR,
 
   getFormatTime: getFormatTime,
   sentServerNotice: sentServerNotice,
@@ -584,7 +656,8 @@ module.exports = {
 
   goBackToMyShop: goBackToMyShop,
 
-  checkPageDirty: checkPageDirty
+  checkPageDirty: checkPageDirty,
+  commPhone: commPhone
 }
 
 module.exports.resolveCtrlProtoUri = resolveCtrlProtoUri

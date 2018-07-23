@@ -1,3 +1,5 @@
+let app = getApp(),
+    pageBeforeLoadRun = app.pageBeforeLoadRun;
 
 Component({
     properties: {
@@ -20,6 +22,9 @@ Component({
         COUPON_STATUS_USED: 2,//已使用
         COUPON_STATUS_EXPIRED: 5,//过期
         COUPON_STATUS_CANCELD: 9,//作废
+    },
+    attached: function () {
+        pageBeforeLoadRun(this);
     },
     methods: {
         showCouponPop: function () {

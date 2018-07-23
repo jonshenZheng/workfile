@@ -4,6 +4,7 @@ let app = getApp(),
   baseURL = app.globalData.svr,
   commJS = require("../common/common.js"),
   prodID,
+  pageBeforeLoadRun = app.pageBeforeLoadRun,
   testThat = this;
 
 Page({
@@ -42,6 +43,8 @@ Page({
     showMinPrice:0,
 
     prodIdParm: '',
+    showReplaceProd : false,
+
   },
 
 
@@ -50,6 +53,7 @@ Page({
   }, 
 
   onLoad: function (options) {
+    pageBeforeLoadRun(this);  
     commJS.injectData(this, options);
     this.options = options;//缓存住，以便onShow时候刷新
   },
@@ -66,6 +70,13 @@ Page({
     commJS.updateRoleView(this);
   },
   onDataInjected:function(options){
+
+    if (options.isReplaceProd === 'true'){
+        this.setData({
+            showReplaceProd : true
+        })
+    }
+
     this.requestGoodsInfo(options);
   },
   requestGoodsInfo: function (options){
@@ -251,8 +262,23 @@ Page({
     let that = this;
     // let res = this.checkSelection();
     // let canSubmit = res.skuId;
-    let canSubmit = e.detail.skuid;
-    let purchaseQuantity = e.detail.num;
+
+    let canSubmit,
+        purchaseQuantity,
+        res;
+
+
+    if (e.detail.skuid){
+        canSubmit = e.detail.skuid;
+        purchaseQuantity = e.detail.num;
+    }
+    else{
+        res = this.checkSelection();
+        canSubmit = res.skuId;
+        purchaseQuantity = this.data.purchaseQuantity;
+    }
+
+    
     if (this.isDistributorVisitorOtherDistributor()) {
       wx.showToast({
         title: '您正在浏览他人店铺',
@@ -294,14 +320,91 @@ Page({
         })
     }
   },
+
+  submitRepalcePd: function (e) {
+
+      let that = this;
+      let canSubmit,
+          res;
+
+
+      if (e.detail.skuid) {
+          canSubmit = e.detail.skuid;
+      }
+      else {
+          res = this.checkSelection();
+          canSubmit = res.skuId;
+      }
+
+      if (canSubmit) {
+            //提交数据 成功返回首页并刷新
+          let oldFid = app.globalData.indexRecommendsId,
+              newSkuId = canSubmit,
+              shopId = this.data.shopOfView.shopId;
+
+          rq({
+              url: baseURL + 'recommend/recommend/'+oldFid+'/'+newSkuId,
+              withoutToken: false,
+              method : 'put',
+              success: function (r) {
+                  wx.showToast({
+                      title: '替换成功',
+                      icon: 'none',
+                  })
+
+                  setTimeout(function(){
+                      wx.switchTab({
+                          url: '../index/index',
+                          success: function () {
+                              getCurrentPages()[0].getRecommendFn();
+                          }
+                      })  
+
+                  },500)
+                     
+              }
+          });
+
+      } else {
+          if (!this.data.isShowPop)
+              this.popupSelectView();
+          else
+              wx.showModal({
+                  title: '提示',
+                  content: '请选择商品规格',
+                  showCancel: false,
+              })
+      }
+  },
+
   isDistributorVisitorOtherDistributor:function(){
     return this.data.role == this.data.ROLE_DISTRIBUTOR 
       && this.data.shop.shopId != this.data.shopOfView.shopId;
   },
-  onTapInstantPurchaseBtn:function(){
+  onTapInstantPurchaseBtn:function(e){
     let that = this;
-    let res = this.checkSelection();
-    let canSubmit = res.skuId;
+    // let res = this.checkSelection();
+    // let canSubmit = res.skuId;
+
+    let canSubmit,
+        purchaseQuantity,
+        res,
+        basicInfo;
+
+    if (e.detail.skuid){
+        canSubmit = e.detail.skuid;
+        purchaseQuantity = e.detail.num;
+        basicInfo = e.detail.basicInfo;
+    }
+    else{
+        res = this.checkSelection();
+        canSubmit = res.skuId;
+        purchaseQuantity = this.data.purchaseQuantity;
+        basicInfo = that.data.goodsDetail.basicInfo;
+    }
+
+
+    
     if (canSubmit) {
       if (this.isDistributorVisitorOtherDistributor()){
         wx.showToast({
@@ -311,17 +414,27 @@ Page({
         return;
       }
 
-      let basicInfo = that.data.goodsDetail.basicInfo;
+      
       app.tmpData.orderProducts = [
+        // {
+        //   prodId: prodID,
+        //   skuId: basicInfo.id,
+        //   property: res.selectedPropertyStr,
+        //   count: that.data.purchaseQuantity,
+        //   produceName: basicInfo.name,
+        //   price: basicInfo.price,
+        //   factoryPrice: basicInfo.factoryPrice,
+        //   imgUrl: basicInfo.icon
+        // },
         {
-          prodId: prodID,
-          skuId: basicInfo.id,
-          property: res.selectedPropertyStr,
-          count: that.data.purchaseQuantity,
-          produceName: basicInfo.name,
-          price: basicInfo.price,
-          factoryPrice: basicInfo.factoryPrice,
-          imgUrl: basicInfo.icon
+            prodId: prodID,
+            skuId: canSubmit,
+            property: that.data.selectedPropertyStr,
+            count: purchaseQuantity,
+            produceName: basicInfo.name,
+            price: basicInfo.price,
+            factoryPrice: basicInfo.factoryPrice,
+            imgUrl: basicInfo.icon
         }
       ]
       wx.navigateTo({
@@ -378,7 +491,14 @@ Page({
    */
   popupSelectView: function () {
 
-        this.getSelectPropCOP();
+        if (!this.SelectPropCOP){
+            this.getSelectPropCOP();
+        }
+
+        this.SelectPropCOP.setData({
+            selectedPropertyStr: this.data.selectedPropertyStr
+        });
+
         this.SelectPropCOP.showSelectView();
 
         this.setData({
@@ -395,6 +515,10 @@ Page({
       isShowPop : false,  
       //bHideSelectView: true
     })
+
+    if (!this.SelectPropCOP){
+        this.getSelectPropCOP();
+    }
     this.SelectPropCOP.hideSelectView();
   },
 
@@ -405,6 +529,20 @@ Page({
            isShowPop: false,
        })
    }, 
+
+   /** 组件更新选择的信息**/
+
+    updateData : function(e){
+
+        let data = e.detail;
+        this.setData({
+            purchaseQuantity: data.purchaseQuantity,
+            selectedPropertyStr: data.selectedPropertyStr,
+            goodsSelection: data.goodsSelection,
+            goodsDetail: data.goodsDetail
+        })
+
+    },
   
   /**
    * 增加购买数目

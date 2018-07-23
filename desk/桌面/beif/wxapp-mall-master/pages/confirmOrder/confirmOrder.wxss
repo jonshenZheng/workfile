@@ -238,9 +238,18 @@ page{
 
 
 
+.mian.iphoneX .footer{
+    height: 168rpx;
+}
 
+.mian.iphoneX .footer .selInfo{
+    padding-top: 42rpx;
+}
 
-
+.mian.iphoneX .footer .addCartBtn{
+    height: 168rpx;
+    line-height: 168rpx;
+}
 
 
 @import '../common/common.wxss';

@@ -1,4 +1,4 @@
-<view class="show-popup" hidden="{{bHideSelectView}}">
+<view class="show-popup {{needAdapter?'iphoneX':''}}" hidden="{{bHideSelectView}}">
     <view class="popup-mask" bindtap="hideSelectView"></view>
     <view class="popup-contents">
         <view class="pop-goods-info">
@@ -7,8 +7,12 @@
             </view>
             <view class="pop-goods-des">
                 <view class="pop-goods-title">{{goodsDetail.basicInfo.name}}</view>
-                <view hidden="{{isRangePrice}}" class="pop-goods-price mainTextColor">售价¥ {{goodsDetail.basicInfo.price}}</view>
-                <view hidden="{{!isRangePrice}}" class="pop-goods-price mainTextColor">¥ {{showMaxPrice === showMinPrice? showMaxPrice : showMinPrice + ' ~ ¥ '+ showMaxPrice }}</view>
+                <view class='clearfix'>
+                    <view hidden="{{isRangePrice}}" style='margin-right:16rpx' class="fl pop-goods-price mianColor">售价¥ {{goodsDetail.basicInfo.price}}</view>
+                    <view hidden="{{!isRangePrice}}" style='margin-right:16rpx' class="fl pop-goods-price mianColor">¥ {{showMaxPrice === showMinPrice? showMaxPrice : showMinPrice + ' ~ ¥ '+ showMaxPrice }}</view>
+                    <view wx:if="{{ isDataInjected && roleOfView==ROLE_DISTRIBUTOR}}" hidden="{{isRangePrice}}" class="fl pop-goods-price mianColor">成本价¥ {{goodsDetail.basicInfo.factoryPrice}}</view>
+                    <view style='padding-left:10rpx;' wx:if="{{ isDataInjected && roleOfView==ROLE_DISTRIBUTOR}}" hidden="{{!isRangePrice}}" class="fl pop-goods-price mianColor">¥ {{showMaxFactoryPrice === showMinFactoryPrice? showMaxFactoryPrice : showMinFactoryPrice + ' ~ ¥ '+ showMaxFactoryPrice }}</view>
+                </view>
             </view>
             <view class="pop-goods-close" bindtap="hideSelectView"></view>
         </view>
@@ -23,7 +27,7 @@
                     </view>
                 </block>
             </view>
-            <view class="buy-num-box">
+            <view class="buy-num-box" wx:if="{{!hideNum}}">
                 <view class="num-label">购买数量</view>
                 <view class="num-box">
                     <view class="num-jian {{purchaseQuantity == minPurchaseQuantity ? 'hui': ''}}" bindtap="onTapIncrOrDecrQuantityBtn" data-increasement="-1">-</view>
@@ -36,8 +40,8 @@
         </view>
 
         <view class='showPopAddBox2 clearfix'>
-            <button class='reset-button btnV viceBtn' bindtap="btn1Fn" >{{btnfirstname}}</button>
-            <button class='reset-button btnV mianBtn' bindtap="btn2Fn" >{{btnsecondname}}</button>
+            <button wx:if="{{btnfirstname}}" class='reset-button btnV {{btnsecondname?"viceBtn":"mianBtn"}}' bindtap="btn1Fn" >{{btnfirstname}}</button>
+            <button wx:if="{{btnsecondname}}" class='reset-button btnV mianBtn' bindtap="btn2Fn" >{{btnsecondname}}</button>
         </view>
 
 

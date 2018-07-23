@@ -1,6 +1,7 @@
 let app = getApp(),
   rq = app.bzRequest,
   baseRqUrl = app.globalData.svr,
+  pageBeforeLoadRun = app.pageBeforeLoadRun,
   commJS = require("../../common/common.js"),
   orderJS = require("../orders.js");
 
@@ -16,6 +17,7 @@ Page({
   },
 
   onLoad: function (options) {
+    pageBeforeLoadRun(this);
     this.setData({
       id: options.id
     });
