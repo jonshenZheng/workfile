@@ -186,7 +186,7 @@ var FormMethod = {
 	    return RegexpObj.chinese.test(s);
 	},
 	/*是否为座机号*/
-	isPhone : function(s){
+	isTelephone : function(s){
 		var s = ''+s;
 	    return RegexpObj.telephone.test(s);
 	},
@@ -205,7 +205,6 @@ var FormMethod = {
 		var s = ''+s;
 	    return RegexpObj.password.test(s);
 	},
-
 	/*输入框只能是数字，不是数字就为空*/
 	inputOnlyNum : function(jq_el){
     	
@@ -325,70 +324,217 @@ var fileMethod = {
 
 var Method = {
 
+	/* 初始化数组 
+	*
+	*	arr 要初始化的数组
+	* 	len 指定数组长度 
+	*  	val 初始化的值
+	*/
+	initArr : function(arr,len,val){
+
+	    let i = len > 0 ? len : 0;
+
+	    arr.splice(0,arr.length);
+
+	    for(;i;i--){
+	        arr.push(val);
+	    }
+
+	},
+
+	/* 设置数组指定范围的值
+	*
+	* beg起始位置
+	* end终止位置（包含此位置）
+	* val 要设置的值
+	* 
+	*/
+	setArrVal : function(arr,beg,end,val){
+
+	    let len = arr.length,
+	        max = len - 1,
+	        begin,
+	        temp,
+	        last;
+
+	    begin = beg || 0;   
+	    last = end || max;
+
+	    if(begin > max){
+	        return arr;
+	    }
+	    else if(begin < 0){
+	        begin = 0;
+	    }
+
+	    if(last < 0){
+	        last = 0
+	    }
+	    else if(last > max){
+	        return arr;
+	    }
+
+	    if(last < begin){
+	        temp = begin;
+	        begin = last;
+	        last = temp;
+	    }
+
+
+	    for(;begin <= last;begin++){
+	        arr[begin] = val;
+	    }
+
+	}, 
+
 	/*
 	*返回数组的所有组合
 	*arr : 获取组合源数据，类型为数组
 	*max ： 最多长度的组合（包括最大长度下的组合）
 	*curLen : 返回指定长度的组合
-	*/
-	getARRzuhe : function(arr,max,curLen){
+	*/	
+	getCombination : function(arr,max,curLen){
 
-	  if( Object.prototype.toString.call(arr) !== '[object Array]' || !arr.length){
-	    return [];
-	  }
+		var runFn;
 
-	  let keyWd = arr,
-	      keyWdLen = keyWd.length,
-	      keyWd_max = max || keyWdLen,
-	      startLen = 1,
-	      restArr = [],
-	      justLen = 0,
-	      cmm = [];
+		if(max >= 10 || arr.length >= 10){
+			//递归的层级太多就不能用递归，改为循环
+			runFn = function getpw(arr,max,curLen){
+
+				if( Object.prototype.toString.call(arr) !== '[object Array]' || !arr.length){
+				    return [];
+				}
+        
+			    let keyWd = arr,
+			        keyWdLen = keyWd.length,
+			        maxLen = keyWdLen - 1,
+			        keyWd_max = max || keyWdLen, //不能小于数组的长度
+			        startValLen = 1,
+			        val_cmm = [],
+			        for_ind = [],
+			        temp_ind = 0,
+			        layer = 1,
+			        overLen,
+			        resArr = [],
+			        deep = 0;  // 循环到那一层的
+			        
+
+		        function commV(){
+		        	
+		        	while(1){
+
+			            if(deep >= overLen){
+
+			            	temp_ind = for_ind[deep]+1;
+			                for_ind[deep] = temp_ind;
+			                val_cmm[deep] = keyWd[temp_ind];
+
+			            	resArr.push(val_cmm.join(','));
+
+			        		let i = overLen;
+
+			        		for(;i>=-1;i--){
+
+			        			if( for_ind[i] < maxLen){
+			        				break;
+			        			}	
+			        		}
+
+			        		if(i <= -1){
+			        			return;
+			        		}
+
+			        		deep = i;
+
+			            	setArrVal(for_ind,deep+1,'',-1);	
+			                
+			            }
+			            else{
+			                temp_ind = for_ind[deep]+1;
+			                for_ind[deep] = temp_ind;
+			                val_cmm[deep] = keyWd[temp_ind];
+			                deep++;
+			            }
+
+		        	}
+
+		        } 
+			  
+			   
+			    for(;layer <= keyWd_max;layer++){
+			    	deep = 0;
+			    	overLen = layer - 1;
+			    	initArr(for_ind,layer,-1);
+			    	commV();
+			    }
+
+			    return resArr;
+
+			}
+
+		}
+		else{
+			runFn = function(arr,max,curLen){
+
+				if( Object.prototype.toString.call(arr) !== '[object Array]' || !arr.length){
+				    return [];
+				}
+
+				let keyWd = arr,
+					keyWdLen = keyWd.length,
+					keyWd_max = max || keyWdLen,
+					startLen = 1,
+					restArr = [],
+					justLen = 0,
+					cmm = [];
 
 
-	  if(curLen && curLen > 0){
-	    justLen = curLen >=  keyWd_max ? keyWd_max : curLen;
-	  }
-	       
-	  function getCommStr(deep) {
+				if(curLen && curLen > 0){
+					justLen = curLen >=  keyWd_max ? keyWd_max : curLen;
+				}
+				       
+				function getCommStr(deep) {
 
-	    if (deep > 0){
+				    if (deep > 0){
 
-	      let arrInd = startLen - deep,
-	          i = 0;
+				      	let arrInd = startLen - deep,
+				          	i = 0;
 
-	      deep--;
+				      	deep--;
 
-	      for (; i < keyWdLen;i++){
+				      	for (; i < keyWdLen;i++){
 
-	        cmm[arrInd] = keyWd[i];
+				        	cmm[arrInd] = keyWd[i];
 
-	        if (deep > 0){
-	          getCommStr(deep);
-	        }
-	        else{
-	          restArr.push(cmm.join('')) 
-	        }
+					        if (deep > 0){
+					          getCommStr(deep);
+					        }
+					        else{
+					          restArr.push(cmm.join('')) 
+					        }
 
-	      }
+				      	}
+
+				    }
+
+				}
 
 
-	    }
+				for (; startLen <= keyWd_max; startLen++){
 
-	  }
+				    if(justLen && justLen !== startLen){
+				        continue;
+				    }
 
+				    cmm = [];
+				    getCommStr(startLen);
+				}    
+				  
+				return restArr
+			}
+		}
 
-	  for (; startLen <= keyWd_max; startLen++){
-
-	      if(justLen && justLen !== startLen){
-	        continue;
-	      }
-
-	      cmm = [];
-	      getCommStr(startLen);
-	  }    
-	  
-	  return restArr
+		runFn(arr,max,curLen);	
 
 	},
 
