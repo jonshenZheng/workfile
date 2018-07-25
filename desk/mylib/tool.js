@@ -7,7 +7,7 @@ function isObject(v){
 }
 
 /*去除首尾空格*/
-trim : function(str){
+function trim(str){
     return str.replace(RegexpObj.trim,'');
 }
 
@@ -87,6 +87,56 @@ var RegexpObj = {
 };
 
 
+var easyLibEvent = {
+	getEvent : function(e){
+		return e?e:window.Event;
+	},
+	stopPropagation : function(e){
+
+		var e = easyLibEvent.getEvent(e);
+
+		if(e.stopPropagation){
+			e.stopPropagation();
+		}
+		else{
+			e.cancelable = true;
+		}
+	},
+	preventDefault : function(e){
+
+		var e = easyLibEvent.getEvent(e);
+
+		if(e.preventDefault){
+			e.preventDefault();
+		}
+		else{
+			e.returnValue = false;
+		}
+	},
+	addEvent : function(obj,type,fn){
+		if(obj.addEventListener){
+			obj.addEventListener(type,fn,false);
+		}
+		else if(obj.attachEvent){
+			obj.attachEvent('on'+type,fn);
+		}
+		else{
+			obj['on'+type] = fn;
+		}
+	},
+	removeEvent : function(obj,type,fn){
+		if(obj.removeEventListener){
+			obj.removeEventListener(type,fn,false);
+		}
+		else if(obj.detachEvent){
+			obj.detachEvent('on'+type,fn);
+		}
+		else{
+			obj['on'+type] = null;
+		}
+	}
+};
+
 
 
 var UiMethod = {
@@ -133,6 +183,39 @@ var UiMethod = {
 	   }
 	   return false;
 	},
+	//判断是否是电脑端，是返回TURE
+	IsPC : function() {
+	    var userAgentInfo = navigator.userAgent,
+	        Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"],
+	        flag = true;
+	        
+	    for (var v = 0; v < Agents.length; v++) {
+	        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+	            flag = false;
+	            break;
+	        }
+	    }
+	    return flag;
+	},
+	getWindowSize : function(){
+
+		var hei,
+			wid;
+
+		if(window.innerHeight){
+			wid = window.innerWidth;
+			hei = window.innerHeight;
+		}
+		else if(document.documentElement){
+			if(document.documentElement.clientWidth){
+				wid = document.documentElement.clientWidth;
+				hei = document.documentElement.clientHeight;
+			}
+		}
+
+		return {width: wid,height : hei}
+
+	}
 
 };
 
@@ -397,8 +480,8 @@ var Method = {
 
 		var runFn;
 
-		if(max >= 10 || arr.length >= 10){
-			//递归的层级太多就不能用递归，改为循环
+		if(max >= 6 || arr.length >= 6){
+			//递归的层级太多就不能用递归，改为循环(长度为10内存溢出)
 			runFn = function getpw(arr,max,curLen){
 
 				if( Object.prototype.toString.call(arr) !== '[object Array]' || !arr.length){
@@ -446,7 +529,7 @@ var Method = {
 
 			        		deep = i;
 
-			            	setArrVal(for_ind,deep+1,'',-1);	
+			            	Method.setArrVal(for_ind,deep+1,'',-1);	
 			                
 			            }
 			            else{
@@ -464,7 +547,7 @@ var Method = {
 			    for(;layer <= keyWd_max;layer++){
 			    	deep = 0;
 			    	overLen = layer - 1;
-			    	initArr(for_ind,layer,-1);
+			    	Method.initArr(for_ind,layer,-1);
 			    	commV();
 			    }
 
@@ -534,7 +617,7 @@ var Method = {
 			}
 		}
 
-		runFn(arr,max,curLen);	
+		return runFn(arr,max,curLen);	
 
 	},
 
@@ -586,7 +669,7 @@ var Method = {
 
     },
     /*获取 函数名*/
-	function getFnName(fn){
+	getFnName : function(fn){
 
 	    if(typeof fn !== 'function'){
 	        return;
@@ -601,9 +684,308 @@ var Method = {
 
 	    return name;     
 
+	},
+	/*
+	    获取url中参数的值
+	    parmName url参数名称，获取当个参数输入一个参数名的字符串即‘aa’，获取多个参数的值传个数组例如获取aa,bb的参数['aa','bb']
+	*/
+	getParmVal : function(parmName,url){
+
+	    var isArr = Object.prototype.toString.call(parmName) === '[object Array]',
+	        url_search,
+	        url = url ? url : location.href,
+	        url_search_temp,
+	        parmName_len,
+	        parmName_i = 0,
+	        parmName_key,
+	        split_one,
+	        parmV;
+
+	    if(!url || !parmName || typeof url !== 'string' || (typeof parmName !== 'string'  && !isArr)){
+	        console.log('传进的参数有问题,返回值为false');
+	        return false;
+	    }
+
+	    url_search = url.split('?')[1].split('#')[0];
+
+	    if(!url_search){
+	        console.log('此url不带参数,返回值为false');
+	        return false;
+	    }
+
+	    split_one = function(){
+
+	        if(url_search.indexOf(parmName) !== -1){
+	            
+	            if(url_search.indexOf('&') !== -1){
+	                url_search_temp = Method.splitParm(url_search,['&','=']);
+	                parmV = url_search_temp[parmName];
+	            }
+	            else{
+	                url_search_temp = url_search.split(parmName+'=')[1];
+	                parmV = url_search_temp.split('&')[0];
+	            }
+
+	        }
+	        else{
+	            console.log('找不到该参数名,返回值为false');
+	            return false;
+	        }
+	    }
+
+	    
+	    // '?' 作为参数的值，或者url其他地方出现'?'下面的处理就会出错
+
+
+	    if(!isArr){
+
+
+	        if(parmName === 'all'){          
+	            parmV = Method.splitParm(url_search,['&','=']);
+	        }
+	        else{
+	            split_one();
+	        }
+	        
+	    }
+	    else{
+	        
+	        parmV = {};
+
+	        url_search_temp = Method.splitParm(url_search,['&','=']);
+
+	        parmName_len = parmName.length;
+
+	        for(;parmName_i < parmName_len;parmName_i++){
+	            parmName_key = parmName[parmName_i];
+	            if(!url_search_temp[parmName_key]){
+	                console.log('找不到参数名:'+parmName_key);
+	                continue;
+	            }
+	            parmV[parmName_key] = url_search_temp[parmName_key];
+	        }
+
+	        
+	        
+	    }
+
+
+	    return parmV;
+	    
+	},
+	/*
+	    通过分隔符来获取对应的参数名和值
+	*/
+	splitParm : function(str,decollate){
+	    
+	    var isArr = Object.prototype.toString.call(decollate) === '[object Array]',
+	        splitFn,
+	        deepSplitFn,
+	        temp_arr = [],
+	        reg_str,
+	        len,
+	        key,
+	        val,
+	        parmObj = {};
+
+	    if(!decollate || (typeof decollate !== 'string' &&　!isArr )){
+	        return false;
+	    }
+
+	    splitFn = function(str,decollate){
+	        var temp_str = str.split(decollate);
+	        parmObj[temp_str[0]] = temp_str[1]; 
+
+	    };
+
+	    deepSplitFn = function(str_split,ind){
+
+	        var str_split_temp,
+	            str_split_temp_arr,
+	            str_split_temp_len,
+	            str_split_res,
+	            split_fh = decollate[len - ind],
+	            split_next_fh,
+	            str_split_temp_i = 0;
+	            
+
+	        if(ind > 1){
+	            
+	            str_split_temp = str_split.split(split_fh);
+
+	            str_split_temp_len = str_split_temp.length;
+
+	            split_next_fh = decollate[len - ind + 1];
+
+	            str_split_temp_arr = [].concat(str_split_temp);
+
+	            for(;str_split_temp_i < str_split_temp_len;str_split_temp_i++){
+	                if(str_split_temp[str_split_temp_i].indexOf(split_next_fh) === -1){
+	                    str_split_temp_arr.splice(str_split_temp_i,1);
+	                }
+	            }
+	           
+	           str_split_res = str_split_temp_arr.join('羴');
+
+	           deepSplitFn(str_split_res,--ind);
+
+	        }
+	        else{
+
+	            str_split_temp = str_split.replace(reg_str,'羴');
+
+	            str_split_res = str_split_temp.split('羴');
+
+	            str_split_temp_len = str_split_res.length;
+
+	            for(;str_split_temp_i < str_split_temp_len;str_split_temp_i+=2){
+	                parmObj[str_split_res[str_split_temp_i]] = str_split_res[str_split_temp_i+1]
+	            }
+
+	            
+	        }
+
+	    };
+
+	    if(!isArr){
+	        splitFn(str,decollate);
+	    }
+	    else{
+	    
+
+	        len = decollate.length;
+
+	        reg_str = new RegExp(decollate[len-1],'g');
+
+	        deepSplitFn(str,len);
+
+	    }
+
+	    return parmObj
+
+	},
+	//通过多个索引来删除数组
+	arrDeleteEles : function(arr,delArrInd){
+
+		var len = arr.length,
+			o_len = len-1,
+			indLen = delArrInd.length,
+			o_indLen = indLen,
+			ind,
+			indArr = Method.getNumIndArr(len), //洗牌之后索引位置
+			realKey,
+			temp;
+
+		for(; indLen-- ;){
+
+			ind = delArrInd[indLen];
+			ind = indArr[ind];
+
+			if( ind === o_len){
+				o_len--;
+				continue;
+			}
+
+			//正真的索引位置
+			realKey = indArr[o_len];
+			temp = arr[realKey];
+			arr[ind] = temp; 
+			//更新索引
+			indArr[realKey] = ind;
+			indArr[ind] = realKey;
+
+			o_len--;
+
+		}
+
+		arr.splice( len-o_indLen,o_indLen);
+
+	},
+	//生成索引数组
+	getNumIndArr : function(len){
+
+		var i = 0,
+			arr = [];
+
+		for(i; i< len;i++){
+			arr[i] = i;
+		}
+
+		return arr;
 	}
     
 };
+
+
+//排序函数
+var sortMethod = {
+
+	//冒泡排序法和直插法结合（不稳定性，越乱越久，最长N阶乘）
+	easySort : function(arr){
+		var len = arr.length,
+			j,
+			i,
+			temp,
+			swop_times = 0;
+
+		for (i = 0; i < len; i++) {
+
+			for (j = 0; j < len-i; j++) {
+				
+				if(arr[j]>arr[j+1]){
+					swop_times++;
+					temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
+				}
+
+			};
+
+			if(swop_times === 0){
+				break;
+			}
+			else{
+				swop_times = 0;
+			}
+		};
+	},
+	quickSort : function(array){
+
+		function sort(prev, numsize){
+
+			var nonius = prev,
+				j = numsize -1,
+				flag = array[prev];
+
+			if ((numsize - prev) > 1) {
+
+				while(nonius < j){
+					for(; nonius < j; j--){
+						if (array[j] < flag) {
+							array[nonius++] = array[j];　//a[i] = a[j]; i += 1;
+							break;
+						};
+					}
+					for( ; nonius < j; nonius++){
+						if (array[nonius] > flag){
+							array[j--] = array[nonius];
+							break;
+						}
+					}
+				}
+
+				array[nonius] = flag;
+				sort(0, nonius);
+				sort(nonius + 1, numsize);
+			}
+		}
+
+		sort(0, array.length);
+
+		return array;
+	}
+
+}
 
 function type(val,type){
 
@@ -648,27 +1030,31 @@ function type(val,type){
 	}
 };
 
-function isDate(val){
+function isDate(val,onlyYYMM){
 	var yy,
 		mm,
 		dd,
 		temp,
 		date;
 
-	if(!RegexpObj.date.test(val)){
-		return false;
+	if(!onlyYYMM){
+		if(!RegexpObj.date.test(val)){
+			return false;
+		}
 	}
 
-	/*需要优化1(调用getYY_MM_DD)*/
-
-	/*temp = (''+val).split('-');
-
-	if (temp.length === 3){
+	
+	if(onlyYYMM){
+		temp = val.split('-');
 		yy = parseInt(temp[0]);
 		mm = parseInt(temp[1]);
-		dd = parseInt(temp[2]);*/
+		if( temp.length <= 1 && mm <= 0 && mm > 12){
+			return false;
+		}
 
-	/*需要优化1 end*/
+		return {yy:yy,mm:mm}
+	}
+
 
 	temp = StrSplit(val,'date');
 		
@@ -680,36 +1066,7 @@ function isDate(val){
 
 		if(mm>=12 && mm<=0){
 			return false;
-		}
-
-
-	/*优化2(将判断是否是该年某月的正确天数改为获取该年某月的总天数，让函数利用率高)	*/
-		/*switch(mm){
-			case 1 : 
-			case 3 :
-			case 5 :
-			case 7 :
-			case 8 :
-			case 10 :
-			case 12 : date =  dd > 0 && dd <= 31;
-				break;	
-			case 4 : 
-			case 6 :
-			case 9 :
-			case 11 :	
-			case 3 : date =  dd > 0 && dd <= 30;
-				break;	
-			case 2 : 	if((yy%4 === 0 && yy%100 !=0 ) || yy%400 === 0){
-							//闰年
-							date =  dd >0 && dd <= 29;
-						}
-						date =  dd >0 && dd <= 28;
-				break;
-			default : return false;
-		}
-
-		return date && {yy:yy,mm:mm,dd:dd};*/
-	/*优化2	end*/	
+		}	
 
 		date = getDayLen(yy,mm);
 		return dd > 0 && dd <= date && {yy:yy,mm:mm,dd:dd};
@@ -718,32 +1075,25 @@ function isDate(val){
 	else{	
 		return false;
 	}
+
 }
 
 function getDayLen(yy,mm){
-	switch(mm){
-		case 1 : 
-		case 3 :
-		case 5 :
-		case 7 :
-		case 8 :
-		case 10 :
-		case 12 : return 31;
-			break;	//break在函数中无作用，由return直接退出
-		case 4 : 
-		case 6 :
-		case 9 :
-		case 11 :	
-		case 3 : return 30;
-			break;	
-		case 2 : 	if((yy%4 === 0 && yy%100 !=0 ) || yy%400 === 0){
-						//闰年
-						return 29;
-					}
-					return 28;
-			break;
-		default : return undefined;
+
+	var day_len_arr = [31,28,31,30,31,30,31,31,30,31,30,31],
+		len;
+
+	len = day_len_arr[mm];
+
+	//是二月份
+	if(mm === 1){
+		if((yy%4 === 0 && yy%100 !=0 ) || yy%400 === 0){
+			//闰年
+			len = 29; 
+		}
 	}
+
+	return len;
 }
 
 function StrSplit(date,ops){
@@ -755,6 +1105,9 @@ function StrSplit(date,ops){
 		obj = {};
 	if(ops === 'date'){
 		temp = val.split('-');
+		if(temp.length === 2){
+			return {yy:parseInt(temp[0]),mm:parseInt(temp[1])};
+		}
 		return temp.length===3 && {yy:parseInt(temp[0]),mm:parseInt(temp[1]),dd:parseInt(temp[2])};
 	}
 
@@ -848,12 +1201,7 @@ function trim(str){
 	return str.replace(RegexpObj.trim,'');
 }
 
-
-
-
-
 //替换Jquery中的方法
-
 function addClass(obj,cName){
 
 	function acn(CN){
