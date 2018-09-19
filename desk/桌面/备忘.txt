@@ -218,6 +218,9 @@ html 一些常用方法
       console.log("e");
    });
 
+   设置value为pxx的项选中
+   $(".selector").val("pxx");
+
    设置text为pxx的项选中
    $(".selector").find("option:contains('pxx')").attr("selected",true);
 
@@ -229,6 +232,12 @@ html 一些常用方法
 
    设置值为lr的下拉选项选中
    $('#fatory_select').find('option[value="lr"]').prop("selected", true);
+   
+   清空Select控件
+   $(".selector2").empty();
+   
+   控件的操作链接
+   https://www.cnblogs.com/zhangym118/p/5509673.html
 
 
 测试webView
