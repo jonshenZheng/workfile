@@ -691,179 +691,175 @@ var Method = {
 	*/
 	getParmVal : function(parmName,url){
 
-	    var isArr = Object.prototype.toString.call(parmName) === '[object Array]',
-	        url_search,
-	        url = url ? url : location.href,
-	        url_search_temp,
-	        parmName_len,
-	        parmName_i = 0,
-	        parmName_key,
-	        split_one,
-	        parmV;
+        var isArr = Object.prototype.toString.call(parmName) === '[object Array]',
+            url_search,
+            url = url ? url : location.href,
+            url_search_temp,
+            parmName_len,
+            parmName_i = 0,
+            parmName_key,
+            split_one,
+            parmV;
 
-	    if(!url || !parmName || typeof url !== 'string' || (typeof parmName !== 'string'  && !isArr)){
-	        console.log('传进的参数有问题,返回值为false');
-	        return false;
-	    }
+        if(!url || !parmName || typeof url !== 'string' || (typeof parmName !== 'string'  && !isArr)){
+            console.log('传进的参数有问题,返回值为false');
+            return false;
+        }
 
-	    url_search = url.split('?')[1].split('#')[0];
+        url_search = url.split('?')[1].split('#')[0];
 
-	    if(!url_search){
-	        console.log('此url不带参数,返回值为false');
-	        return false;
-	    }
+        if(!url_search){
+            console.log('此url不带参数,返回值为false');
+            return false;
+        }
 
-	    split_one = function(){
+        split_one = function(){
 
-	        if(url_search.indexOf(parmName) !== -1){
-	            
-	            if(url_search.indexOf('&') !== -1){
-	                url_search_temp = Method.splitParm(url_search,['&','=']);
-	                parmV = url_search_temp[parmName];
-	            }
-	            else{
-	                url_search_temp = url_search.split(parmName+'=')[1];
-	                parmV = url_search_temp.split('&')[0];
-	            }
+            if(url_search.indexOf(parmName) !== -1){
+                
+                if(url_search.indexOf('&') !== -1){
+                    url_search_temp = Method.splitParm(url_search,['&','=']);
+                    parmV = url_search_temp[parmName];
+                }
+                else{
+                    url_search_temp = url_search.split(parmName+'=')[1];
+                    parmV = url_search_temp.split('&')[0];
+                }
 
-	        }
-	        else{
-	            console.log('找不到该参数名,返回值为false');
-	            return false;
-	        }
-	    }
+            }
+            else{
+                console.log('找不到该参数名,返回值为false');
+                return false;
+            }
+        }
 
-	    
-	    // '?' 作为参数的值，或者url其他地方出现'?'下面的处理就会出错
+        
+        // '?' 作为参数的值，或者url其他地方出现'?'下面的处理就会出错
 
-
-	    if(!isArr){
-
-
-	        if(parmName === 'all'){          
-	            parmV = Method.splitParm(url_search,['&','=']);
-	        }
-	        else{
-	            split_one();
-	        }
-	        
-	    }
-	    else{
-	        
-	        parmV = {};
-
-	        url_search_temp = Method.splitParm(url_search,['&','=']);
-
-	        parmName_len = parmName.length;
-
-	        for(;parmName_i < parmName_len;parmName_i++){
-	            parmName_key = parmName[parmName_i];
-	            if(!url_search_temp[parmName_key]){
-	                console.log('找不到参数名:'+parmName_key);
-	                continue;
-	            }
-	            parmV[parmName_key] = url_search_temp[parmName_key];
-	        }
-
-	        
-	        
-	    }
+        if(!isArr){
 
 
-	    return parmV;
-	    
-	},
+            if(parmName === 'all'){          
+                parmV = Method.splitParm(url_search,['&','=']);
+            }
+            else{
+                split_one();
+            }
+            
+        }
+        else{
+            
+            parmV = {};
+
+            url_search_temp = Method.splitParm(url_search,['&','=']);
+
+            parmName_len = parmName.length;
+
+            for(;parmName_i < parmName_len;parmName_i++){
+                parmName_key = parmName[parmName_i];
+                if(!url_search_temp[parmName_key]){
+                    console.log('找不到参数名:'+parmName_key);
+                    continue;
+                }
+                parmV[parmName_key] = url_search_temp[parmName_key];
+            }
+
+        }
+
+        return parmV;
+        
+    },
 	/*
 	    通过分隔符来获取对应的参数名和值
 	*/
 	splitParm : function(str,decollate){
-	    
-	    var isArr = Object.prototype.toString.call(decollate) === '[object Array]',
-	        splitFn,
-	        deepSplitFn,
-	        temp_arr = [],
-	        reg_str,
-	        len,
-	        key,
-	        val,
-	        parmObj = {};
+        
+        var isArr = Object.prototype.toString.call(decollate) === '[object Array]',
+            splitFn,
+            deepSplitFn,
+            temp_arr = [],
+            reg_str,
+            len,
+            key,
+            val,
+            parmObj = {};
 
-	    if(!decollate || (typeof decollate !== 'string' &&　!isArr )){
-	        return false;
-	    }
+        if(!decollate || (typeof decollate !== 'string' &&　!isArr )){
+            return false;
+        }
 
-	    splitFn = function(str,decollate){
-	        var temp_str = str.split(decollate);
-	        parmObj[temp_str[0]] = temp_str[1]; 
+        splitFn = function(str,decollate){
+            var temp_str = str.split(decollate);
+            parmObj[temp_str[0]] = temp_str[1]; 
 
-	    };
+        };
 
-	    deepSplitFn = function(str_split,ind){
+        deepSplitFn = function(str_split,ind){
 
-	        var str_split_temp,
-	            str_split_temp_arr,
-	            str_split_temp_len,
-	            str_split_res,
-	            split_fh = decollate[len - ind],
-	            split_next_fh,
-	            str_split_temp_i = 0;
-	            
+            var str_split_temp,
+                str_split_temp_arr,
+                str_split_temp_len,
+                str_split_res,
+                split_fh = decollate[len - ind],
+                split_next_fh,
+                str_split_temp_i = 0;
+                
 
-	        if(ind > 1){
-	            
-	            str_split_temp = str_split.split(split_fh);
+            if(ind > 1){
+                
+                str_split_temp = str_split.split(split_fh);
 
-	            str_split_temp_len = str_split_temp.length;
+                str_split_temp_len = str_split_temp.length;
 
-	            split_next_fh = decollate[len - ind + 1];
+                split_next_fh = decollate[len - ind + 1];
 
-	            str_split_temp_arr = [].concat(str_split_temp);
+                str_split_temp_arr = [].concat(str_split_temp);
 
-	            for(;str_split_temp_i < str_split_temp_len;str_split_temp_i++){
-	                if(str_split_temp[str_split_temp_i].indexOf(split_next_fh) === -1){
-	                    str_split_temp_arr.splice(str_split_temp_i,1);
-	                }
-	            }
-	           
-	           str_split_res = str_split_temp_arr.join('羴');
+                for(;str_split_temp_i < str_split_temp_len;str_split_temp_i++){
+                    if(str_split_temp[str_split_temp_i].indexOf(split_next_fh) === -1){
+                        str_split_temp_arr.splice(str_split_temp_i,1);
+                    }
+                }
+               
+               str_split_res = str_split_temp_arr.join('羴');
 
-	           deepSplitFn(str_split_res,--ind);
+               deepSplitFn(str_split_res,--ind);
 
-	        }
-	        else{
+            }
+            else{
 
-	            str_split_temp = str_split.replace(reg_str,'羴');
+                str_split_temp = str_split.replace(reg_str,'羴');
 
-	            str_split_res = str_split_temp.split('羴');
+                str_split_res = str_split_temp.split('羴');
 
-	            str_split_temp_len = str_split_res.length;
+                str_split_temp_len = str_split_res.length;
 
-	            for(;str_split_temp_i < str_split_temp_len;str_split_temp_i+=2){
-	                parmObj[str_split_res[str_split_temp_i]] = str_split_res[str_split_temp_i+1]
-	            }
+                for(;str_split_temp_i < str_split_temp_len;str_split_temp_i+=2){
+                    parmObj[str_split_res[str_split_temp_i]] = str_split_res[str_split_temp_i+1]
+                }
 
-	            
-	        }
+                
+            }
 
-	    };
+        };
 
-	    if(!isArr){
-	        splitFn(str,decollate);
-	    }
-	    else{
-	    
+        if(!isArr){
+            splitFn(str,decollate);
+        }
+        else{
+        
 
-	        len = decollate.length;
+            len = decollate.length;
 
-	        reg_str = new RegExp(decollate[len-1],'g');
+            reg_str = new RegExp(decollate[len-1],'g');
 
-	        deepSplitFn(str,len);
+            deepSplitFn(str,len);
 
-	    }
+        }
 
-	    return parmObj
+        return parmObj
 
-	},
+    },
 	//通过多个索引来删除数组
 	arrDeleteEles : function(arr,delArrInd){
 
@@ -912,7 +908,361 @@ var Method = {
 		}
 
 		return arr;
+	},
+	//找到对象中 id=3所在位置，在这个位置可以增删属性
+    setObjVal : function(key,val,cb,data){
+
+        var setKey = key,
+            isBreck = false,
+            setVal = val,
+            doSome = cb;
+
+        setDataAttt(data);
+
+        function setDataAttt(data){
+        
+            if(isBreck){
+                return;
+            }
+
+
+            if( isArray(data) ){
+
+                var len = data.length,
+                    i = 0;      
+
+                for(;i<len;i++){
+
+                    if(isBreck){
+                        return;
+                    }
+
+                    setDataAttt(data[i]);
+                }
+
+
+            }
+            else if( isObject(data) ){
+
+                for( var key in data ){
+
+                    if(isBreck){
+                        return;
+                    }
+
+                    if( isArray(data[key]) || isObject(data[key]) ){
+                        setDataAttt(data[key]);
+                    }
+                    else{
+
+                        if( key === setKey && data[key] === setVal ){
+        
+                            doSome(data);
+                            isBreck = true;
+                            return; 
+
+                        }
+
+                    }
+
+                }
+            }
+        }
+    },
+    isInArrVal : function(arr,val){
+
+        var len = arr.length,
+            i = 0;
+
+        for(;i < len; i++){
+
+            if( arr[i] === val ){
+                return true;
+            }
+
+        } 
+
+        return false;
+
+    },
+    //判断数组是否已经存在该值(每一条数据都用对象包住)
+    isInArrObjVal : function(arr,key,val){
+        var len = arr.length,
+            i = 0;
+
+        for(;i < len; i++){
+
+            if( arr[i][key] === val ){
+                return true;
+            }
+        } 
+
+        return false;
+    },
+    //通过元素的值来删除该元素(每一条数据都不用对象包住)
+    delArrByVal : function(arr,val){
+
+        var len = arr.length,
+            i = 0;
+
+        for(;i < len; i++){
+
+            if( arr[i] === val ){
+                arr.splice(i,1);
+                break;
+            }
+
+        }    
+
+    },
+    //通过元素的值来删除该元素(每一条数据都用对象包住)
+    delArrByObjVal : function(arr,key,val){
+
+        var len = arr.length,
+            i = 0;
+
+        for(;i < len; i++){
+
+            if( arr[i][key] === val ){ debugger
+                arr.splice(i,1);
+                break;
+            }
+
+        }    
+
+    },
+    //改数组的里面的条目的key名
+	//eg1 : 将数组arr1每一项的fdstr改成name
+	//      arr1 = [{ fdstr : 'cc', id : 1 },{ fdstr : 'bb', id : 2 }]
+	//      使用 arr1 = setDataValName( arr1 , 'fdstr' , 'name' );
+	//      结果 ： arr = [{ name : 'cc', id : 1 },{ name : 'bb', id : 2 }]
+	//
+	//eg2 : 将数组arr1每一项的fdstr和count分别改成name和val
+	//      arr2 = [{ fdstr : 'cc', count : 6 ,id : 1 },{ fdstr : 'bb', count : 18 , id : 2 }]           
+	//      使用 arr2 = setDataValName( arr2 , ['fdstr','count'] , ['name','val'] );
+	//      结果 ： arr = [{ name : 'cc', val : 6 ,id : 1 },{ name : 'bb', val : 18 , id : 2 }] 
+	//
+	setDataValName : function(arr,oldKey,newKey){
+
+	    if( !isArray(arr) ){
+	        return;
+	    }
+
+	    var newArr = [],
+	        len = arr.length,
+	        i = 0,
+	        temp,
+	        key,
+	        fn,
+	        oldKeyStr;
+
+	    if( isArray(oldKey) && isArray(newKey) ){
+
+	        oldKeyStr = ';' + oldKey.join(';') + ';';
+
+	        fn = function(ind,key){
+
+	        var sKey = ';'+key+';',
+	                temp,
+	                newKeyName,
+	                nInd = oldKeyStr.indexOf( sKey );
+
+	            if( nInd !== -1 ){
+
+	                if( nInd !== 0 ){
+	                    temp = oldKeyStr.slice(1, nInd);
+	                    nInd = temp.split(';').length;
+	                }
+
+	                newKeyName = newKey[nInd];
+
+	                newArr[ind][newKeyName] = arr[ind][key];
+
+	            }
+	            else{
+	                newArr[ind][key] = arr[ind][key];
+	            }
+
+	        };
+	    }
+	    else{
+	        fn = function(ind,key){
+	            if( key === oldKey ){
+	                newArr[ind][newKey] = temp[key];
+	            }
+	            else{
+	                newArr[ind][key] = temp[key];
+	            }
+	        };
+	    }
+
+	    for(;i<len; i++){
+
+	        temp = arr[i];
+
+	        newArr[i] = {};
+
+	        for( key in temp ){
+
+	            fn(i,key);
+
+	        }
+	    }
+	    return newArr;
+
+	},
+	//换key名    （深拷贝 拷贝的对象是数组是对象，以及对象嵌套数组，数组嵌套对象都行，目前只能手动设置要改的key名)
+	formatterData : function(data){
+	    var nArr,
+	        len,
+	        i = 0;
+
+
+	    if( isArray(data) ){
+			nArr = [];
+	        len = data.length;
+
+			for(;i<len;i++){
+
+				if( isObject(data[i]) ){
+					nArr[i] = {};
+					copyObj(nArr[i],data[i]);
+				}
+				else if( isArray(data[i]) ){
+					nArr[i] = [];
+					copyArr(nArr[i],data[i]);
+				}
+				else{
+					nArr[i] = data[i];
+				}
+
+			}
+
+	    }
+	    else if( isObject(data) ){
+		
+			nArr = {};
+			copyObj(nArr,data);
+
+	    }   
+
+	       
+
+	    return nArr;
+
+	},
+	//深拷贝数组 （不是通用，要改）
+	copyArr : function(obj,cobj){
+	    var len = cobj.length,
+	        i = 0;
+
+	    for(;i<len;i++){
+
+	        if(isArray(cobj[i])){
+	            obj[i] = [];
+	            Method.copyArr(obj[i],cobj[i]);
+	        }
+	        else if( isObject(cobj[i])){
+	            obj[i] = {};
+	            Method.copyObj(obj[i],cobj[i]);
+	        }
+	        else{
+	            obj[i] = cobj[i];
+	        }
+	     
+	    }
+
 	}
+	//深拷贝对象（不是通用,要改）
+	copyObj : function(obj,cObj){
+
+	    if( Object.prototype.toString.call(cObj) === '[object Array]' ){
+	        obj = [];
+	        copyArr(obj,cObj);
+
+	    }
+	    else{
+	        for(key in cObj){
+
+	            if( key == 'pid'){
+	                if(cObj.pid.length){   //这里要改
+	                    obj['children'] = [];
+	                    Method.copyArr(obj['children'],cObj.pid);
+	                }
+	            }
+	            else if( key == 'id' ){
+	                obj['value'] = cObj[key];
+	            }
+	            else if( key == 'name' ){
+	                obj['name'] = cObj[key];
+	            }
+	            else{
+	                //obj[key] = cObj[key];
+	            }
+
+	        }
+	    }
+
+	},
+	//找到对象中 id=12所在位置，在这里添加一个属性active:true, ((可以利用回调执行属性增删)
+	//eg setObjVal('id','12',function(o){o['active'] = true; },data);
+	setObjVal : function(key,val,cb,data){
+
+		var setKey = key,
+			isBreck = false,
+			setVal = val,
+			doSome = cb;
+
+		setDataAttt(data);
+
+		function setDataAttt(data){
+		
+			if(isBreck){
+				return;
+			}
+
+			if( isArray(data) ){
+
+				var len = data.length,
+					i = 0;		
+
+				for(;i<len;i++){
+
+					if(isBreck){
+						return;
+					}
+
+					setDataAttt(data[i]);
+				}
+
+			}
+			else if( isObject(data) ){
+
+				for( var key in data ){
+
+					if(isBreck){
+						return;
+					}
+
+					if( isArray(data[key]) || isObject(data[key]) ){
+						setDataAttt(data[key]);
+					}
+					else{
+
+						if( key === setKey && data[key] === setVal ){
+							doSome(data);
+							isBreck = true;
+							return;	
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+
+
     
 };
 
