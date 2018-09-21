@@ -222,7 +222,7 @@ html 一些常用方法
    $(".selector").val("pxx");
 
    设置text为pxx的项选中
-   $(".selector").find("option:contains('pxx')").attr("selected",true);
+   $(".selector").find("option:contains('pxx')").prop("selected",true);
 
    获取当前选中项的text
    $(".selector").find("option:selected").text();
