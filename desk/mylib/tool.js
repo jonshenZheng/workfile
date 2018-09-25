@@ -1,3 +1,23 @@
+注意
+/* '' == null            false
+'' == undefined          false
+false == null            false
+false == undefined       false
+0 == null                false
+0 == undefined           false
+
+NaN == ''                false
+NaN == null              false
+NaN == undefined         false
+NaN == 0                 false
+NaN == false             false
+NaN == NaN               false
+
+0 == ''                  true
+undefined == null        true
+'' == false              true
+null和undefined是一个特殊的对象转化为布尔值true,NaN比较永远为false  */
+
 /*常用方法*/
 function isArray(v){
 	return type(v,'array');
@@ -5,6 +25,32 @@ function isArray(v){
 function isObject(v){
 	return type(v,'object');
 }
+
+/*是否原始值*/
+function isPrimitive (value) {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    // $flow-disable-line
+    typeof value === 'symbol' ||
+    typeof value === 'boolean'
+  )
+}
+
+/*判断是否为整数且不能为无穷值，可以用来判断是为数组的索引*/
+function isValidArrayIndex (val) {
+  var n = parseFloat(String(val));
+  return n >= 0 && Math.floor(n) === n && isFinite(val)
+}
+
+function toString (val) {
+  return val == null
+    ? ''
+    : is() typeof val === 'object'
+      ? JSON.stringify(val, null, 2)
+      : String(val)
+}
+
 
 /*去除首尾空格*/
 function trim(str){
