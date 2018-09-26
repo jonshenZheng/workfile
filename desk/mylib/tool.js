@@ -1077,6 +1077,15 @@ var Method = {
         }    
 
     },
+    //判断数组是否已经存在该值(用于数字或字符串数字，区分不了数值和字符串类型)
+    isInArr : function(arr,val){
+
+	var str = ';' + arr.join(';') + ';',
+	valStr = ';'+val+';';
+
+	return str.indexOf(valStr) !== -1;
+
+    },
     //改数组的里面的条目的key名
 	//eg1 : 将数组arr1每一项的fdstr改成name
 	//      arr1 = [{ fdstr : 'cc', id : 1 },{ fdstr : 'bb', id : 2 }]
