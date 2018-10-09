@@ -26,6 +26,34 @@ function isObject(v){
 	return type(v,'object');
 }
 
+/*格式对象为一个字符串
+* 必填 obj 要格式化的对象
+* 选填 letter string类型 默认为一个空格
+*/
+function ObjectJoin(obj,letter){
+	
+    if( !isObject(obj) ){
+	return;
+    }
+
+    var leter = letter || ' ',
+	key,
+	res = '';
+
+    for( key in obj){
+	res += obj[key] + letter;
+    }
+
+    if( letter && res.split(letter).length > 1 ){
+	res = res.slice(0,-(letter.length));
+    }
+
+    return res;
+
+}
+
+
+
 /*是否原始值*/
 function isPrimitive (value) {
   return (
@@ -454,7 +482,6 @@ var fileMethod = {
 var Method = {
 
 	/* 初始化数组 
-	*
 	*	arr 要初始化的数组
 	* 	len 指定数组长度 
 	*  	val 初始化的值
@@ -1320,6 +1347,245 @@ var Method = {
 
     
 };
+
+//运算
+var operation = {
+
+	/* 长度不够填充默认符号 （string）
+	* 必填 num string或number类型 当前长度字符
+	* 必填 length number类型 填充后最终长度
+	* 选填 letter string类型  填充的字符 默认是'0'
+	*/
+	fillLetter : function(num,length,letter){
+
+            if( (!num && num != 0 ) || !length ){
+                return;
+            }
+
+            var res = String(num),
+                i = res.length,
+                leter = letter || '0';
+
+            for( ;i < length; i++){
+                res = leter + res;
+            }
+
+            return res;
+
+        },
+	/* 累加或累乘数组 （number）
+	* 必填 arr 要操作的数组
+	* 选填 letter string类型 '+'表示累加 '*'表示累乘 默认是累加
+	* 选填 end number类型 累加某个索引时结束（会将结束是索引计算到）默认是传入arr的长度
+	*/
+	cumulative : function(arr,letter,end){
+
+            if( !isArray(arr) ){
+                return;
+            }
+
+            var len = arr.length,
+                i = 0,
+                fn,
+                ys = letter || '+',
+                over,
+                res;
+
+            if( end == 0 || end){
+                over = end;
+            }
+            else{
+                over = len;
+            }
+
+            switch(ys){
+
+                case '+' :  res = 0;
+                            fn = function(a){
+                                res += a;
+                            };
+                    break;
+
+                case '*' :  res = 1;
+                            fn = function(a){
+                                    res *= a;
+                            };
+                    break;
+            }
+
+            for(;i<len;i++){
+                fn( arr[i] );
+                if( i == over){
+                    break
+                }
+            }
+
+            return res;
+
+        }
+	
+	
+	
+};
+
+//跟时间相关的
+var time = {
+	/*计算两段时间的隔了多久 （object）
+	*
+	*
+	*
+	*/
+	showUseTime ：function (beg,cur,fillObj){
+
+            if(!beg){
+                return;
+            }
+
+            var start = beg,
+                now,
+                timeNum,
+                timeStr,
+                f_key,
+                isBreak = false,
+                dateObj = {
+                    year : '',
+                    mouth : '',
+                    day : '',
+                    hour : '',
+                    minute : '',
+                    second : '',
+                    msec : ''
+                },
+                dateKey = ['msec','second','minute','hour','day','mouth','year'],
+                level = [1000,60,60,24,30,12]; //30天算一个月
+
+            if( isObject(fillObj) ){
+                for( f_key in fillObj){
+                    dateObj[f_key] = fillObj[f_key];
+                }
+            }
+
+            if( typeof beg === 'string' && ( beg.split('-').length > 1 || beg.split('/').length > 1  ) ){
+                //转化为时间戳
+                start = new Date(start).getTime();
+            }
+
+            if(cur){
+
+                if( typeof cur === 'string' && ( beg.split('-').length > 1 || beg.split('/').length > 1  ) ){
+                    //转化为时间戳
+                    now = new Date(start).getTime();
+                }
+                else{
+                    now = cur;                    
+                }
+
+            }
+            else{
+                now = 0;
+            }
+
+            if(now < start){
+                timeNum = now;
+                now = start;
+                start = timeNum;
+            }
+
+            timeNum = now - start;
+
+            function count(lev){
+
+                if( isBreak || lev >= 7){
+                    return;
+                }
+
+                var temp = cumulative(level,'*',lev),
+                    temp2,
+                    temp3 = lev > 0 ? cumulative(level,'*',lev-1) : level[lev],
+                    key = dateKey[lev];
+
+                if( timeNum >= temp ){
+                    count(lev+1);
+                }
+
+                temp2 = parseInt(timeNum / temp3);
+                timeNum = timeNum % temp3;
+
+                if(lev < 1){
+                    temp2 = fillLetter(timeNum,3);
+                }
+                else if( lev < 4 ){
+                    temp2 = fillLetter(temp2,2);
+                }
+
+                switch(lev){
+
+                    case 0 : dateObj[key] = temp2;
+                        break;
+                    case 1 : dateObj[key] = temp2 + ' ';
+                        break;
+                    case 2 : ;
+                    case 3 : dateObj[key] = temp2+':';
+                        break;
+                    case 4 : dateObj[key] = temp2+'天 '; 
+                        break;
+                    case 5 : dateObj[key] = temp2+'月 '; 
+                        break;
+                    case 6 : dateObj[key] = temp2+'年 ';
+                        break;
+                }
+
+
+            }
+
+            count(0);
+
+            return dateObj; //ObjectJoin(dateObj,'');
+
+        },
+	/* 递增显示与开始时间的时长 （无返回值）
+	*
+	*
+	*
+	*/
+	randerUseTime : function(el,beg,cur){
+
+            var data,
+                hideMescond = true,
+                timeStr,
+                speed = 1000,
+                timer;
+
+            function runder(){
+
+                data = showUseTime(beg,cur,{
+                    hour : '00:',
+                    minute : '00:'
+                });
+                timeStr = ObjectJoin(data,'');
+
+                if(hideMescond){
+                    timeStr = timeStr.slice(0,-4);
+                }
+
+                el.innerHTML = timeStr;
+
+            }
+
+            runder();
+
+            timer = setInterval(function(){
+                cur += speed;
+                runder();
+            },speed);
+
+
+        }
+
+
+};
+
+
 
 
 //排序函数
